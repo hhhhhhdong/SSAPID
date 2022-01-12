@@ -1,10 +1,11 @@
 import Header from "./components/header";
+import style from "./App.module.scss";
 
 function App() {
   return (
     <div className="App">
       <Header />
-      App
+      <div className={style.big}>start</div>
     </div>
   );
 }
