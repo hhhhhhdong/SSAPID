@@ -1,4 +1,4 @@
-# Harry's commit message template
+# CodingNerd777 commit message template
 # 제목은 대문자로 시작합니다.
 # 본문과 푸터는 선택 사항 입니다.
 #######제목#######
@@ -8,6 +8,7 @@
 #######푸터#######
 
 ##################
+# 제목 옵션
 # Fix : 수정
 # Add : 추가
 # Remove : 삭제
