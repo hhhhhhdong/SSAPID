@@ -1,0 +1,30 @@
+.input {
+  box-sizing: border-box;
+  border: 1px solid black;
+  font-size: 12px;
+  label {
+    // height: 36px;
+    position: relative;
+  }
+  span {
+    height: 36px;
+    position: absolute;
+    left: 8px;
+    user-select: none;
+    line-height: 36px;
+    transition: transform ease-out 0.1s;
+  }
+  .inValueSpan {
+    transform: scale(0.83333) translateY(-10px);
+  }
+  .inValueInput {
+    padding: 14px 0 2px 8px;
+  }
+  input {
+    box-sizing: border-box;
+    border: 0;
+    height: 36px;
+    padding: 9px 0px 7px 8px;
+    outline: 0;
+  }
+}
