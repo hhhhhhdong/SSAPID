@@ -8,9 +8,10 @@ interface Props {
   value?: InputValue;
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
   placeHolder?: string;
+  name?: string;
 }
 
-function Input({ value, onChange, placeHolder }: Props) {
+function Input({ value, onChange, placeHolder, name }: Props) {
   const [inputValue, setInputValue] = useState<InputValue>(value);
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -21,6 +22,7 @@ function Input({ value, onChange, placeHolder }: Props) {
       <label htmlFor="email">
         <span className={value ? style.inValueSpan : ""}>{placeHolder}</span>
         <input
+          name={name}
           className={value ? style.inValueInput : ""}
           type="text"
           value={value}
