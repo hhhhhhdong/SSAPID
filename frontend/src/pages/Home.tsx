@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { To, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button";
 
 function Home() {
-  const type = "button";
-  const url = ["/Main", "/IdFind"];
+  const buttonType = "button";
+  const url = ["/main", "/idFind", "/passwordFind"];
   const [isLoading, setBool] = useState(false);
   const navigate = useNavigate();
+
   const handleMain = () => {
     setBool(false);
     navigate(url[0]);
@@ -15,22 +16,33 @@ function Home() {
     setBool(false);
     navigate(url[1]);
   };
+  const handlePasswordFind = () => {
+    setBool(false);
+    navigate(url[2]);
+  };
 
   return (
     <div>
       <Button
-        buttonType={type}
+        buttonType={buttonType}
         text="메인페이지"
         handleClick={handleMain}
         Disabled={isLoading}
         url={url[0]}
       />
       <Button
-        buttonType={type}
+        buttonType={buttonType}
         text="아이디찾기"
         handleClick={handleIdFind}
         Disabled={isLoading}
         url={url[1]}
+      />
+      <Button
+        buttonType={buttonType}
+        text="비밀번호찾기"
+        handleClick={handlePasswordFind}
+        Disabled={isLoading}
+        url={url[2]}
       />
     </div>
   );
