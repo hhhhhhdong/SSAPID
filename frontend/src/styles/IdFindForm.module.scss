@@ -1,5 +1,9 @@
 .form {
   Button {
-    margin: 10px;
+    margin-top: 1rem;
   }
+}
+.btns {
+  display: flex;
+  justify-content: space-around;
 }
