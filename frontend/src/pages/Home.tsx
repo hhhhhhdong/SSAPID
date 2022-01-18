@@ -4,7 +4,7 @@ import Button from "../components/common/Button";
 
 function Home() {
   const buttonType = "button";
-  const url = ["/main", "/idFind", "/passwordFind"];
+  const url = ["/main", "/idFind", "/passwordFind", "/login"];
   const [isLoading, setBool] = useState(false);
   const navigate = useNavigate();
 
@@ -19,6 +19,10 @@ function Home() {
   const handlePasswordFind = () => {
     setBool(false);
     navigate(url[2]);
+  };
+  const handleLogin = () => {
+    setBool(false);
+    navigate(url[3]);
   };
 
   return (
@@ -43,6 +47,13 @@ function Home() {
         handleClick={handlePasswordFind}
         Disabled={isLoading}
         url={url[2]}
+      />
+      <Button
+        buttonType={buttonType}
+        text="로그인"
+        handleClick={handleLogin}
+        Disabled={isLoading}
+        url={url[3]}
       />
     </div>
   );
