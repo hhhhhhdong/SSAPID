@@ -12,11 +12,11 @@ interface Props {
 }
 
 function Input({ value, onChange, placeHolder, name }: Props) {
-  const [inputValue, setInputValue] = useState<InputValue>(value);
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    onChange && onChange(e);
-  };
+  // const [inputValue, setInputValue] = useState<InputValue>(value);
+  // const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue(e.target.value);
+  //   onChange && onChange(e);
+  // };
   return (
     <div className={style.input} style={{ width: "200px" }}>
       <label htmlFor="email">
@@ -26,7 +26,7 @@ function Input({ value, onChange, placeHolder, name }: Props) {
           className={value ? style.inValueInput : ""}
           type="text"
           value={value}
-          onChange={changeHandler}
+          onChange={onChange}
         />
       </label>
     </div>
