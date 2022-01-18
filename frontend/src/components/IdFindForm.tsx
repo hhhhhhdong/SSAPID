@@ -60,15 +60,16 @@ function IdFindForm({ onSubmit }: idFindProps) {
           onChange={onChange}
           placeHolder={emailPlaceHolder}
         />
-
-        <Button buttonType={submitButtonType} text="다음" />
-        <Button
-          buttonType={backButtonType}
-          text="뒤로가기"
-          handleClick={backOut}
-          Disabled={isLoad}
-          url={url[0]}
-        />
+        <div className={style.btns}>
+          <Button buttonType={submitButtonType} text="다음" />
+          <Button
+            buttonType={backButtonType}
+            text="뒤로가기"
+            handleClick={backOut}
+            Disabled={isLoad}
+            url={url[0]}
+          />
+        </div>
       </form>
     </div>
   );
