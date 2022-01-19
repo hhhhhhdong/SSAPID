@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Button from "./common/Button";
 import Input from "./common/Input";
 
-function LoginPageForm() {
+function LoginForm() {
   // const buttonType = "submit";
   // const url = ["/"];
   // const [isLoad, setLoad] = useState(false);
@@ -39,4 +39,4 @@ function LoginPageForm() {
   );
 }
 
-export default LoginPageForm;
+export default LoginForm;

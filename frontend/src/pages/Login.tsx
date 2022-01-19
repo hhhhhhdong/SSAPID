@@ -1,5 +1,5 @@
 import React from "react";
-import LoginPageForm from "../components/LoginPageForm";
+import LoginPageForm from "../components/LoginForm";
 
 function LoginPage() {
   // // api 통신 로직

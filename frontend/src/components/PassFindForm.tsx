@@ -8,7 +8,7 @@ type PasswordFindProps = {
   onSubmit: (form: { id: string }) => void;
 };
 
-function PassWordFindForm({ onSubmit }: PasswordFindProps) {
+function PassFindForm({ onSubmit }: PasswordFindProps) {
   const submitButtonType = "submit";
   const backButtonType = "button";
   const idPlaceHolder = "이메일을 입력하세요.";
@@ -68,4 +68,4 @@ function PassWordFindForm({ onSubmit }: PasswordFindProps) {
   );
 }
 
-export default PassWordFindForm;
+export default PassFindForm;
