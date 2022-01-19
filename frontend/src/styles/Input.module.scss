@@ -13,10 +13,12 @@
     height: 36px;
     position: absolute;
     left: 8px;
-    user-select: none;
     line-height: 36px;
     transition: transform ease-out 0.1s;
     color: rgba(var(--f52, 142, 142, 142), 1);
+    user-select: none;
+    // 클릭무시
+    pointer-events: none;
   }
   .inValueSpan {
     transform: scale(0.83333) translateY(-10px);
