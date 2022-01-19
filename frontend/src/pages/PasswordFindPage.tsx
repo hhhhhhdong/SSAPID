@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import PassWordFindForm from "../components/PasswordFindForm";
+import PasswordFindForm from "../components/PasswordFindForm";
+import style from "../styles/FindPage.module.scss";
 
 function PasswordFindPage() {
   const onSubmit = (form: { id: string }) => {
@@ -10,8 +11,8 @@ function PasswordFindPage() {
     console.log(form);
   };
   return (
-    <div>
-      <PassWordFindForm onSubmit={onSubmit} />
+    <div className={style.page}>
+      <PasswordFindForm onSubmit={onSubmit} />
     </div>
   );
 }

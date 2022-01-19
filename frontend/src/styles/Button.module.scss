@@ -22,3 +22,11 @@
     cursor: pointer;
   }
 }
+
+.disable {
+  box-shadow: none;
+  background: #eee;
+  color: #ccc;
+  //마우스 이벤트 막음
+  pointer-events: none;
+}
