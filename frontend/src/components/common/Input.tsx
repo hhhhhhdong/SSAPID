@@ -10,16 +10,26 @@ interface Props {
   placeHolder?: string;
   name?: string;
   type?: React.HTMLInputTypeAttribute | undefined;
+  buttonText?: string;
+  width?: number;
 }
 
-function Input({ value, onChange, placeHolder, name, type }: Props) {
+function Input({
+  value,
+  onChange,
+  placeHolder,
+  name,
+  type,
+  buttonText,
+  width = 240,
+}: Props) {
   // const [inputValue, setInputValue] = useState<InputValue>(value);
   // const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
   //   setInputValue(e.target.value);
   //   onChange && onChange(e);
   // };
   return (
-    <div className={style.input} style={{ width: "200px" }}>
+    <div className={style.input} style={{ width: `${width}px` }}>
       <label htmlFor="email">
         <span className={value ? style.inValueSpan : ""}>{placeHolder}</span>
         <input
@@ -30,7 +40,7 @@ function Input({ value, onChange, placeHolder, name, type }: Props) {
           onChange={onChange}
         />
       </label>
-      <div />
+      <div>{buttonText}</div>
     </div>
   );
 }
