@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Input from "./common/Input";
 import Button from "./common/Button";
-import style from "../styles/globalForm.module.scss";
+import style from "../styles/Register.module.scss";
 import Spacer from "./common/Spacer";
 
 const INPUT_MARGIN_BOTTOM = 2;
@@ -13,6 +13,7 @@ function RegisterForm() {
   const [form, setForm] = useState({
     userId: "",
     userPw: "",
+    userPwCheck: "",
     userNickname: "",
     userPhone: "",
     userName: "",
@@ -20,36 +21,89 @@ function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState({
     userId: "",
     userPw: "",
+    userPwCheck: "",
     userNickname: "",
     userPhone: "",
     userName: "",
   });
-  const [userPwCheck, setUserPwCheck] = useState("");
-  const [userPwCheckError, setUserPwCheckError] = useState("");
+
   const onChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    // 전화번호 숫자만 입력받기
+    if (name === "userPhone") {
+      const regex = /^[0-9\b -]{0,13}$/;
+      if (regex.test(e.target.value)) {
+        setForm({
+          ...form,
+          [name]: value,
+        });
+      }
+      return;
+    }
+
     setForm({
       ...form,
       [name]: value,
     });
   };
 
-  const onChangePwCheck = (e: ChangeEvent<HTMLInputElement>) => {
-    setUserPwCheck(e.target.value);
-  };
-
+  // 휴대폰 번호 형식 설정
   useEffect(() => {
-    if (userPwCheck && form.userPw !== userPwCheck) {
-      setUserPwCheckError("비밀번호 확인이 다릅니다.");
-    } else {
-      setUserPwCheckError("");
+    if (form.userPhone.length === 10) {
+      setForm({
+        ...form,
+        userPhone: form.userPhone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"),
+      });
     }
-  }, [userPwCheck]);
+    if (form.userPhone.length === 13) {
+      setForm({
+        ...form,
+        userPhone: form.userPhone
+          .replace(/-/g, "")
+          .replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3"),
+      });
+    }
+  }, [form.userPhone]);
+
+  // 비밀번호 확인
+  useEffect(() => {
+    if (form.userPwCheck && form.userPw !== form.userPwCheck) {
+      setErrorMessage({
+        ...errorMessage,
+        userPwCheck: "비밀번호가 다릅니다.",
+      });
+    } else {
+      setErrorMessage({
+        ...errorMessage,
+        userPwCheck: "",
+      });
+    }
+  }, [form.userPwCheck]);
+
+  // Id, Nickname 비어있으면 에러메세지 삭제
+  useEffect(() => {
+    if (!form.userId) {
+      setErrorMessage({
+        ...errorMessage,
+        userId: "",
+      });
+    }
+    if (!form.userNickname) {
+      setErrorMessage({
+        ...errorMessage,
+        userNickname: "",
+      });
+    }
+  }, [form.userId, form.userNickname]);
+
+  // 회원가입 버튼 클릭
   const onClickSubmit = () => {
     // 비어있는 값이 있을 경우
     if (Object.values(form).some((v) => v === "")) {
       console.log("모든 값을 입력해 주세요");
     }
+
     axios
       .post("http://localhost:8080/user/register", form)
       .then((res) => {
@@ -62,6 +116,7 @@ function RegisterForm() {
 
   const onClickCheckEmail = (e: React.MouseEvent) => {
     e.preventDefault();
+    if (!form.userId) return;
     // axios email check
     setErrorMessage({
       ...errorMessage,
@@ -124,14 +179,14 @@ function RegisterForm() {
         name="userPwCheck"
         placeHolder="password check"
         type="password"
-        value={userPwCheck}
-        errorMessage={userPwCheckError}
-        onChange={onChangePwCheck}
+        value={form.userPwCheck}
+        errorMessage={errorMessage.userPwCheck}
+        onChange={onChangeForm}
       />
       <Spacer size={INPUT_MARGIN_BOTTOM} />
       <Input
         name="userPhone"
-        placeHolder="phone (only number)"
+        placeHolder="phone number"
         value={form.userPhone}
         errorMessage={errorMessage.userPhone}
         onChange={onChangeForm}

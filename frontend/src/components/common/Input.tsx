@@ -5,10 +5,10 @@ import style from "../../styles/Input.module.scss";
 
 type InputValue = string | number | readonly string[] | undefined;
 interface Props {
-  value?: InputValue;
-  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  placeHolder?: string;
-  name?: string;
+  value: InputValue;
+  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  placeHolder: string;
+  name: string;
   type?: React.HTMLInputTypeAttribute | undefined;
   buttonText?: string;
   width?: number;
