@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
 import Input from "./common/Input";
-import style from "../styles/FindForm.module.scss";
+import style from "../styles/globalForm.module.scss";
 
 type PasswordFindProps = {
   onSubmit: (form: { id: string }) => void;
