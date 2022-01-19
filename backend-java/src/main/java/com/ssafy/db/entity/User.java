@@ -25,10 +25,8 @@ public class User extends BaseTimeEntity {
     String userNickname;
     @Column(name = "user_phone", nullable = false) @NotNull
     String userPhone;
-//    @Column(name = "created_at", nullable = false) @NotNull
-//    Timestamp createdAt;
-    @Column(name = "is_Destroyed", nullable = false) @NotNull
-    Boolean isDestroyed;
+    @Column(name = "user_name", nullable = false) @NotNull
+    String userName;
     @Column(name = "user_type", nullable = false) @NotNull
     int userType;
 }
