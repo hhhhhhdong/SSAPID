@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PassFindForm from "../components/PassFindForm";
-import style from "../styles/FindPage.module.scss";
+import style from "../styles/globalPage.module.scss";
 
 function PasswordFind() {
   const onSubmit = (form: { id: string }) => {
