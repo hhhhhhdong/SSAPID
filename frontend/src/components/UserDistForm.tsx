@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import style from "../styles/UserDistPage.module.scss";
+import style from "../styles/globalForm.module.scss";
 import Input from "./common/Input";
 import Button from "./common/Button";
 

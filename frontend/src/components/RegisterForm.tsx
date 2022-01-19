@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState, MouseEvent } from "react";
 import axios from "axios";
 import Input from "./common/Input";
 import Button from "./common/Button";
-import style from "../styles/RegisterForm.module.scss";
+import style from "../styles/globalForm.module.scss";
 import Spacer from "./common/Spacer";
 
 function RegisterForm() {
