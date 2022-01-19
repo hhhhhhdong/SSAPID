@@ -6,7 +6,7 @@ import IdFindPage from "./pages/IdFindPage";
 import Register from "./pages/Register";
 import PasswordFindPage from "./pages/PasswordFindPage";
 import LoginPage from "./pages/LoginPage";
-import UserDistPage from "./pages/UserDistPage";
+import UserDistPage from "./components/UserDistForm";
 
 function App() {
   return (
