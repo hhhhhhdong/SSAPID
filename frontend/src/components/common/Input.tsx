@@ -21,7 +21,7 @@ function Input({
   name,
   type,
   buttonText,
-  width = 220,
+  width = 240,
 }: Props) {
   // const [inputValue, setInputValue] = useState<InputValue>(value);
   // const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
