@@ -12,12 +12,12 @@ interface Props {
   type?: React.HTMLInputTypeAttribute | undefined;
 }
 
-function Input({ value, onChange, placeHolder, name, type = "text" }: Props) {
-  const [inputValue, setInputValue] = useState<InputValue>(value);
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    onChange && onChange(e);
-  };
+function Input({ value, onChange, placeHolder, name, type }: Props) {
+  // const [inputValue, setInputValue] = useState<InputValue>(value);
+  // const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue(e.target.value);
+  //   onChange && onChange(e);
+  // };
   return (
     <div className={style.input} style={{ width: "200px" }}>
       <label htmlFor="email">
@@ -27,7 +27,7 @@ function Input({ value, onChange, placeHolder, name, type = "text" }: Props) {
           className={value ? style.inValueInput : ""}
           type={type}
           value={value}
-          onChange={changeHandler}
+          onChange={onChange}
         />
       </label>
       <div />

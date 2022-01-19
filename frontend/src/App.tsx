@@ -4,6 +4,8 @@ import Main from "./pages/Main";
 import Home from "./pages/Home";
 import IdFindPage from "./pages/IdFindPage";
 import Register from "./pages/Register";
+import PasswordFindPage from "./pages/PasswordFindPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
@@ -11,9 +13,11 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Main" element={<Main />} />
-          <Route path="/IdFind" element={<IdFindPage />} />
-          <Route path="/Register" element={<Register />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/main" element={<Main />} />
+          <Route path="/idFind" element={<IdFindPage />} />
+          <Route path="/passwordFind" element={<PasswordFindPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </div>
     </Router>
