@@ -23,7 +23,10 @@ function RegisterForm() {
   };
 
   const onClick = () => {
-    console.log(form);
+    // 비어있는 값이 있을 경우
+    if (Object.values(form).some((v) => v === "")) {
+      console.log("모든 값을 입력해 주세요");
+    }
   };
   return (
     <div className={style.wrapper}>
@@ -33,6 +36,7 @@ function RegisterForm() {
         value={form.userId}
         onChange={onChange}
         type="email"
+        buttonText="중복체크"
       />
       <Spacer size={inputSpace} />
       <Input
@@ -47,6 +51,7 @@ function RegisterForm() {
         placeHolder="nickname"
         value={form.userNickname}
         onChange={onChange}
+        buttonText="중복체크"
       />
       <Spacer size={inputSpace} />
       <Input
