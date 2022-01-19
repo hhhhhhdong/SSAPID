@@ -9,9 +9,10 @@ interface Props {
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
   placeHolder?: string;
   name?: string;
+  type?: React.HTMLInputTypeAttribute | undefined;
 }
 
-function Input({ value, onChange, placeHolder, name }: Props) {
+function Input({ value, onChange, placeHolder, name, type }: Props) {
   // const [inputValue, setInputValue] = useState<InputValue>(value);
   // const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
   //   setInputValue(e.target.value);
@@ -24,11 +25,12 @@ function Input({ value, onChange, placeHolder, name }: Props) {
         <input
           name={name}
           className={value ? style.inValueInput : ""}
-          type="text"
+          type={type}
           value={value}
           onChange={onChange}
         />
       </label>
+      <div />
     </div>
   );
 }
