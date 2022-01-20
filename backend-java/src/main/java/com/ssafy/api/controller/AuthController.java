@@ -37,8 +37,8 @@ public class AuthController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<UserLoginPostRes> login(@RequestBody @ApiParam(value = "로그인 요청 정보", required = true) UserLoginPostReq loginInfo) {
-        String userId = loginInfo.getId();
-        String password = loginInfo.getPassword();
+        String userId = loginInfo.getUserId();
+        String password = loginInfo.getUserPw();
         try {
             User user = userService.getUserByUserId(userId);
             // 패스워드 일치 여부 확인

@@ -20,9 +20,15 @@ public class UserRepositorySupport {
     public Optional<User> findUserByUserId(String userId) {
         User user = jpaQueryFactory.select(qUser).from(qUser)
                 .where(qUser.userId.eq(userId)).fetchOne();
-        if(user == null){
+        if (user == null) {
             return Optional.empty();
         }
         return Optional.ofNullable(user);
+    }
+
+    public Optional<String> findUserId(String userName, String userPhone) {
+        String userId = jpaQueryFactory.select(qUser.userId).from(qUser)
+                .where(qUser.userName.eq(userName).and(qUser.userPhone.eq(userPhone))).fetchOne();
+        return Optional.ofNullable(userId);
     }
 }

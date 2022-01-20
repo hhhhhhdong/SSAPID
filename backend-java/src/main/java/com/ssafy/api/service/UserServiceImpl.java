@@ -49,4 +49,11 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
+    @Override
+    public String getUserId(String userName, String userPhone) {
+        String userId = "";
+        if (userRepositorySupport.findUserId(userName, userPhone).isPresent())
+            userId = userRepositorySupport.findUserId(userName, userPhone).get();
+        return userId;
+    }
 }

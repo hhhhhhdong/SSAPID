@@ -10,4 +10,5 @@ public interface UserService {
 	User createUser(UserRegisterPostReq userRegisterInfo);
 	User getUserByUserId(String userId);
 	void deleteUser(User user);
+	String getUserId(String userName, String userPhone);
 }
