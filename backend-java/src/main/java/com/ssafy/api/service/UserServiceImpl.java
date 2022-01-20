@@ -55,7 +55,12 @@ public class UserServiceImpl implements UserService {
         return userRepositorySupport.findUserId(userName, userPhone).orElse("");
     }
 
-	@Override
+    @Override
+    public boolean checkNickname(String userNickname) {
+        return userRepository.existsByUserNickname(userNickname);
+    }
+
+    @Override
 	public User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId) {
 
 		User user = getUserByUserId(userId);
