@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/Loginform.module.scss";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { library } from "@fortawesome/fontawesome-svg-core";
+// import { fab } from "@fortawesome/free-brands-svg-icons";
+
+// library.add(fab);
 
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
@@ -19,10 +24,17 @@ function LoginForm({ onSubmit }: loginPageProps) {
       console.log(form);
     });
   };
-
+  const [isEmpty, setEmpty] = useState(false);
   const [form, setForm] = useState({
     userId: "",
     userPw: "",
+  });
+  useEffect(() => {
+    if (userId === "" || userPw === "") {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+    }
   });
 
   const { userId, userPw } = form;
@@ -67,10 +79,21 @@ function LoginForm({ onSubmit }: loginPageProps) {
           <a href="../register">회원가입</a>
         </h4>
         <br />
-        <Button buttonType="submit" text="로그인" handleClick={Submit} />
+        <Button
+          buttonType="submit"
+          Disabled={isEmpty}
+          text="로그인"
+          handleClick={Submit}
+        />
         <br />
         <h4>---------------또는----------------</h4>
         <br />
+
+        {/* <div>
+          <FontAwesomeIcon icon={["fab", "facebook"]} size="3x" />
+          <FontAwesomeIcon icon={["fab", "microsoft"]} size="3x" />
+          <FontAwesomeIcon icon={["fab", "google"]} size="3x" />
+        </div> */}
       </form>
     </div>
   );
