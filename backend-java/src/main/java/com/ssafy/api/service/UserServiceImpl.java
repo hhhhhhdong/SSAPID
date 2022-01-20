@@ -65,6 +65,15 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
+    public boolean checkNickname(String userNickname) {
+        return userRepository.existsByUserNickname(userNickname);
+    }
+
+    @Override
+    public boolean checkId(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
     @Override
 	public User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId) {
 
