@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.api.request.UserSetInfoPostReq;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
@@ -43,5 +44,18 @@ public class UserServiceImpl implements UserService {
 		return user;
 
 	}
+
+	@Override
+	public User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId) {
+
+		User user = getUserByUserId(userId);
+
+		user.setUserPw(passwordEncoder.encode(userSetInfoPostReq.getUserPw()));
+		user.setUserNickname(userSetInfoPostReq.getUserNickname());
+		user.setUserPhone(userSetInfoPostReq.getUserPhone());
+
+		return userRepository.save(user);
+	}
+
 
 }
