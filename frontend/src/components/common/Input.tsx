@@ -5,13 +5,15 @@ import style from "../../styles/Input.module.scss";
 
 type InputValue = string | number | readonly string[] | undefined;
 interface Props {
-  value?: InputValue;
-  onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
-  placeHolder?: string;
-  name?: string;
+  value: InputValue;
+  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  placeHolder: string;
+  name: string;
   type?: React.HTMLInputTypeAttribute | undefined;
   buttonText?: string;
   width?: number;
+  onClickInputButton?: (e: React.MouseEvent) => void;
+  errorMessage?: string;
 }
 
 function Input({
@@ -19,9 +21,11 @@ function Input({
   onChange,
   placeHolder,
   name,
-  type,
+  type = "text",
   buttonText,
   width = 240,
+  onClickInputButton,
+  errorMessage,
 }: Props) {
   // const [inputValue, setInputValue] = useState<InputValue>(value);
   // const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,18 +33,26 @@ function Input({
   //   onChange && onChange(e);
   // };
   return (
-    <div className={style.input} style={{ width: `${width}px` }}>
-      <label htmlFor="email">
-        <span className={value ? style.inValueSpan : ""}>{placeHolder}</span>
-        <input
-          name={name}
-          className={value ? style.inValueInput : ""}
-          type={type}
-          value={value}
-          onChange={onChange}
-        />
-      </label>
-      <div>{buttonText}</div>
+    <div>
+      <div className={style.input} style={{ width: `${width}px` }}>
+        <label htmlFor={name}>
+          <span className={value ? style.inValueSpan : ""}>{placeHolder}</span>
+          <input
+            name={name}
+            className={value ? style.inValueInput : ""}
+            type={type}
+            value={value}
+            onChange={onChange}
+          />
+        </label>
+
+        {buttonText && (
+          <button type="button" onClick={onClickInputButton}>
+            {buttonText}
+          </button>
+        )}
+      </div>
+      <p className={style.error}>{errorMessage}</p>
     </div>
   );
 }
