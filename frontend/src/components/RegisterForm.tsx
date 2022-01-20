@@ -107,9 +107,6 @@ function RegisterForm() {
 
     axios
       .post("/user/register", form)
-      .then((res: object) => {
-        console.log(res);
-      })
       .then(() => {
         navigate("/login");
       })
