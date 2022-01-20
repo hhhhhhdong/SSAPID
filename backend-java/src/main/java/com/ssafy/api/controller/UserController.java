@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserFindIdReq;
+import com.ssafy.api.request.UserFindPwReq;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.request.UserSetInfoPostReq;
 import com.ssafy.api.response.UserFindIdRes;
@@ -124,5 +125,20 @@ public class UserController {
             return ResponseEntity.status(404).body(UserFindIdRes.of(404, "정보가 일치하는 유저가 없습니다.", null));
         }
         return ResponseEntity.status(200).body(UserFindIdRes.of(200, "Success", userId));
+    }
+
+    @PostMapping("/find-pw")
+    @ApiOperation(value = "ID 찾기", notes = "회원의 <strong>아이디</strong>를 입력받아 이메일로 비밀번호를 전송한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> findPw(
+            @RequestBody @ApiParam(value = "회원 아이디", required = true) UserFindPwReq req) {
+        if (!userService.getUserPw(req.getUserId())) {
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "정보가 일치하는 유저가 없습니다."));
+        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 }

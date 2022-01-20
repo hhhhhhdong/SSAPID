@@ -31,4 +31,10 @@ public class UserRepositorySupport {
                 .where(qUser.userName.eq(userName).and(qUser.userPhone.eq(userPhone))).fetchOne();
         return Optional.ofNullable(userId);
     }
+
+    public User findUserPw(String userId) {
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.userId.eq(userId)).fetchFirst();
+        return user;
+    }
 }

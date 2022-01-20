@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
  */
@@ -55,7 +57,15 @@ public class UserServiceImpl implements UserService {
         return userRepositorySupport.findUserId(userName, userPhone).orElse("");
     }
 
-	@Override
+    @Override
+    public boolean getUserPw(String userId) {
+        if (Objects.isNull(userRepositorySupport.findUserPw(userId))) { // 일치하는 회원이 없는 경우
+            return false;
+        }
+        return true;
+    }
+
+    @Override
 	public User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId) {
 
 		User user = getUserByUserId(userId);
