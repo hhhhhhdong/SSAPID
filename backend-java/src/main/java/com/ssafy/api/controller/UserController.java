@@ -2,7 +2,11 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserFindIdReq;
 import com.ssafy.api.request.UserRegisterPostReq;
+<<<<<<<HEAD
 import com.ssafy.api.response.UserFindIdRes;
+=======
+import com.ssafy.api.request.UserSetInfoPostReq;
+>>>>>>>9481cac99fbdccbf3e37cc3b295c102c8723361d
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -36,6 +40,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
+
     public ResponseEntity<? extends BaseResponseBody> register(
             @Valid @RequestBody @ApiParam(value = "회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
 
@@ -64,6 +69,27 @@ public class UserController {
         return ResponseEntity.status(200).body(UserRes.of(user));
     }
 
+    @PostMapping("/setinfo")
+    @ApiOperation(value = "회원정보 수정", notes = "회원정보를 수정한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> setInfo(@ApiIgnore Authentication authentication,
+                                                              @Valid @RequestBody @ApiParam(value = "회원수정 정보", required = true) UserSetInfoPostReq userSetInfoPostReq) {
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
+        ResponseEntity.status(200).body(UserRes.of(user));
+
+
+        user = userService.setUser(userSetInfoPostReq, userId);
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+
+    }
 
     @DeleteMapping("/delete")
     @ApiOperation(value = "회원 탈퇴", notes = "로그인한 회원의 회원탈퇴를 진행한다.")

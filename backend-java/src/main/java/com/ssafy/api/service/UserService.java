@@ -1,6 +1,7 @@
 package com.ssafy.api.service;
 
 import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.api.request.UserSetInfoPostReq;
 import com.ssafy.db.entity.User;
 
 /**
@@ -9,6 +10,7 @@ import com.ssafy.db.entity.User;
 public interface UserService {
 	User createUser(UserRegisterPostReq userRegisterInfo);
 	User getUserByUserId(String userId);
+	User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId);
 	void deleteUser(User user);
 	String getUserId(String userName, String userPhone);
 }

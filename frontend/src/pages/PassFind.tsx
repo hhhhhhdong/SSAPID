@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import PasswordFindForm from "../components/PasswordFindForm";
-import style from "../styles/FindPage.module.scss";
+import PassFindForm from "../components/PassFindForm";
+import style from "../styles/globalPage.module.scss";
 
-function PasswordFindPage() {
+function PasswordFind() {
   const onSubmit = (form: { id: string }) => {
     // api 통신 로직
     if (form.id === "") {
@@ -12,9 +12,9 @@ function PasswordFindPage() {
   };
   return (
     <div className={style.page}>
-      <PasswordFindForm onSubmit={onSubmit} />
+      <PassFindForm onSubmit={onSubmit} />
     </div>
   );
 }
 
-export default PasswordFindPage;
+export default PasswordFind;
