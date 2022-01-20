@@ -2,11 +2,8 @@ package com.ssafy.api.controller;
 
 import com.ssafy.api.request.UserFindIdReq;
 import com.ssafy.api.request.UserRegisterPostReq;
-<<<<<<<HEAD
-import com.ssafy.api.response.UserFindIdRes;
-=======
 import com.ssafy.api.request.UserSetInfoPostReq;
->>>>>>>9481cac99fbdccbf3e37cc3b295c102c8723361d
+import com.ssafy.api.response.UserFindIdRes;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
