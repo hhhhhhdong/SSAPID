@@ -106,7 +106,7 @@ function RegisterForm() {
 
     axios
       .post("/user/register", form)
-      .then((res) => {
+      .then((res: object) => {
         console.log(res);
       })
       .catch((err) => {
