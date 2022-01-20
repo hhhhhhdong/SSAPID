@@ -175,6 +175,9 @@ function RegisterForm() {
       return;
     }
 
+    // 비밀번호 확인 다르면 리턴
+    if (form.userPw !== form.userPwCheck) return;
+
     axios
       .post("/user/register", form)
       .then(() => {
