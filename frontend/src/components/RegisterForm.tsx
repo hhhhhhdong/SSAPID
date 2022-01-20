@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import axios from "api/axios";
 import style from "styles/Register.module.scss";
+import { useNavigate } from "react-router-dom";
 import Input from "./common/Input";
 import Button from "./common/Button";
 import Spacer from "./common/Spacer";
@@ -9,7 +10,7 @@ const INPUT_MARGIN_BOTTOM = 2;
 function RegisterForm() {
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickname, setIsCheckedNickname] = useState(false);
-
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     userId: "",
     userPw: "",
