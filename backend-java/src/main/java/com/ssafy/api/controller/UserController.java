@@ -143,4 +143,23 @@ public class UserController {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         }
     }
+
+    @GetMapping("/check-id/{userId}")
+    @ApiOperation(value = "아이디 중복 확인", notes = "입력한 아이디에 대하여 중복 체크를 진행한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "실패"),
+            @ApiResponse(code = 404, message = "찾을 수 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> chekUserId(@PathVariable("userId") String userId ){
+        boolean exists = userService.checkId(userId);
+
+        if(exists){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "fail"));
+        }else {
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        }
+    }
+
 }
