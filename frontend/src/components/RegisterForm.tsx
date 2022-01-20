@@ -109,6 +109,9 @@ function RegisterForm() {
       .then((res: object) => {
         console.log(res);
       })
+      .then(() => {
+        navigate("/login");
+      })
       .catch((err) => {
         console.dir(err);
       });
