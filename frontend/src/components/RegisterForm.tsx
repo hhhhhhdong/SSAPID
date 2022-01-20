@@ -11,7 +11,6 @@ function RegisterForm() {
   const navigate = useNavigate();
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickname, setIsCheckedNickname] = useState(false);
-  const navigate = useNavigate();
   const [form, setForm] = useState({
     userId: "",
     userPw: "",
@@ -194,8 +193,9 @@ function RegisterForm() {
       <h2
         style={{
           width: "240px",
-          color: "rgba(var(--b3f, 60, 60, 60), 1)",
+          color: "#f1c40f",
           textAlign: "center",
+          fontSize: "33px",
         }}
       >
         Register

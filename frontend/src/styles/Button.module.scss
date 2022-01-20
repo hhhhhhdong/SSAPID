@@ -1,19 +1,21 @@
 .button {
+  width: 240px;
   position: relative;
   border: none;
   display: inline-block;
-  background-color: rgb(241, 241, 151);
+  // background-color: rgb(241, 241, 151);
+  background-color: #f1c40f;
   padding: 10px 20px;
   border-radius: 10px;
   font-family: "paybooc-Light", sans-serif;
   text-decoration: none;
   font-weight: 600;
   transition: 0.25s;
-  border: 0.5px solid rgb(247, 247, 170);
-  color: #1e6b7b;
+  // border: 0.5px solid rgb(247, 247, 170);
+  border: 0.5px solid #f1c40f;
+  color: #0a3d62;
   &:hover {
     letter-spacing: 2px;
-    color: black;
     transform: scale(1);
     cursor: pointer;
   }
