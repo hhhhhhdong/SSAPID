@@ -1,15 +1,16 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import axios from "api/axios";
-import style from "styles/Register.module.scss";
+import style from "styles/RegisterForm.module.scss";
+import { useNavigate } from "react-router-dom";
 import Input from "./common/Input";
 import Button from "./common/Button";
 import Spacer from "./common/Spacer";
 
 const INPUT_MARGIN_BOTTOM = 2;
 function RegisterForm() {
+  const navigate = useNavigate();
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickname, setIsCheckedNickname] = useState(false);
-
   const [form, setForm] = useState({
     userId: "",
     userPw: "",
@@ -27,6 +28,7 @@ function RegisterForm() {
     userName: "",
   });
 
+  // Form 데이터 onChange
   const onChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -40,6 +42,13 @@ function RegisterForm() {
         });
       }
       return;
+    }
+
+    // userId, userNickname 변경시 중복체크초기화
+    if (name === "userId") {
+      setIsCheckedEmail(false);
+    } else if (name === "userNickname") {
+      setIsCheckedNickname(false);
     }
 
     setForm({
@@ -97,46 +106,100 @@ function RegisterForm() {
     }
   }, [form.userId, form.userNickname]);
 
-  // 회원가입 버튼 클릭
-  const onClickSubmit = () => {
-    // 비어있는 값이 있을 경우
-    if (Object.values(form).some((v) => v === "")) {
-      console.log("모든 값을 입력해 주세요");
-    }
+  // 이메일 중복 체크
+  const onClickCheckEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // 값이 비어있거나 이미 체크했으면 리턴
+    if (!form.userId || isCheckedEmail) return;
 
     axios
-      .post("/user/register", form)
-      .then((res) => {
-        console.log(res);
+      .get(`/user/check-id/${form.userId}`)
+      .then(() => {
+        setIsCheckedEmail(true);
+        setErrorMessage({
+          ...errorMessage,
+          userId: "",
+        });
       })
-      .catch((err) => {
-        console.dir(err);
+      .catch(() => {
+        setErrorMessage({
+          ...errorMessage,
+          userId: "email aleady exist",
+        });
+      });
+  };
+  // 닉네임 중복체크
+  const onClickCheckNickname = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // 값이 비어있거나 이미 체크했으면 리턴
+    if (!form.userNickname || isCheckedNickname) return;
+
+    axios
+      .get(`/user/check-nick/${form.userNickname}`)
+      .then((res) => {
+        setIsCheckedNickname(true);
+        setErrorMessage({
+          ...errorMessage,
+          userNickname: "",
+        });
+      })
+      .catch(() => {
+        setErrorMessage({
+          ...errorMessage,
+          userNickname: "nickname aleady exist",
+        });
       });
   };
 
-  const onClickCheckEmail = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (!form.userId) return;
-    // axios email check
-    setErrorMessage({
-      ...errorMessage,
-      userId: "email aleady exist",
-    });
-    console.log("check email");
-  };
-  const onClickCheckNickname = (e: React.MouseEvent) => {
-    e.preventDefault();
-    // axios nickname check
-    setErrorMessage({
-      ...errorMessage,
-      userNickname: "nickname aleady exist",
-    });
-    console.log("check nickname");
+  // 회원가입 버튼 클릭
+  const onClickSubmit = () => {
+    // 비어있는 값이 있을 경우 리턴
+    if (Object.values(form).some((v) => v === "")) return;
+
+    // 아이디 중복체크 안되있으면 리턴
+    if (!isCheckedEmail) {
+      setErrorMessage({
+        ...errorMessage,
+        userId: "중복체크 해주시기 바랍니다.",
+      });
+      return;
+    }
+
+    // 닉네임 중복체크 안되있으면 리턴
+    if (!isCheckedNickname) {
+      setErrorMessage({
+        ...errorMessage,
+        userNickname: "중복체크 해주시기 바랍니다.",
+      });
+      return;
+    }
+
+    // 비밀번호 확인 다르면 리턴
+    if (form.userPw !== form.userPwCheck) return;
+
+    axios
+      .post("/user/register", form)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.dir(err);
+        alert("회원가입에 실패했습니다.");
+      });
   };
 
   return (
     <div className={style.wrapper}>
-      <h2 style={{ width: "240px" }}>Register</h2>
+      <h2
+        style={{
+          width: "240px",
+          color: "#f1c40f",
+          textAlign: "center",
+          fontSize: "33px",
+        }}
+      >
+        Register
+      </h2>
       <Input
         name="userId"
         placeHolder="email"
@@ -144,7 +207,7 @@ function RegisterForm() {
         errorMessage={errorMessage.userId}
         onChange={onChangeForm}
         type="email"
-        buttonText="중복체크"
+        buttonText={isCheckedEmail ? "✔" : "중복체크"}
         onClickInputButton={onClickCheckEmail}
       />
       <Spacer size={INPUT_MARGIN_BOTTOM} />
@@ -162,7 +225,7 @@ function RegisterForm() {
         value={form.userNickname}
         errorMessage={errorMessage.userNickname}
         onChange={onChangeForm}
-        buttonText="중복체크"
+        buttonText={isCheckedNickname ? "✔" : "중복체크"}
         onClickInputButton={onClickCheckNickname}
       />
       <Spacer size={INPUT_MARGIN_BOTTOM} />
