@@ -1,9 +1,9 @@
 import React from "react";
+import style from "../../styles/Button.module.scss";
 
 export interface buttonProps {
   buttonType?: "submit" | "button"; // or directly JSX.IntrinsicElements['button']['type']
   handleClick?: () => void;
-  url?: string;
   Disabled?: boolean;
   Loading?: boolean;
   text: string;
@@ -12,15 +12,14 @@ export interface buttonProps {
 
 function Button({ buttonType, text, handleClick, Disabled }: buttonProps) {
   return (
-    <div>
-      <button
-        type={buttonType === "submit" ? "submit" : "button"}
-        onClick={handleClick}
-        disabled={Disabled}
-      >
-        {text}
-      </button>
-    </div>
+    <button
+      type={buttonType === "submit" ? "submit" : "button"}
+      className={Disabled ? `${style.button} ${style.disable}` : style.button}
+      onClick={handleClick}
+      disabled={Disabled}
+    >
+      {text}
+    </button>
   );
 }
 

@@ -9,26 +9,38 @@ interface Props {
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
   placeHolder?: string;
   name?: string;
+  type?: React.HTMLInputTypeAttribute | undefined;
+  buttonText?: string;
+  width?: number;
 }
 
-function Input({ value, onChange, placeHolder, name }: Props) {
-  const [inputValue, setInputValue] = useState<InputValue>(value);
-  const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    onChange && onChange(e);
-  };
+function Input({
+  value,
+  onChange,
+  placeHolder,
+  name,
+  type,
+  buttonText,
+  width = 240,
+}: Props) {
+  // const [inputValue, setInputValue] = useState<InputValue>(value);
+  // const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue(e.target.value);
+  //   onChange && onChange(e);
+  // };
   return (
-    <div className={style.input} style={{ width: "200px" }}>
+    <div className={style.input} style={{ width: `${width}px` }}>
       <label htmlFor="email">
         <span className={value ? style.inValueSpan : ""}>{placeHolder}</span>
         <input
           name={name}
           className={value ? style.inValueInput : ""}
-          type="text"
+          type={type}
           value={value}
-          onChange={changeHandler}
+          onChange={onChange}
         />
       </label>
+      <div>{buttonText}</div>
     </div>
   );
 }

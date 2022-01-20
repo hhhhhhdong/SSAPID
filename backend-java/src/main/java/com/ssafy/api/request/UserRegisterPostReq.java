@@ -16,6 +16,8 @@ import javax.validation.constraints.NotEmpty;
 public class UserRegisterPostReq {
 	@ApiModelProperty(name="유저 ID", example="ssafy205") @NotEmpty
 	String userId;
+	@ApiModelProperty(name="유저 Name", example="김은준") @NotEmpty
+	String userName;
 	@ApiModelProperty(name="유저 Password", example="ssafy") @NotEmpty
 	String userPw;
 	@ApiModelProperty(name="유저 NickName", example="구미_4반_김은준") @NotEmpty

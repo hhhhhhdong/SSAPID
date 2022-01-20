@@ -18,7 +18,6 @@ function Main() {
         text="Home"
         handleClick={handle}
         Disabled={isLoading}
-        url={url}
       />
     </div>
   );
