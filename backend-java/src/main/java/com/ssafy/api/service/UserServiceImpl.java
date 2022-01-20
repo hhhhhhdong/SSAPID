@@ -52,10 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getUserId(String userName, String userPhone) {
-        String userId = "";
-        if (userRepositorySupport.findUserId(userName, userPhone).isPresent())
-            userId = userRepositorySupport.findUserId(userName, userPhone).get();
-        return userId;
+        return userRepositorySupport.findUserId(userName, userPhone).orElse("");
     }
 
 	@Override

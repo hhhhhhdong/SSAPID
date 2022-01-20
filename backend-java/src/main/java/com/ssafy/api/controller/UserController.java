@@ -117,11 +117,11 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<UserFindIdRes> findId(
-            @Valid @RequestBody @ApiParam(value = "회원 이름, 전화번호", required = true) UserFindIdReq req) {
+            @RequestBody @ApiParam(value = "회원 이름, 전화번호", required = true) UserFindIdReq req) {
 
         String userId = userService.getUserId(req.getUserName(), req.getUserPhone());
-        if (userId.equals("")) {
-            return ResponseEntity.status(404).body(UserFindIdRes.of(404, "해당하는 유저가 없습니다.", null));
+        if (userId.isEmpty()) {
+            return ResponseEntity.status(404).body(UserFindIdRes.of(404, "정보가 일치하는 유저가 없습니다.", null));
         }
         return ResponseEntity.status(200).body(UserFindIdRes.of(200, "Success", userId));
     }
