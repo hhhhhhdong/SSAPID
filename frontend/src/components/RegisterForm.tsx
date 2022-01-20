@@ -11,7 +11,7 @@ function RegisterForm() {
   const navigate = useNavigate();
   const [isCheckedEmail, setIsCheckedEmail] = useState(false);
   const [isCheckedNickname, setIsCheckedNickname] = useState(false);
-
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     userId: "",
     userPw: "",

@@ -3,7 +3,7 @@ import IdFindForm from "../components/IdFindForm";
 import style from "../styles/globalPage.module.scss";
 // 아이디 찾기 이름이랑 전화번호
 function IdFindPage() {
-  const onSubmit = (form: { name: string; phone: string }) => {
+  const onSubmit = (form: { userName: string; userPhone: string }) => {
     // api 통신 로직
     console.log(form);
   };

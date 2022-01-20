@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "api/axios";
 import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
 import Input from "./common/Input";
@@ -14,7 +14,7 @@ function LoginForm({ onSubmit }: loginPageProps) {
   const passwordPlaceHolder = "비밀번호를 입력하세요";
 
   const Submit = () => {
-    axios.post("http://localhost:8080/login", form).then((res) => {
+    axios.post("/login", form).then((res: object) => {
       console.log(res);
       console.log(form);
     });

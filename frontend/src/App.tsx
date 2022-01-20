@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Main from "./pages/Main";
-import Home from "./pages/Home";
+// import Main from "./pages/Main";
 import IdFind from "./pages/IdFind";
 import Register from "./pages/Register";
 import PassFind from "./pages/PassFind";
@@ -13,9 +12,8 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Main />} /> */}
           <Route path="/register" element={<Register />} />
-          <Route path="/main" element={<Main />} />
           <Route path="/idFind" element={<IdFind />} />
           <Route path="/passwordFind" element={<PassFind />} />
           <Route path="/login" element={<Login />} />
