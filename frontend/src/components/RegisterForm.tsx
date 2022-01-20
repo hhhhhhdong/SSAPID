@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import axios from "axios";
+import axios from "api/axios";
+import style from "styles/Register.module.scss";
 import Input from "./common/Input";
 import Button from "./common/Button";
-import style from "../styles/Register.module.scss";
 import Spacer from "./common/Spacer";
 
 const INPUT_MARGIN_BOTTOM = 2;
@@ -105,7 +105,7 @@ function RegisterForm() {
     }
 
     axios
-      .post("http://localhost:8080/user/register", form)
+      .post("/user/register", form)
       .then((res) => {
         console.log(res);
       })
