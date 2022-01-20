@@ -1,11 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import style from "../styles/UserDistPage.module.scss";
+import style from "../styles/globalForm.module.scss";
 import Input from "./common/Input";
 import Button from "./common/Button";
 
 function UserDistForm() {
+  // 회원탈퇴 Form
   // 라우팅 함수
   const navigate = useNavigate();
   // 로딩 중일 때 버튼의 동작을 막는 State

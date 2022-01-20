@@ -12,7 +12,7 @@ type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
 };
 
-function LoginPageForm({ onSubmit }: loginPageProps) {
+function LoginForm({ onSubmit }: loginPageProps) {
   const idPlaceHolder = "아이디를 입력하세요";
   const passwordPlaceHolder = "비밀번호를 입력하세요";
 
@@ -79,4 +79,4 @@ function LoginPageForm({ onSubmit }: loginPageProps) {
   );
 }
 
-export default LoginPageForm;
+export default LoginForm;
