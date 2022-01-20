@@ -5,9 +5,6 @@ import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/Loginform.module.scss";
 
-// onclick - 로그인버튼 클릭했을때 로그인 되었습니다. 라는 문구 나오게?//
-// true일때만 메인페이지로 보내는 방식 navigate사용해서 만들면 될듯?//
-
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
 };
@@ -67,7 +64,7 @@ function LoginForm({ onSubmit }: loginPageProps) {
         <h4>
           <a href="../idFind">아이디 찾기|</a>
           <a href="../passwordFind">비밀번호 찾기|</a>
-          <a href="../login">회원가입</a>
+          <a href="../register">회원가입</a>
         </h4>
         <br />
         <Button buttonType="submit" text="로그인" handleClick={Submit} />
