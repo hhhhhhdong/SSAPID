@@ -61,6 +61,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkId(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
+    @Override
 	public User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId) {
 
 		User user = getUserByUserId(userId);
