@@ -1,0 +1,23 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: gray;
+  li {
+    display: inline-block;
+    color: #f1c40f;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    a {
+      display: flex;
+      text-decoration: none;
+      color: black;
+      text-align: right;
+    }
+  }
+
+}
