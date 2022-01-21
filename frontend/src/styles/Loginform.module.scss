@@ -1,7 +1,21 @@
 .wrapper {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 70vh;
+  min-height: 110vh;
+  a {
+    text-decoration-line: none;
+    color: black;
+  }
+  Input {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.img {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin: 10px;
 }
