@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
 import axios from "api/axios";
-import { useNavigate } from "react-router-dom";
+import FormHeader from "./layout/FormHeader";
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/Loginform.module.scss";
-
-library.add(fab);
 
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
@@ -40,7 +35,6 @@ function LoginForm({ onSubmit }: loginPageProps) {
   const { userId, userPw } = form;
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    console.log(name, value);
     setForm({
       ...form,
       [name]: value,
@@ -58,6 +52,7 @@ function LoginForm({ onSubmit }: loginPageProps) {
 
   return (
     <div className={style.wrapper}>
+      <FormHeader text="Login" />
       <form onSubmit={handleSubmit}>
         <Input
           name="userId"
@@ -65,7 +60,6 @@ function LoginForm({ onSubmit }: loginPageProps) {
           onChange={onChange}
           placeHolder={idPlaceHolder}
         />
-        <br />
         <Input
           name="userPw"
           value={userPw}
@@ -73,26 +67,22 @@ function LoginForm({ onSubmit }: loginPageProps) {
           placeHolder={passwordPlaceHolder}
         />
         <h4>
-          <a href="../idFind">아이디 찾기|</a>
-          <a href="../passwordFind">비밀번호 찾기|</a>
+          <a href="../idFind">아이디 찾기 | </a>
+          <a href="../passFind">비밀번호 찾기 | </a>
           <a href="../register">회원가입</a>
         </h4>
-        <br />
         <Button
           buttonType="submit"
-          Disabled={isEmpty}
+          // Disabled={isEmpty}
           text="로그인"
           handleClick={Submit}
         />
-        <br />
-        <hr />
-        <br />
 
-        <div className={style.img}>
+        {/* <div className={style.img}>
           <img src="/img/googlelogo.png" alt="google" />
           <img src="/img/kakaoroundlogo.png" alt="kakao" />
           <img src="/img/facebooklogo.png" alt="kakao" />
-        </div>
+        </div> */}
       </form>
     </div>
   );

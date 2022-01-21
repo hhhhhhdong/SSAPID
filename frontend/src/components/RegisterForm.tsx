@@ -30,12 +30,29 @@ function RegisterForm() {
 
   // Form 데이터 onChange
   const onChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
+    const userPhoneRegex = /^[0-9]+$/;
+    const userNameRegex = /[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi;
+    const blankPattern = /[\s]/g;
+
     const { name, value } = e.target;
 
-    // 전화번호 숫자만 입력받기
+    // 빈 칸 체크
+    if (blankPattern.test(value)) return;
+
+    // 전화번호 입력 유효성 체크
     if (name === "userPhone") {
-      const regex = /^[0-9\b -]{0,13}$/;
-      if (regex.test(e.target.value)) {
+      if (userPhoneRegex.test(value) || value === "") {
+        setForm({
+          ...form,
+          [name]: value,
+        });
+      }
+      return;
+    }
+
+    // 이름 입력 유효성 체크
+    if (name === "userName") {
+      if (!userNameRegex.test(value)) {
         setForm({
           ...form,
           [name]: value,
@@ -47,8 +64,16 @@ function RegisterForm() {
     // userId, userNickname 변경시 중복체크초기화
     if (name === "userId") {
       setIsCheckedEmail(false);
+      setErrorMessage({
+        ...errorMessage,
+        userId: "",
+      });
     } else if (name === "userNickname") {
       setIsCheckedNickname(false);
+      setErrorMessage({
+        ...errorMessage,
+        userNickname: "",
+      });
     }
 
     setForm({
@@ -56,24 +81,6 @@ function RegisterForm() {
       [name]: value,
     });
   };
-
-  // 휴대폰 번호 형식 설정
-  useEffect(() => {
-    if (form.userPhone.length === 10) {
-      setForm({
-        ...form,
-        userPhone: form.userPhone.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3"),
-      });
-    }
-    if (form.userPhone.length === 13) {
-      setForm({
-        ...form,
-        userPhone: form.userPhone
-          .replace(/-/g, "")
-          .replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3"),
-      });
-    }
-  }, [form.userPhone]);
 
   // 비밀번호 확인
   useEffect(() => {
