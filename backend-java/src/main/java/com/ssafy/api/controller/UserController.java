@@ -1,9 +1,6 @@
 package com.ssafy.api.controller;
 
-import com.ssafy.api.request.UserFindIdReq;
-import com.ssafy.api.request.UserFindPwReq;
-import com.ssafy.api.request.UserRegisterPostReq;
-import com.ssafy.api.request.UserSetInfoPostReq;
+import com.ssafy.api.request.*;
 import com.ssafy.api.response.UserFindIdRes;
 import com.ssafy.api.response.UserFindPwRes;
 import com.ssafy.api.response.UserRes;
@@ -142,6 +139,18 @@ public class UserController {
             return ResponseEntity.status(404).body(UserFindPwRes.of(404, "정보가 일치하는 유저가 없습니다.", null));
         }
         return ResponseEntity.status(200).body(UserFindPwRes.of(200, "Success", authCode));
+    }
+
+    @PutMapping("/change-pw")
+    @ApiOperation(value = "비밀번호 재설정", notes = "비밀번호를 입력받은 값으로 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> changePw(
+            @RequestBody @ApiParam(value = "회원 아이디와 비밀번호", required = true) UserChangePwReq req) {
+        userService.changeUserPw(req);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
     @GetMapping("/check-nick/{userNickname}")

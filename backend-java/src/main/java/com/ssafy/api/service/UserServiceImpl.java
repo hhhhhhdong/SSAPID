@@ -1,5 +1,6 @@
 package com.ssafy.api.service;
 
+import com.ssafy.api.request.UserChangePwReq;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.request.UserSetInfoPostReq;
 import com.ssafy.db.entity.User;
@@ -85,6 +86,11 @@ public class UserServiceImpl implements UserService {
         message.setText("인증 번호 : " + key);
         javaMailSender.send(message);
         return key;
+    }
+
+    @Override
+    public void changeUserPw(UserChangePwReq userChangePwReq) {
+        userRepositorySupport.changeUserPw(userChangePwReq.getUserId(), passwordEncoder.encode(userChangePwReq.getUserPw()));
     }
 
     public boolean checkNickname(String userNickname) {

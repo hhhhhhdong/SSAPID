@@ -5,6 +5,7 @@ import com.ssafy.db.entity.QUser;
 import com.ssafy.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -36,5 +37,11 @@ public class UserRepositorySupport {
         User user = jpaQueryFactory.select(qUser).from(qUser)
                 .where(qUser.userId.eq(userId)).fetchFirst();
         return user;
+    }
+
+    @Transactional
+    public long changeUserPw(String userId, String userPw) {
+        return jpaQueryFactory.update(qUser).where(qUser.userId.eq(userId))
+                .set(qUser.userPw, userPw).execute();
     }
 }
