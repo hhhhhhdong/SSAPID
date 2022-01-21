@@ -13,7 +13,7 @@ public interface UserService {
 	User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId);
 	void deleteUser(User user);
 	String getUserId(String userName, String userPhone);
-	boolean getUserPw(String userId);
+	String getUserPw(String userId);
 	boolean checkNickname(String userNickname);
 	boolean checkId(String userId);
 }

@@ -5,6 +5,7 @@ import com.ssafy.api.request.UserFindPwReq;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.request.UserSetInfoPostReq;
 import com.ssafy.api.response.UserFindIdRes;
+import com.ssafy.api.response.UserFindPwRes;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -128,18 +129,19 @@ public class UserController {
     }
 
     @PostMapping("/find-pw")
-    @ApiOperation(value = "ID 찾기", notes = "회원의 <strong>아이디</strong>를 입력받아 이메일로 비밀번호를 전송한다.")
+    @ApiOperation(value = "ID 찾기", notes = "회원의 <strong>아이디(이메일)</strong>를 입력받아 비밀번호를 전송한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> findPw(
+    public ResponseEntity<UserFindPwRes> findPw(
             @RequestBody @ApiParam(value = "회원 아이디", required = true) UserFindPwReq req) {
-        if (!userService.getUserPw(req.getUserId())) {
-            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "정보가 일치하는 유저가 없습니다."));
+        String authCode = userService.getUserPw(req.getUserId());
+        if (authCode.isEmpty()) {
+            return ResponseEntity.status(404).body(UserFindPwRes.of(404, "정보가 일치하는 유저가 없습니다.", null));
         }
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        return ResponseEntity.status(200).body(UserFindPwRes.of(200, "Success", authCode));
     }
 
     @GetMapping("/check-nick/{userNickname}")
@@ -150,12 +152,12 @@ public class UserController {
             @ApiResponse(code = 404, message = "찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> chekNickname(@PathVariable("userNickname") String userNickname ){
+    public ResponseEntity<? extends BaseResponseBody> chekNickname(@PathVariable("userNickname") String userNickname) {
         boolean exists = userService.checkNickname(userNickname);
 
-        if(exists){
+        if (exists) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "fail"));
-        }else {
+        } else {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         }
     }
@@ -168,12 +170,12 @@ public class UserController {
             @ApiResponse(code = 404, message = "찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> chekUserId(@PathVariable("userId") String userId ){
+    public ResponseEntity<? extends BaseResponseBody> chekUserId(@PathVariable("userId") String userId) {
         boolean exists = userService.checkId(userId);
 
-        if(exists){
+        if (exists) {
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "fail"));
-        }else {
+        } else {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         }
     }

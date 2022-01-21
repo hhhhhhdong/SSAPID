@@ -12,6 +12,6 @@ import lombok.Setter;
 @Setter
 @ApiModel("UserFindPwRequest")
 public class UserFindPwReq {
-    @ApiModelProperty(name = "유저 ID", example = "ssafy")
+    @ApiModelProperty(name = "유저 ID", example = "ssafy@ssafy.com")
     String userId;
 }

@@ -6,10 +6,13 @@ import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JavaMailSender javaMailSender;
 
     @Override
     public User createUser(UserRegisterPostReq userRegisterInfo) {
@@ -58,11 +64,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean getUserPw(String userId) {
+    public String getUserPw(String userId) {
         if (Objects.isNull(userRepositorySupport.findUserPw(userId))) { // 일치하는 회원이 없는 경우
-            return false;
+            return "";
         }
-        return true;
+        // 난수 생성, 이메일 전송
+        Random random = new Random();
+        String key = "";
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(userId);
+
+        for (int i = 0; i < 3; i++) {
+            int index = random.nextInt(25) + 65;
+            key += (char) index;
+        }
+        int numIndex = random.nextInt(8999) + 1000;
+        key += numIndex;
+        message.setSubject("인증번호 입력을 위한 메일 전송입니다.");
+        message.setText("인증 번호 : " + key);
+        javaMailSender.send(message);
+        return key;
     }
 
     public boolean checkNickname(String userNickname) {
@@ -75,14 +97,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-	public User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId) {
+    public User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId) {
 
-		User user = getUserByUserId(userId);
+        User user = getUserByUserId(userId);
 
-		user.setUserPw(passwordEncoder.encode(userSetInfoPostReq.getUserPw()));
-		user.setUserNickname(userSetInfoPostReq.getUserNickname());
-		user.setUserPhone(userSetInfoPostReq.getUserPhone());
+        user.setUserPw(passwordEncoder.encode(userSetInfoPostReq.getUserPw()));
+        user.setUserNickname(userSetInfoPostReq.getUserNickname());
+        user.setUserPhone(userSetInfoPostReq.getUserPhone());
 
-		return userRepository.save(user);
-	}
+        return userRepository.save(user);
+    }
 }
