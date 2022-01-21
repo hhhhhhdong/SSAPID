@@ -16,6 +16,7 @@ function FormHeader({ text, width = 240 }: Props) {
     <div className={style.header} style={{ width: `${width}px` }}>
       <button type="button" onClick={onClickBack}>
         <i className="fas fa-angle-left" />
+        {/* <i class="fas fa-arrow-circle-left"></i> */}
       </button>
       <p>{text}</p>
     </div>
