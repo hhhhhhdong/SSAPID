@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
 import axios from "api/axios";
 import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/Loginform.module.scss";
-
-library.add(fab);
 
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;

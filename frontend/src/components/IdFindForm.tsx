@@ -23,18 +23,23 @@ function IdFindForm({ onSubmit }: idFindProps) {
   const { userName, userPhone } = form;
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const numCheck = /^[0-9]+$/;
+    const numCheck = /^[0-9]*$/;
+    const blankPattern = /[\s]/g;
     const textCheck = /[^(가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z)]/gi;
-    if (name === "userPhone" && (numCheck.test(value) || value === "")) {
-      setForm({
-        ...form,
-        [name]: value,
-      });
+    if (name === "userPhone" && numCheck.test(value)) {
+      if (!blankPattern.test(value)) {
+        setForm({
+          ...form,
+          [name]: value,
+        });
+      }
     } else if (name === "userName" && !textCheck.test(value)) {
-      setForm({
-        ...form,
-        [name]: value,
-      });
+      if (!blankPattern.test(value)) {
+        setForm({
+          ...form,
+          [name]: value,
+        });
+      }
     }
   };
 
