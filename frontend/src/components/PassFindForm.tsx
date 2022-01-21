@@ -3,10 +3,30 @@ import axios from "axios";
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/globalForm.module.scss";
+import SelectBox from "./common/SelectBox";
 
 type PasswordFindProps = {
   onSubmit: (form: { userId: string }) => void;
 };
+
+const OPTIONS = [
+  {
+    value: "select",
+    name: "선택",
+  },
+  {
+    value: "naver",
+    name: "naver.com",
+  },
+  {
+    value: "google",
+    name: "gmail.com",
+  },
+  {
+    value: "yahoo",
+    name: "yahoo.co.kr",
+  },
+];
 
 function PassFindForm({ onSubmit }: PasswordFindProps) {
   const submitButtonType = "submit";
@@ -20,9 +40,10 @@ function PassFindForm({ onSubmit }: PasswordFindProps) {
   const { userId } = form;
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-    if (korean.test(value)) {
-      alert("한글은 입력하실 수 없습니다.");
+    const blankPattern = /[\s]/g;
+    const id = /[^a-z|A-Z|0-9|ㄱ-ㅎ|가-힣]/g;
+    if (id.test(value) || blankPattern.test(value)) {
+      alert("유효하지않는 정보입니다.");
       setForm({
         ...form,
       });
@@ -62,12 +83,18 @@ function PassFindForm({ onSubmit }: PasswordFindProps) {
   };
   return (
     <form className={style.form} onSubmit={handleSubmit}>
-      <Input
-        name="userId"
-        value={userId}
-        onChange={onChange}
-        placeHolder={idPlaceHolder}
-      />
+      <div className={style.inform}>
+        <Input
+          name="userId"
+          value={userId}
+          onChange={onChange}
+          placeHolder={idPlaceHolder}
+          width={150}
+        />
+        <span>@</span>
+        <SelectBox options={OPTIONS} />
+      </div>
+
       <Button
         buttonType={submitButtonType}
         handleClick={submit}
