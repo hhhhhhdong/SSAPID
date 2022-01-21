@@ -1,10 +1,10 @@
 /* eslint-disable react/require-default-props */
 import React from "react";
 
-interface Props {
+type Props = {
   size: number;
   axis?: "x" | "y";
-}
+};
 
 function Spacer({ size, axis }: Props) {
   const width = axis === "y" ? 1 : size;

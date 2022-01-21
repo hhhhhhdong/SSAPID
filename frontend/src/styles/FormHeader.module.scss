@@ -1,0 +1,34 @@
+.header {
+  position: relative;
+  button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+    position: absolute;
+    top: 2px;
+    left: -4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: transform ease-out 0.3s;
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0.6;
+    i {
+      font-size: 28px;
+      color: #f1c40f;
+    }
+    &:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+  p {
+    color: #f1c40f;
+    text-align: center;
+    font-size: 33px;
+    font-weight: 500;
+    margin: 23px;
+  }
+}

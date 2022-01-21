@@ -1,15 +1,16 @@
 .wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 110vh;
+  h4 {
+    margin-top: 0px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
   a {
+    font-size: 12px;
     text-decoration-line: none;
     color: black;
-  }
-  Input {
-    margin: 0;
-    padding: 0;
+    &:hover {
+      color: #0a3d62;
+    }
   }
 }
 

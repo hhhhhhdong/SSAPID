@@ -1,20 +1,20 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable react/require-default-props */
-import React, { useState, ChangeEvent } from "react";
-import style from "../../styles/Input.module.scss";
+import React from "react";
+import style from "styles/Input.module.scss";
 
 type InputValue = string | number | readonly string[] | undefined;
-interface Props {
+
+type Props = {
   value: InputValue;
   onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
   placeHolder: string;
   name: string;
   type?: React.HTMLInputTypeAttribute | undefined;
-  buttonText?: string;
   width?: number;
+  buttonText?: string;
   onClickInputButton?: (e: React.MouseEvent) => void;
   errorMessage?: string;
-}
+};
 
 function Input({
   value,
@@ -27,11 +27,6 @@ function Input({
   onClickInputButton,
   errorMessage,
 }: Props) {
-  // const [inputValue, setInputValue] = useState<InputValue>(value);
-  // const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setInputValue(e.target.value);
-  //   onChange && onChange(e);
-  // };
   return (
     <div>
       <div className={style.input} style={{ width: `${width}px` }}>
@@ -45,7 +40,6 @@ function Input({
             onChange={onChange}
           />
         </label>
-
         {buttonText && (
           <button type="button" onClick={onClickInputButton}>
             {buttonText}

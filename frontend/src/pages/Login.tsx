@@ -1,4 +1,5 @@
 import React from "react";
+import VideoBackground from "components/layout/VideoBackground";
 import LoginPageForm from "../components/LoginForm";
 
 function Login() {
@@ -8,7 +9,9 @@ function Login() {
   };
   return (
     <div>
-      <LoginPageForm onSubmit={onSubmit} />
+      <VideoBackground>
+        <LoginPageForm onSubmit={onSubmit} />
+      </VideoBackground>
     </div>
   );
 }
