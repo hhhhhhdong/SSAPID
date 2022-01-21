@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
 import axios from "api/axios";
 import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/Loginform.module.scss";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { library } from "@fortawesome/fontawesome-svg-core";
-// import { fab } from "@fortawesome/free-brands-svg-icons";
 
-// library.add(fab);
+library.add(fab);
 
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
@@ -58,7 +58,6 @@ function LoginForm({ onSubmit }: loginPageProps) {
 
   return (
     <div className={style.wrapper}>
-      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <Input
           name="userId"
@@ -86,14 +85,14 @@ function LoginForm({ onSubmit }: loginPageProps) {
           handleClick={Submit}
         />
         <br />
-        <h4>---------------또는----------------</h4>
+        <hr />
         <br />
 
-        {/* <div>
-          <FontAwesomeIcon icon={["fab", "facebook"]} size="3x" />
-          <FontAwesomeIcon icon={["fab", "microsoft"]} size="3x" />
-          <FontAwesomeIcon icon={["fab", "google"]} size="3x" />
-        </div> */}
+        <div className={style.img}>
+          <img src="/img/googlelogo.png" alt="google" />
+          <img src="/img/kakaoroundlogo.png" alt="kakao" />
+          <img src="/img/facebooklogo.png" alt="kakao" />
+        </div>
       </form>
     </div>
   );

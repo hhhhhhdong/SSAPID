@@ -1,7 +1,7 @@
 import React from "react";
 
-const header = () => {
-  return <div>d</div>;
-};
+function Header() {
+  return <div />;
+}
 
-export default header;
+export default Header;
