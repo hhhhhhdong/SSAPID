@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "./common/Input";
 import Button from "./common/Button";
 import Spacer from "./common/Spacer";
+import FormHeader from "./common/FormHeader";
 
 const INPUT_MARGIN_BOTTOM = 2;
 function RegisterForm() {
@@ -190,16 +191,7 @@ function RegisterForm() {
 
   return (
     <div className={style.wrapper}>
-      <h2
-        style={{
-          width: "240px",
-          color: "#f1c40f",
-          textAlign: "center",
-          fontSize: "33px",
-        }}
-      >
-        Register
-      </h2>
+      <FormHeader text="Register" />
       <Input
         name="userId"
         placeHolder="email"

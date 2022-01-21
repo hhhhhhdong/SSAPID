@@ -1,10 +1,9 @@
-/* eslint-disable no-unused-expressions */
 /* eslint-disable react/require-default-props */
-import React, { useState, ChangeEvent } from "react";
+import React from "react";
 import style from "../../styles/Input.module.scss";
 
 type InputValue = string | number | readonly string[] | undefined;
-interface Props {
+type Props = {
   value: InputValue;
   onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
   placeHolder: string;
@@ -14,7 +13,7 @@ interface Props {
   width?: number;
   onClickInputButton?: (e: React.MouseEvent) => void;
   errorMessage?: string;
-}
+};
 
 function Input({
   value,
