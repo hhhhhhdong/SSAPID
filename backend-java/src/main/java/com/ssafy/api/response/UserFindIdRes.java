@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * 유저 아이디 찾기 API ([POST] /login) 요청에 대한 응답값 정의.
+ * 유저 아이디 찾기 API ([POST] /user/find-id) 요청에 대한 응답값 정의.
  */
 @Getter
 @Setter
