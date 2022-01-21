@@ -3,9 +3,9 @@ import PassFindForm from "../components/PassFindForm";
 import style from "../styles/globalPage.module.scss";
 
 function PasswordFind() {
-  const onSubmit = (form: { id: string }) => {
+  const onSubmit = (form: { userId: string }) => {
     // api 통신 로직
-    if (form.id === "") {
+    if (form.userId === "") {
       alert("이메일을 입력해주세요");
     }
     console.log(form);
