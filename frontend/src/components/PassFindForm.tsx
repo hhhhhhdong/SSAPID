@@ -42,8 +42,8 @@ function PassFindForm({ onSubmit }: PasswordFindProps) {
     const { name, value } = e.target;
     const blankPattern = /[\s]/g;
     const id = /[^a-z|A-Z|0-9|ㄱ-ㅎ|가-힣]/g;
-    if (id.test(value) || blankPattern.test(value)) {
-      alert("유효하지않는 정보입니다.");
+    if (id.test(value) || blankPattern.test(value) || value.length > 15) {
+      alert("유효하지 않는 정보입니다.");
       setForm({
         ...form,
       });

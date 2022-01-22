@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "api/axios";
+import FacebookSignin from "service/FaceBookSingin";
+import GithubSignin from "service/GithubSignin";
 import FormHeader from "./layout/FormHeader";
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/Loginform.module.scss";
+import GoogleSignin from "../service/GoogleSingin";
 
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
@@ -77,7 +80,9 @@ function LoginForm({ onSubmit }: loginPageProps) {
           text="로그인"
           handleClick={Submit}
         />
-
+        <GoogleSignin />
+        <FacebookSignin />
+        <GithubSignin />
         {/* <div className={style.img}>
           <img src="/img/googlelogo.png" alt="google" />
           <img src="/img/kakaoroundlogo.png" alt="kakao" />
