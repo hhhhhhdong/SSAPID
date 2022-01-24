@@ -2,7 +2,6 @@ import React from "react";
 import VideoBackground from "components/layout/VideoBackground";
 import FormHeader from "components/layout/FormHeader";
 import IdFindForm from "../components/IdFindForm";
-import style from "../styles/globalPage.module.scss";
 // 아이디 찾기 이름이랑 전화번호
 function IdFindPage() {
   const onSubmit = (form: { userName: string; userPhone: string }) => {
@@ -12,7 +11,7 @@ function IdFindPage() {
 
   return (
     <VideoBackground>
-      <div className={style.page}>
+      <div>
         <FormHeader text="Find ID" />
         <IdFindForm onSubmit={onSubmit} />
       </div>
