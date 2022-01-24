@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.filter {
+  margin: 200px 0;
+}
+.checkbox {
+  font-size: 14px;
+  label {
+    padding-right: 7px;
+    padding-left: 19px;
+    position: relative;
+  }
+  input {
+    position: absolute;
+    top: 2px;
+    left: 0;
+  }
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
