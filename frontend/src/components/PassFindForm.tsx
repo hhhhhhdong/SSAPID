@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, Children } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/globalForm.module.scss";
 import SelectBox from "./common/SelectBox";
-
-type PasswordFindProps = {
-  onSubmit: (form: { userId: string }) => void;
-};
+import authString from "../redux/actions";
+import store from "../redux/store.js";
 
 const OPTIONS = [
   {
@@ -15,25 +14,25 @@ const OPTIONS = [
     name: "선택",
   },
   {
-    value: "naver",
+    value: "naver.com",
     name: "naver.com",
   },
   {
-    value: "google",
+    value: "gmail.com",
     name: "gmail.com",
   },
   {
-    value: "yahoo",
+    value: "yahoo.co.kr",
     name: "yahoo.co.kr",
   },
 ];
 
-function PassFindForm({ onSubmit }: PasswordFindProps) {
+function PassFindForm() {
   const submitButtonType = "submit";
   const idPlaceHolder = "이메일을 입력하세요.";
-
+  const navigate = useNavigate();
   const [isEmpty, setEmpty] = useState(true);
-
+  const [isSelect, setSelect] = useState("");
   const [form, setForm] = useState({
     userId: "",
   });
@@ -41,7 +40,7 @@ function PassFindForm({ onSubmit }: PasswordFindProps) {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const blankPattern = /[\s]/g;
-    const id = /[^a-z|A-Z|0-9|ㄱ-ㅎ|가-힣]/g;
+    const id = /[^a-z|0-9]/g;
     if (id.test(value) || blankPattern.test(value) || value.length > 15) {
       alert("유효하지 않는 정보입니다.");
       setForm({
@@ -56,27 +55,33 @@ function PassFindForm({ onSubmit }: PasswordFindProps) {
   };
 
   useEffect(() => {
-    if (userId === "") {
+    if (userId === "" || isSelect === "") {
       setEmpty(true);
     } else {
       setEmpty(false);
     }
   });
   const submit = () => {
-    axios.post("/user/find-pw", form).then((res) => {
-      console.log(res.status);
-      if (true) {
-        // 인증번호를 보내드렸습니다. 이메일로
-        // 인증번호를 입력하세요.
-        // 확인되면 비밀번호 변경 페이지
-        // 인증번호 입력
-      }
-    });
+    axios
+      .post("/user/find-pw", { userId: form.userId.concat("@", isSelect) })
+      .then((res) => {
+        // 액션을 날려줘야함
+        // console.log(res.data.authCode);
+        store.dispatch({ type: authString, text: res.data.authCode });
+        navigate("/authNum");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("잘못된 이메일입니다.");
+      });
+  };
+  const handleOption = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelect(e.target.value);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(form);
+
     setForm({
       userId: "",
     });
@@ -92,7 +97,7 @@ function PassFindForm({ onSubmit }: PasswordFindProps) {
           width={150}
         />
         <span>@</span>
-        <SelectBox options={OPTIONS} />
+        <SelectBox handleClick={handleOption} options={OPTIONS} />
       </div>
 
       <Button

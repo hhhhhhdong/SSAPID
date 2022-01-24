@@ -83,10 +83,12 @@ function LoginForm({ onSubmit }: loginPageProps) {
         <GoogleSignin />
         <FacebookSignin />
         <GithubSignin /> */}
+
         <div className={style.img}>
           <i className="fab fa-google" />
           <i className="fab fa-github" />
           <i className="fab fa-facebook" />
+
         </div>
       </form>
     </div>
