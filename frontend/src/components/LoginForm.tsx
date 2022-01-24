@@ -74,20 +74,25 @@ function LoginForm({ onSubmit }: loginPageProps) {
           <a href="../passFind">비밀번호 찾기 | </a>
           <a href="../register">회원가입</a>
         </h4>
-        <Button
-          buttonType="submit"
-          // Disabled={isEmpty}
-          text="로그인"
-          handleClick={Submit}
-        />
-        <GoogleSignin />
-        <FacebookSignin />
-        <GithubSignin />
         {/* <div className={style.img}>
           <img src="/img/googlelogo.png" alt="google" />
           <img src="/img/kakaoroundlogo.png" alt="kakao" />
           <img src="/img/facebooklogo.png" alt="kakao" />
         </div> */}
+        <div className={style.img}>
+          <i className="fab fa-google" />
+          <i className="fab fa-github" />
+          <i className="fab fa-facebook" />
+          <Button
+            buttonType="submit"
+            // Disabled={isEmpty}
+            text="로그인"
+            handleClick={Submit}
+          />
+          <GoogleSignin />
+          <FacebookSignin />
+          <GithubSignin />
+        </div>
       </form>
     </div>
   );
