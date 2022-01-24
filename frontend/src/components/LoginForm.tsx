@@ -5,8 +5,8 @@ import GithubSignin from "service/GithubSignin";
 import FormHeader from "./layout/FormHeader";
 import Button from "./common/Button";
 import Input from "./common/Input";
-import style from "../styles/Loginform.module.scss";
 import GoogleSignin from "../service/GoogleSingin";
+import style from "../styles/Loginform.module.scss";
 
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
@@ -83,12 +83,10 @@ function LoginForm({ onSubmit }: loginPageProps) {
         <GoogleSignin />
         <FacebookSignin />
         <GithubSignin /> */}
-
         <div className={style.img}>
-          <i className="fab fa-google" />
-          <i className="fab fa-github" />
-          <i className="fab fa-facebook" />
-
+          <GithubSignin />
+          <GoogleSignin />
+          <FacebookSignin />
         </div>
       </form>
     </div>

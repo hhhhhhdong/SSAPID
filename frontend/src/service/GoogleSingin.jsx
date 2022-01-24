@@ -7,13 +7,14 @@ function GoogleSignin() {
   const navigate = useNavigate();
   const onGoogleClick = async (event) => {
     const data = await authService.signInWithPopup(googleProvider);
+    const user = authService.currentUser;
+    console.log(user.displayName, user.email);
+
     navigate("/");
   };
 
   return (
-    <div>
-      <Button handleClick={onGoogleClick} text="구글" />;
-    </div>
+    <i className="fab fa-google" onClick={onGoogleClick} aria-hidden="true" />
   );
 }
 export default GoogleSignin;

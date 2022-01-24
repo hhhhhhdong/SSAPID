@@ -1,19 +1,22 @@
 import React from "react";
-import Button from "components/common/Button";
 import { useNavigate } from "react-router-dom";
-import { authService, googleProvider } from "./fbase";
+import { authService, facebookProvider } from "./fbase";
 
 function FacebookSignin() {
   const navigate = useNavigate();
-  const onGoogleClick = async (event) => {
-    const data = await authService.signInWithPopup(googleProvider);
+  const onFacebookClick = async (event) => {
+    const data = await authService.signInWithPopup(facebookProvider);
+    const user = authService.currentUser;
+    console.log(user.email, user.displayName);
     navigate("/");
   };
 
   return (
-    <div>
-      <Button handleClick={onGoogleClick} text="페이스북" />;
-    </div>
+    <i
+      className="fab fa-facebook"
+      onClick={onFacebookClick}
+      aria-hidden="true"
+    />
   );
 }
 export default FacebookSignin;
