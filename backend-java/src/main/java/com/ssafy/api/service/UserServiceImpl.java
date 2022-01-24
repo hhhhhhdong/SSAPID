@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkId(String userId) {
-        return userRepository.existsByUserId(userId);
+        return userRepositorySupport.checkId(userId);
     }
 
     @Override
