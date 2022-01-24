@@ -20,4 +20,7 @@
   flex-direction: row;
   margin: 10px;
   font-size: 2rem;
+  &:hover {
+    cursor: pointer;
+  }
 }
