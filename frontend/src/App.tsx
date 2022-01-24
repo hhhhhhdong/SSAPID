@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import PassFind from "./pages/PassFind";
 import Login from "./pages/Login";
 import UserDist from "./pages/UserDist";
-import AuthNum from "./pages/AuthNum";
+import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
           <Route path="/passFind" element={<PassFind />} />
           <Route path="/login" element={<Login />} />
           <Route path="/userDist" element={<UserDist />} />
-          <Route path="/authNum" element={<AuthNum />} />
+          <Route path="/authFind" element={<AuthFind />} />
           <Route path="/passChange" element={<PassChange />} />
         </Routes>
       </div>
