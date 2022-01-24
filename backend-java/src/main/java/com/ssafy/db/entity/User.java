@@ -16,8 +16,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class User extends BaseTimeEntity {
-
-    @Id @Column(name = "user_id", nullable = false) @NotNull
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_seq")
+    Long userSeq;
+    @Column(name = "user_id", nullable = false) @NotNull
     String userId;
     @Column(name = "user_pw", nullable = false) @NotNull @JsonIgnore @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String userPw;
@@ -28,5 +31,5 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_name", nullable = false) @NotNull
     String userName;
     @Column(name = "user_type", nullable = false) @NotNull
-    int userType;
+    Long userType;
 }
