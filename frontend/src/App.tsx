@@ -6,6 +6,8 @@ import Register from "./pages/Register";
 import PassFind from "./pages/PassFind";
 import Login from "./pages/Login";
 import UserDist from "./pages/UserDist";
+import AuthNum from "./pages/AuthNum";
+import PassChange from "./pages/PassChange";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/passFind" element={<PassFind />} />
           <Route path="/login" element={<Login />} />
           <Route path="/userDist" element={<UserDist />} />
+          <Route path="/authNum" element={<AuthNum />} />
+          <Route path="/passChange" element={<PassChange />} />
         </Routes>
       </div>
     </Router>
