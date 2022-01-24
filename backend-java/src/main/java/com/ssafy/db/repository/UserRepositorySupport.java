@@ -43,7 +43,7 @@ public class UserRepositorySupport {
 
     @Transactional
     public long changeUserPw(String userId, String userPw) {
-        return jpaQueryFactory.update(qUser).where(qUser.userId.eq(userId))
+        return jpaQueryFactory.update(qUser).where(qUser.userId.eq(userId).and(qUser.userType.eq(Long.valueOf(1))))
                 .set(qUser.userPw, userPw).execute();
     }
 
