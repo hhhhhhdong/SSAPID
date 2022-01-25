@@ -6,11 +6,12 @@ type optionprops = {
 };
 type selectprops = {
   options: Array<optionprops>;
+  handleClick: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
-function SelectBox({ options }: selectprops) {
+function SelectBox({ options, handleClick }: selectprops) {
   return (
-    <select>
+    <select onChange={handleClick}>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.name}

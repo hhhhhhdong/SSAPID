@@ -12,11 +12,8 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ApiModel("BoardUpdateRequest")
-public class BoardUpdateReq {
-
-    @ApiModelProperty(name ="글 번호", example="1") @NotNull
-    Long boardSeq;
+@ApiModel("BoardRegisterPostReq")
+public class BoardRegisterPostReq {
     @ApiModelProperty(name="글 제목", example="Example Title") @NotEmpty
     String boardTitle;
     @ApiModelProperty(name="글 내용", example="Hi, This is example Content !!") @NotEmpty
