@@ -28,6 +28,15 @@ public class UserRepositorySupport {
         return Optional.ofNullable(user);
     }
 
+    public Optional<User> findSocialUserByUserId(String userId){
+        User user = jpaQueryFactory.select(qUser).from(qUser)
+                .where(qUser.userId.eq(userId).and(qUser.userType.eq(Long.valueOf(2)))).fetchOne();
+        if (user == null) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(user);
+    }
+
     public Optional<String> findUserId(String userName, String userPhone) {
         String userId = jpaQueryFactory.select(qUser.userId).from(qUser)
                 .where(qUser.userName.eq(userName).and(qUser.userPhone.eq(userPhone))
