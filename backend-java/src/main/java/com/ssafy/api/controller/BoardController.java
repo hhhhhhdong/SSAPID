@@ -53,7 +53,6 @@ public class BoardController {
     public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         List<Board> boards = boardService.getBoardList();
-        System.out.println(BoardListRes.of(200, "Success", boards).getBoardInfos().get(0));
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
     }
 
