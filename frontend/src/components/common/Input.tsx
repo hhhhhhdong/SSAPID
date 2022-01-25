@@ -14,6 +14,7 @@ type Props = {
   buttonText?: string;
   onClickInputButton?: (e: React.MouseEvent) => void;
   errorMessage?: string;
+  noBackground?: boolean;
 };
 
 function Input({
@@ -26,10 +27,16 @@ function Input({
   width = 240,
   onClickInputButton,
   errorMessage,
+  noBackground = false,
 }: Props) {
   return (
     <div>
-      <div className={style.input} style={{ width: `${width}px` }}>
+      <div
+        className={
+          noBackground ? `${style.input} ${style.noBackground}` : style.input
+        }
+        style={{ width: `${width}px` }}
+      >
         <label htmlFor={name}>
           <span className={value ? style.inValueSpan : ""}>{placeHolder}</span>
           <input

@@ -3,3 +3,7 @@ $size: 30rem;
 .big {
   font-size: $size;
 }
+
+* {
+  box-sizing: border-box;
+}
