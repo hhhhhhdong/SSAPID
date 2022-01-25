@@ -4,6 +4,7 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.BoardRegisterPostReq;
 import com.ssafy.api.response.BoardListRes;
 import com.ssafy.api.request.BoardUpdateReq;
+import com.ssafy.api.response.BoardRes;
 import com.ssafy.api.service.BoardService;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import javax.xml.ws.Response;
 import java.util.List;
 
 
@@ -54,6 +56,23 @@ public class BoardController {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         List<Board> boards = boardService.getBoardList();
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
+    }
+
+    @GetMapping("/{boardSeq}")
+    @ApiOperation(value = "게시글 조회", notes = "게시글을 보여준다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "찾을 수 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<BoardRes> getBoard(@ApiIgnore Authentication authentication,
+                                             @PathVariable("boardSeq") long boardSeq) {
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        Board board = boardService.getBoardByBoardSeq(boardSeq);
+        if (board == null) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.status(200).body(BoardRes.of(board));
     }
 
     @PutMapping("/{boardSeq}")

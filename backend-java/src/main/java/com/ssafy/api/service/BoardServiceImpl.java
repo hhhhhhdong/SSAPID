@@ -33,7 +33,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public Board getBoardByBoardSeq(Long boardSeq) {
-        Board board = boardRepository.findBoardByBoardSeq(boardSeq).get();
+        Board board = boardRepository.findBoardByBoardSeq(boardSeq).orElse(null);
         return board;
     }
 
