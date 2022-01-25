@@ -52,6 +52,10 @@ public class BoardController {
 
     @GetMapping
     @ApiOperation(value = "게시글 목록", notes = "게시글 목록을 보여준다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
     public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         List<Board> boards = boardService.getBoardList();
@@ -66,7 +70,7 @@ public class BoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BoardRes> getBoard(@ApiIgnore Authentication authentication,
-                                             @PathVariable("boardSeq") long boardSeq) {
+                                             @PathVariable("boardSeq") @ApiParam(value = "게시글 번호", required = true) long boardSeq) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         Board board = boardService.getBoardByBoardSeq(boardSeq);
         if (board == null) {
