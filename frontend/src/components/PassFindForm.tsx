@@ -5,8 +5,8 @@ import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/globalForm.module.scss";
 import SelectBox from "./common/SelectBox";
-import authString from "../redux/actions";
-import store from "../redux/store.js";
+import { authString } from "../redux/actions";
+import { authStore } from "../redux/store.js";
 
 const OPTIONS = [
   {
@@ -67,8 +67,9 @@ function PassFindForm() {
       .then((res) => {
         // 액션을 날려줘야함
         // console.log(res.data.authCode);
-        store.dispatch({ type: authString, text: res.data.authCode });
-        navigate("/authNum");
+        authStore.dispatch({ type: authString, text: res.data.authCode });
+        // ㅅ
+        navigate("/authFind");
       })
       .catch((err) => {
         console.log(err);

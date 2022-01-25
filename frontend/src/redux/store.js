@@ -1,6 +1,5 @@
 import { createStore } from "redux";
-import { makeAuth } from "./reducers";
+import { makeAuth, makeNick } from "./reducers";
 
-const store = createStore(makeAuth);
-
-export default store;
+export const authStore = createStore(makeAuth);
+export const nickStore = createStore(makeNick);

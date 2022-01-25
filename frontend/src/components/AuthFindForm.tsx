@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import store from "../redux/store.js";
+import { authStore } from "../redux/store.js";
 import Input from "./common/Input";
 import Button from "./common/Button";
 
@@ -11,7 +11,7 @@ function AuthNumForm() {
   const [isEmpty, setEmpty] = useState(true);
   const navigate = useNavigate();
   const { auth } = authString;
-  const select = store.getState();
+  const select = authStore.getState();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (value !== "") {
@@ -26,7 +26,7 @@ function AuthNumForm() {
   const Conf = () => {
     if (select === auth) {
       alert("인증이 완료되었습니다.");
-      store.dispatch({ type: authString, text: "" });
+      authStore.dispatch({ type: authString, text: "" });
       navigate("/passChange");
     } else {
       alert("인증번호가 옳바르지 않습니다.");

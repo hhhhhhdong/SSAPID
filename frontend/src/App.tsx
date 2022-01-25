@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import UserDist from "./pages/UserDist";
 import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
+import ChatRoom from "./components/ChatRoom";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/userDist" element={<UserDist />} />
           <Route path="/authFind" element={<AuthFind />} />
           <Route path="/passChange" element={<PassChange />} />
+          <Route path="/chatRoom" element={<ChatRoom />} />
         </Routes>
       </div>
     </Router>

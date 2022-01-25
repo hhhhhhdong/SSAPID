@@ -27,7 +27,7 @@ function RegisterForm() {
     userPhone: "",
     userName: "",
   });
-
+  const { userId, userName, userNickname, userPhone, userPw } = form;
   // Form 데이터 onChange
   const onChangeForm = (e: ChangeEvent<HTMLInputElement>) => {
     const userPhoneRegex = /^[0-9]+$/;
@@ -196,7 +196,14 @@ function RegisterForm() {
     if (form.userPw !== form.userPwCheck) return;
 
     axios
-      .post("/user/register", form)
+      .post("/user/register", {
+        userId,
+        userName,
+        userNickname,
+        userPhone,
+        userPw,
+        userType: 1,
+      })
       .then(() => {
         navigate("/login");
       })

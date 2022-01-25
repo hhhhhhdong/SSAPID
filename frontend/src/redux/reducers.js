@@ -1,4 +1,4 @@
-import authString from "./actions";
+import { nickString, authString } from "./actions";
 
 export function makeAuth(previousState, action) {
   if (previousState === undefined) {
@@ -10,5 +10,15 @@ export function makeAuth(previousState, action) {
     return action.text;
   }
   // 변경이 안일어났을 때
+  return "";
+}
+
+export function makeNick(previousState, action) {
+  if (previousState === undefined) {
+    return "";
+  }
+  if (action.type === nickString) {
+    return action.text;
+  }
   return "";
 }

@@ -3,10 +3,11 @@ import axios from "api/axios";
 import FacebookSignin from "service/FaceBookSingin";
 import GithubSignin from "service/GithubSignin";
 import FormHeader from "./layout/FormHeader";
-import Button from "./common/Button";
 import Input from "./common/Input";
 import GoogleSignin from "../service/GoogleSingin";
 import style from "../styles/Loginform.module.scss";
+import { nickStore } from "../redux/store";
+import Button from "./common/Button";
 
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
@@ -18,8 +19,9 @@ function LoginForm({ onSubmit }: loginPageProps) {
 
   const Submit = () => {
     axios.post("/login", form).then((res: object) => {
-      console.log(res);
-      console.log(form);
+      // userNickname을 스토어에 저장
+      // 미구현
+      // nickStore.dispatch(res);
     });
   };
   const [isEmpty, setEmpty] = useState(false);
@@ -74,15 +76,12 @@ function LoginForm({ onSubmit }: loginPageProps) {
           <a href="../passFind">비밀번호 찾기 | </a>
           <a href="../register">회원가입</a>
         </h4>
-        {/* <Button
+        <Button
           buttonType="submit"
-          // Disabled={isEmpty}
+          Disabled={isEmpty}
           text="로그인"
           handleClick={Submit}
         />
-        <GoogleSignin />
-        <FacebookSignin />
-        <GithubSignin /> */}
         <div className={style.img}>
           <GithubSignin />
           <GoogleSignin />

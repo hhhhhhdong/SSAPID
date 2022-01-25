@@ -21,7 +21,7 @@ function PassChangeForm() {
 
   const submit = () => {
     axios.put("/user/change-pw", { userPw }).then((res) => {
-      console.log(res);
+      // user req변경해야함
     });
   };
 
