@@ -9,10 +9,8 @@ import java.util.List;
 
 public interface BoardService {
     void createBoard(BoardRegisterPostReq boardRegisterPostReq, User user);
-
+    void deleteBoard(Board board);
     List<Board> getBoardList();
-
     Board updateBoard(BoardUpdateReq boardUpdateReq, User user);
-
     Board getBoardByBoardSeq(Long boardSeq);
 }

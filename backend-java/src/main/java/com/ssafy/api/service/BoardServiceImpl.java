@@ -28,10 +28,16 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public void deleteBoard(Board board) {
+        boardRepository.delete(board);
+    }
+
+    @Override
     public List<Board> getBoardList() {
         return boardRepository.findAll();
     }
 
+    @Override
     public Board getBoardByBoardSeq(Long boardSeq) {
         Board board = boardRepository.findBoardByBoardSeq(boardSeq).get();
         return board;
@@ -47,4 +53,5 @@ public class BoardServiceImpl implements BoardService {
 
         return boardRepository.save(board);
     }
+
 }
