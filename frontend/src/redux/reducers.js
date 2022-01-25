@@ -20,5 +20,5 @@ export function makeNick(previousState, action) {
   if (action.type === nickString) {
     return action.text;
   }
-  return "";
+  return previousState;
 }

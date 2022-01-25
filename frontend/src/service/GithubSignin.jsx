@@ -1,15 +1,24 @@
 import React from "react";
-import Button from "components/common/Button";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { nickStore } from "redux/store";
+import { nickString } from "redux/actions";
 import { authService, githubProvider } from "./fbase";
-import style from "../styles/Loginform.module.scss";
 
 function GithubSignin() {
   const navigate = useNavigate();
   const onGithubClick = async (event) => {
-    const data = await authService.signInWithPopup(githubProvider);
+    await authService.signInWithPopup(githubProvider);
     const user = authService.currentUser;
-    console.log(user.displayName, user.email);
+    // 깃허브는 user email 안줌
+    axios
+      .post("/social-login", { userId: user.email, userType: 2 })
+      .then((res) => {
+        nickStore.dispatch({ type: nickString, text: res.userNickName });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     navigate("/");
   };
 

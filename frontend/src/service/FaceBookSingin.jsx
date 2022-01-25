@@ -1,13 +1,23 @@
+import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { nickString } from "redux/actions";
+import { nickStore } from "../redux/store";
 import { authService, facebookProvider } from "./fbase";
 
 function FacebookSignin() {
   const navigate = useNavigate();
   const onFacebookClick = async (event) => {
-    const data = await authService.signInWithPopup(facebookProvider);
+    await authService.signInWithPopup(facebookProvider);
     const user = authService.currentUser;
-    console.log(user.email, user.displayName);
+    axios
+      .post("/social-login", { userId: user.email, userType: 2 })
+      .then((res) => {
+        nickStore.dispatch({ type: nickString, text: res.userNickName });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     navigate("/");
   };
 

@@ -17,11 +17,11 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Main />} />
           <Route path="/register" element={<Register />} />
           <Route path="/idFind" element={<IdFind />} />
           <Route path="/passFind" element={<PassFind />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/userDist" element={<UserDist />} />
           <Route path="/createPost" element={<CreatePost />} />
           <Route path="/authFind" element={<AuthFind />} />

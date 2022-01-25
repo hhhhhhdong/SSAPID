@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "styles/CreatePostForm.module.scss";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import axios from "api/axios";
 import Input from "./common/Input";
 import Button from "./common/Button";
 import Spacer from "./common/Spacer";
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 
 function CreatePostForm() {
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ function CreatePostForm() {
           value={title}
           onChange={onChangeTitle}
           width={500}
-          noBackground
+          // noBackground
         />
         <div className={style.textAreaDiv}>
           <span
@@ -81,14 +81,14 @@ function CreatePostForm() {
           </textarea>
         </div>
         <div className={style.datePickerWrapper}>
-          <DatePicker
+          {/* <DatePicker
             dateFormat="yyyy-MM-dd"
             minDate={new Date()}
             closeOnScroll
             placeholderText="마감 날짜 선택"
             selected={deadline}
             onChange={(date) => setDeadline(date)}
-          />
+          /> */}
         </div>
       </div>
       <Spacer size={50} />
