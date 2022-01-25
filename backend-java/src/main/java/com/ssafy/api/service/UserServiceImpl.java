@@ -3,9 +3,11 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.UserChangePwReq;
 import com.ssafy.api.request.UserRegisterPostReq;
 import com.ssafy.api.request.UserSetInfoPostReq;
+import com.ssafy.api.request.UserSocialReq;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.UserRepository;
 import com.ssafy.db.repository.UserRepositorySupport;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -47,11 +49,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void createSocialUser(UserSocialReq socialRegisterInfo) {
+        User user = new User();
+        user.setUserId("Social_"+socialRegisterInfo.getUserId());
+        user.setUserType(socialRegisterInfo.getUserType());
+        // 난수로 닉네임 생성, 중복체크
+        String userNickname = RandomStringUtils.random(15, true, true);
+        while(checkId(userNickname)){
+            userNickname = RandomStringUtils.random(15, true, true);
+        }
+        user.setUserNickname(userNickname);
+        // 소셜 로그인 유저일때 더미데이터
+        user.setUserPw(passwordEncoder.encode("sociallogin"));
+        user.setUserPhone("000-0000-0000");
+        user.setUserName("social_guest");
+        userRepository.save(user);
+    }
+
+    @Override
     public User getUserByUserId(String userId) {
         // 디비에 유저 정보 조회 (userId 를 통한 조회).
         User user = userRepositorySupport.findUserByUserId(userId).get();
         return user;
 
+    }
+
+    @Override
+    public User getSocialUserByUserId(String userId) {
+        User user = userRepositorySupport.findSocialUserByUserId(userId).get();
+        return user;
     }
 
     @Override
