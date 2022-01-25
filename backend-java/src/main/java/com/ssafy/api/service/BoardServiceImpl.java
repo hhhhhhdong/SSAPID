@@ -44,8 +44,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Board updateBoard(BoardUpdateReq boardUpdateReq, User user) {
-        Board board = getBoardByBoardSeq(boardUpdateReq.getBoardSeq());
+    public Board updateBoard(Long boardSeq, BoardUpdateReq boardUpdateReq, User user) {
+        Board board = getBoardByBoardSeq(boardSeq);
         board.setUser(user);
         board.setBoardTitle(boardUpdateReq.getBoardTitle());
         board.setBoardContent(boardUpdateReq.getBoardContent());

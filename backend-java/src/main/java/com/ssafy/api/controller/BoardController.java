@@ -61,18 +61,25 @@ public class BoardController {
     @ApiOperation(value = "게시글 수정", notes = "<strong>작성한 내용의 정보</strong>를 게시판에 수정한다..")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "실패"),
+            @ApiResponse(code = 401, message = "인증 실패"),
             @ApiResponse(code = 404, message = "찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> update(@ApiIgnore Authentication authentication,
-                                                             @Valid @RequestBody @ApiParam(value = "작성한 내용의 정보", required = true) BoardUpdateReq boardUpdateReq) {
+                                                             @Valid @RequestBody @ApiParam(value = "작성한 내용의 정보", required = true) BoardUpdateReq boardUpdateReq,
+                                                             @PathVariable("boardSeq") Long boardSeq) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
-        Board board = boardService.getBoardByBoardSeq(boardUpdateReq.getBoardSeq());
-        board = boardService.updateBoard(boardUpdateReq, user);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        Board board = boardService.getBoardByBoardSeq(boardSeq);
+
+        if (user.getUserNickname().equals(board.getUser().getUserNickname())) {
+            board = boardService.updateBoard(boardSeq, boardUpdateReq, user);
+        } else {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "수정 권한이 없습니다."));
+        }
+
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "수정 성공!"));
     }
 
     @DeleteMapping("/{boardSeq}")
@@ -96,7 +103,7 @@ public class BoardController {
         if (user.getUserNickname().equals(board.getUser().getUserNickname())) {
             boardService.deleteBoard(board);
         } else {
-            return ResponseEntity.status(404).body(BaseResponseBody.of(401, "삭제 권한이 없습니다."));
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "삭제 권한이 없습니다."));
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "삭제 성공"));
     }
