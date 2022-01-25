@@ -1,6 +1,8 @@
 package com.ssafy.api.service;
 
+
 import com.ssafy.api.request.BoardRegisterPostReq;
+import com.ssafy.api.request.BoardUpdateReq;
 import com.ssafy.db.entity.Board;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.BoardRepository;
@@ -28,5 +30,21 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<Board> getBoardList() {
         return boardRepository.findAll();
+    }
+
+    public Board getBoardByBoardSeq(Long boardSeq) {
+        Board board = boardRepository.findBoardByBoardSeq(boardSeq).get();
+        return board;
+    }
+
+    @Override
+    public Board updateBoard(BoardUpdateReq boardUpdateReq, User user) {
+        Board board = getBoardByBoardSeq(boardUpdateReq.getBoardSeq());
+        board.setUser(user);
+        board.setBoardTitle(boardUpdateReq.getBoardTitle());
+        board.setBoardContent(boardUpdateReq.getBoardContent());
+        board.setDeadline(boardUpdateReq.getDeadline());
+
+        return boardRepository.save(board);
     }
 }
