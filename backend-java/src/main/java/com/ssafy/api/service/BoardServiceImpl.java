@@ -9,10 +9,13 @@ import com.ssafy.db.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("boardService")
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
     @Autowired
     BoardRepository boardRepository;
+
     @Override
     public void createBoard(BoardRegisterPostReq boardRegisterPostReq, User user) {
         Board board = new Board();
@@ -30,6 +33,17 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public List<Board> getBoardList() {
+        return boardRepository.findAll();
+    }
+
+    @Override
+    public Board getBoardByBoardSeq(Long boardSeq) {
+        Board board = boardRepository.findBoardByBoardSeq(boardSeq).get();
+        return board;
+    }
+
+    @Override
     public Board updateBoard(BoardUpdateReq boardUpdateReq, User user) {
         Board board = getBoardByBoardSeq(boardUpdateReq.getBoardSeq());
         board.setUser(user);
@@ -38,12 +52,6 @@ public class BoardServiceImpl implements BoardService{
         board.setDeadline(boardUpdateReq.getDeadline());
 
         return boardRepository.save(board);
-    }
-
-    @Override
-    public Board getBoardByBoardSeq(Long boardSeq) {
-        Board board = boardRepository.findBoardByBoardSeq(boardSeq).get();
-        return board;
     }
 
 }
