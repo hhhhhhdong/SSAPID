@@ -2,6 +2,7 @@ package com.ssafy.api.response;
 
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Board;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,15 +13,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 게시글 목록 조회 API ([GET] /board) 요청에 대한 응답값 정의.
+ */
 @Getter
 @Setter
+@ApiModel("BoardListResponse")
 public class BoardListRes extends BaseResponseBody {
 
-//    Long boardSeq;
-//    String boardTitle;
-//    LocalDateTime createdAt;
-//    LocalDateTime deadline;
-//    String userId;
     List<Map<String, Object>> boardInfos;
 
     public static BoardListRes of(Integer statusCode, String message, List<Board> boardList) {

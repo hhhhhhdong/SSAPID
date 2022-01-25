@@ -2,9 +2,9 @@ package com.ssafy.api.controller;
 
 
 import com.ssafy.api.request.BoardRegisterPostReq;
-import com.ssafy.api.response.BoardListRes;
 import com.ssafy.api.request.BoardUpdateReq;
-import com.ssafy.api.response.UserFindPwRes;
+import com.ssafy.api.response.BoardListRes;
+import com.ssafy.api.response.BoardRes;
 import com.ssafy.api.service.BoardService;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -51,10 +51,31 @@ public class BoardController {
 
     @GetMapping
     @ApiOperation(value = "게시글 목록", notes = "게시글 목록을 보여준다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
     public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         List<Board> boards = boardService.getBoardList();
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
+    }
+
+    @GetMapping("/{boardSeq}")
+    @ApiOperation(value = "게시글 조회", notes = "게시글을 보여준다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 404, message = "찾을 수 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<BoardRes> getBoard(@ApiIgnore Authentication authentication,
+                                             @PathVariable("boardSeq") @ApiParam(value = "게시글 번호", required = true) long boardSeq) {
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        Board board = boardService.getBoardByBoardSeq(boardSeq);
+        if (board == null) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.status(200).body(BoardRes.of(board));
     }
 
     @PutMapping("/{boardSeq}")
@@ -84,7 +105,7 @@ public class BoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> deleteBoard(@ApiIgnore Authentication authentication,
-                                                                     @PathVariable("boardSeq") Long boardSeq) {
+                                                                  @PathVariable("boardSeq") Long boardSeq) {
         /**
          * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
          * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.

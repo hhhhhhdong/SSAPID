@@ -1,6 +1,5 @@
 package com.ssafy.api.service;
 
-
 import com.ssafy.api.request.BoardRegisterPostReq;
 import com.ssafy.api.request.BoardUpdateReq;
 import com.ssafy.db.entity.Board;
@@ -39,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public Board getBoardByBoardSeq(Long boardSeq) {
-        Board board = boardRepository.findBoardByBoardSeq(boardSeq).get();
+        Board board = boardRepository.findBoardByBoardSeq(boardSeq).orElse(null);
         return board;
     }
 
