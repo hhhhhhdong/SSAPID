@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import style from "styles/CreatePostForm.module.scss";
 import DatePicker from "react-datepicker";
 import axios from "api/axios";
@@ -7,17 +8,12 @@ import Button from "./common/Button";
 import Spacer from "./common/Spacer";
 import "react-datepicker/dist/react-datepicker.css";
 
-// 일정 날짜 이후의 Date 객체를 반환하는 함수
-function addDays(date: Date, days: number) {
-  const clone = new Date(date);
-  clone.setDate(date.getDate() + days);
-  return clone;
-}
-
 function CreatePostForm() {
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [deadline, setDeadline] = useState<Date | null>(null);
   const [disabled, setDisabled] = useState(true);
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,25 +24,27 @@ function CreatePostForm() {
   };
 
   useEffect(() => {
-    if (title && content && startDate) {
+    if (title && content && deadline) {
       setDisabled(false);
     }
-  }, [title, content, startDate]);
+  }, [title, content, deadline]);
 
   const onClickSubmit = () => {
-    const date = `${startDate?.getFullYear()}-${
-      Number(startDate?.getMonth()) + 1
-    }-${startDate?.getDate()}`;
+    const date = `${deadline?.getFullYear()}-${
+      Number(deadline?.getMonth()) + 1
+    }-${deadline?.getDate()}`;
+
     axios
       .post("/board", {
         boardTitle: title,
         boardContent: content,
         deadline: date,
       })
-      .then((res) => {
-        console.log(res);
+      .then(() => {
+        navigate("/");
       })
       .catch((err) => {
+        alert("게시들 생성에 실패했습니다.");
         console.dir(err);
       });
   };
@@ -88,8 +86,8 @@ function CreatePostForm() {
             minDate={new Date()}
             closeOnScroll
             placeholderText="마감 날짜 선택"
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            selected={deadline}
+            onChange={(date) => setDeadline(date)}
           />
         </div>
       </div>
