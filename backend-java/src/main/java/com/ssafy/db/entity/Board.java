@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "board")
@@ -24,6 +25,6 @@ public class Board extends BaseTimeEntity {
     @Column(name = "board_content", nullable = false, length = 1000)
     String boardContent;
     @Column(name = "deadline", nullable = false) @NotNull
-    LocalDateTime deadline;
+    LocalDate deadline;
 
 }

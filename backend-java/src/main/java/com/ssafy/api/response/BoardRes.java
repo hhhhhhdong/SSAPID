@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +19,7 @@ public class BoardRes {
     String boardTitle;
     String boardContent;
     LocalDateTime createdAt;
-    LocalDateTime deadline;
+    LocalDate deadline;
     String userId;
 
     public static BoardRes of(Board board) {

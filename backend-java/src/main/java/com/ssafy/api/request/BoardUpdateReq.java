@@ -8,7 +8,8 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class BoardUpdateReq {
     String boardTitle;
     @ApiModelProperty(name="글 내용", example="Hi, This is example Content !!") @NotEmpty
     String boardContent;
-    @ApiModelProperty(name="마감일", example="") @NotNull
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    LocalDateTime deadline;
+    @ApiModelProperty(name="마감일", example="2022-09-25") @NotNull
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    LocalDate deadline;
 }
