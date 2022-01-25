@@ -1,7 +1,7 @@
 package com.ssafy.api.controller;
 
 import com.ssafy.api.request.BoardRegisterPostReq;
-import com.ssafy.api.request.UserRegisterPostReq;
+import com.ssafy.api.response.BoardListRes;
 import com.ssafy.api.service.BoardService;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -12,13 +12,12 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.List;
+
 
 @Api(value = "게시판 API", tags = {"Board"})
 @RestController
@@ -42,8 +41,19 @@ public class BoardController {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
-        boardService.createBoard(registerInfo,user);
+        boardService.createBoard(registerInfo, user);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @GetMapping
+    @ApiOperation(value = "게시글 목록", notes = "게시글 목록을 보여준다.")
+    public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication) {
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        List<Board> boards = boardService.getBoardList();
+        if (boards.isEmpty()) {
+            return ResponseEntity.status(404).body(null);
+        }
+        return ResponseEntity.status(200).body(BoardListRes.of(boards));
     }
 
 }
