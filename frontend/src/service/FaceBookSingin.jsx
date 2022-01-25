@@ -1,8 +1,6 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { nickString } from "redux/actions";
-import { nickStore } from "../redux/store";
 import { authService, facebookProvider } from "./fbase";
 
 function FacebookSignin() {
@@ -13,7 +11,7 @@ function FacebookSignin() {
     axios
       .post("/social-login", { userId: user.email, userType: 2 })
       .then((res) => {
-        nickStore.dispatch({ type: nickString, text: res.userNickName });
+        sessionStorage.setItem("userNickname", res.data.userNickname);
       })
       .catch((error) => {
         console.log(error);

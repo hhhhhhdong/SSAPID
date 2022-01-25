@@ -7,10 +7,8 @@ import FormHeader from "./layout/FormHeader";
 import Input from "./common/Input";
 import GoogleSignin from "../service/GoogleSingin";
 import style from "../styles/Loginform.module.scss";
-import { nickStore } from "../redux/store";
 import Button from "./common/Button";
 // eslint-disable-next-line import/order
-import { nickString } from "redux/actions";
 
 function LoginForm() {
   const idPlaceHolder = "아이디를 입력하세요";
@@ -25,7 +23,7 @@ function LoginForm() {
     axios
       .post("/login", form)
       .then((res) => {
-        nickStore.dispatch({ type: nickString, text: res.data.userNickName });
+        sessionStorage.setItem("userNickname", res.data.userNickname);
         navigate("/");
       })
       .catch((err) => {

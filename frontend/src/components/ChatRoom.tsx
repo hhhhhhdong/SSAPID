@@ -1,18 +1,14 @@
 import { sendChat } from "service/function";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
-import { nickStore } from "../redux/store";
 import Input from "./common/Input";
 
 function ChatRoom() {
-  const state = nickStore.getState();
   const [isEmpty, setEmpty] = useState(true);
   const [chatText, setChat] = useState({ text: "" });
   const { text } = chatText;
-  const navigate = useNavigate();
+  const state = sessionStorage.getItem("userNickname");
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(state);
     const { name, value } = e.target;
     if (value !== "") {
       setEmpty(false);
@@ -34,7 +30,6 @@ function ChatRoom() {
     } catch (error) {
       console.log(error);
     }
-    navigate("/");
   };
 
   return (

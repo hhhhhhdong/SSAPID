@@ -1,8 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { nickStore } from "redux/store";
-import { nickString } from "redux/actions";
+
 import { authService, githubProvider } from "./fbase";
 
 function GithubSignin() {
@@ -14,7 +13,7 @@ function GithubSignin() {
     axios
       .post("/social-login", { userId: user.email, userType: 2 })
       .then((res) => {
-        nickStore.dispatch({ type: nickString, text: res.userNickName });
+        sessionStorage.setItem("userNickname", res.data.userNickname);
       })
       .catch((error) => {
         console.log(error);

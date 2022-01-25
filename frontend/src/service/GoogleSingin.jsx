@@ -1,8 +1,6 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { nickString } from "redux/actions";
-import { nickStore } from "redux/store";
 import { authService, googleProvider } from "./fbase";
 
 function GoogleSignin() {
@@ -13,8 +11,7 @@ function GoogleSignin() {
     axios
       .post("/social-login", { userId: user.email, userType: 2 })
       .then((res) => {
-        nickStore.dispatch({ type: nickString, text: res.data.userNickname });
-        navigate("/chatRoom");
+        sessionStorage.setItem("userNickname", res.data.userNickname);
       })
       .catch((error) => {
         console.log("에러", error);
