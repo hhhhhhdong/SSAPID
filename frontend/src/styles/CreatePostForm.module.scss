@@ -1,0 +1,65 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    color: #f1c40f;
+  }
+}
+
+.textAreaDiv {
+  height: 400px;
+  padding: 17px 10px 15px 11px;
+  border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+  border-radius: 7px;
+  position: relative;
+
+  textarea {
+    resize: none; // 사이즈 변경 막기
+    outline: 0; // 포커스시 outline 없애기
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    border: 0;
+
+    // 스크롤바 디자인
+    &::-webkit-scrollbar {
+      width: 7px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: #e4e4e4;
+      // border-radius: 100px;
+    }
+    &::-webkit-scrollbar-thumb {
+      // border-radius: 100px;
+      background-color: rgba(var(--f52, 142, 142, 142), 1);
+    }
+  }
+  .inputSpan {
+    font-size: 13px;
+    height: 36px;
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    line-height: 36px;
+    transition: transform ease-out 0.1s;
+    color: rgba(var(--f52, 142, 142, 142), 1);
+    // user-select: none;
+    pointer-events: none; // 마우스 무시
+  }
+  .inValueSpan {
+    transform: scale(0.8) translateY(-17px) translateX(-10px);
+  }
+}
+
+.datePickerWrapper {
+  padding-top: 10px;
+  padding-left: 3px;
+  input {
+    border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+    border-radius: 7px;
+    outline: 0;
+  }
+}

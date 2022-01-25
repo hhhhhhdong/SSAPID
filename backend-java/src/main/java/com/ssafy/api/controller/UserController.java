@@ -45,6 +45,7 @@ public class UserController {
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
+
     @GetMapping("/info")
     @ApiOperation(value = "회원 본인 정보 조회", notes = "로그인한 회원 본인의 정보를 응답한다.")
     @ApiResponses({
@@ -126,7 +127,7 @@ public class UserController {
     }
 
     @PostMapping("/find-pw")
-    @ApiOperation(value = "ID 찾기", notes = "회원의 <strong>아이디(이메일)</strong>를 입력받아 비밀번호를 전송한다.")
+    @ApiOperation(value = "비밀번호 찾기", notes = "회원의 <strong>아이디</strong>를 입력받아 인증코드를 전송한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 404, message = "사용자 없음"),
@@ -147,9 +148,11 @@ public class UserController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> changePw(
-            @RequestBody @ApiParam(value = "회원 아이디와 비밀번호", required = true) UserChangePwReq req) {
-        userService.changeUserPw(req);
+    public ResponseEntity<? extends BaseResponseBody> changePw(@ApiIgnore Authentication authentication,
+                                                               @RequestBody @ApiParam(value = "새로운 비밀번호", required = true) UserChangePwReq req) {
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        userService.changeUserPw(req, userId);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -188,4 +191,5 @@ public class UserController {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         }
     }
+
 }
