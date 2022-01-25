@@ -9,6 +9,7 @@ import UserDist from "./pages/UserDist";
 import CreatePost from "./pages/CreatePost";
 import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
+import "./App.module.scss";
 
 function App() {
   return (
