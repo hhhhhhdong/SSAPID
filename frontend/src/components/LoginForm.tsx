@@ -5,8 +5,8 @@ import GithubSignin from "service/GithubSignin";
 import FormHeader from "./layout/FormHeader";
 import Button from "./common/Button";
 import Input from "./common/Input";
-import style from "../styles/Loginform.module.scss";
 import GoogleSignin from "../service/GoogleSingin";
+import style from "../styles/Loginform.module.scss";
 
 type loginPageProps = {
   onSubmit: (form: { userId: string; userPw: string }) => void;
@@ -74,7 +74,7 @@ function LoginForm({ onSubmit }: loginPageProps) {
           <a href="../passFind">비밀번호 찾기 | </a>
           <a href="../register">회원가입</a>
         </h4>
-        <Button
+        {/* <Button
           buttonType="submit"
           // Disabled={isEmpty}
           text="로그인"
@@ -82,12 +82,12 @@ function LoginForm({ onSubmit }: loginPageProps) {
         />
         <GoogleSignin />
         <FacebookSignin />
-        <GithubSignin />
-        {/* <div className={style.img}>
-          <img src="/img/googlelogo.png" alt="google" />
-          <img src="/img/kakaoroundlogo.png" alt="kakao" />
-          <img src="/img/facebooklogo.png" alt="kakao" />
-        </div> */}
+        <GithubSignin /> */}
+        <div className={style.img}>
+          <GithubSignin />
+          <GoogleSignin />
+          <FacebookSignin />
+        </div>
       </form>
     </div>
   );
