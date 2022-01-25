@@ -54,7 +54,7 @@ public class BoardController {
             @ApiResponse(code = 404, message = "찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> updateBoard(@ApiIgnore Authentication authentication,
+    public ResponseEntity<? extends BaseResponseBody> update(@ApiIgnore Authentication authentication,
                                                                @Valid @RequestBody @ApiParam(value = "작성한 내용의 정보", required = true) BoardUpdateReq boardUpdateReq) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
