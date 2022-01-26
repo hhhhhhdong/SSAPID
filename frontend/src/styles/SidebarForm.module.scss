@@ -2,8 +2,11 @@
   border: 1px solid red;
   margin-top: 40px;
   width: 200px;
+  position: fixed;
+  right: 0;
+  transition: right ease-out 0.3s;
 }
 
-.sidebar-move {
-  transform: translateX(200px);
+.sidebarMove {
+  right: -200px;
 }

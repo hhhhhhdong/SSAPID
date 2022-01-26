@@ -2,3 +2,12 @@
   display: flex;
   justify-content: space-between;
 }
+
+.container {
+  transition: width ease-out 0.3s;
+  width: 100%;
+}
+.containerMove {
+  transition: width ease-out 0.3s;
+  width: calc(100% - 200px);
+}

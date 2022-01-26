@@ -11,7 +11,7 @@ function Navbar({ children }: Props) {
     <div>
       <NavbarForm />
       <div className={style.wrapper}>
-        <div style={{ width: "100%" }}>{children}</div>
+        <div className={style.containerMove}>{children}</div>
         <SidebarForm />
       </div>
     </div>
