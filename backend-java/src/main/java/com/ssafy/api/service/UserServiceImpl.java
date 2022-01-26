@@ -115,8 +115,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changeUserPw(UserChangePwReq userChangePwReq, String userId) {
-        userRepositorySupport.changeUserPw(userId, passwordEncoder.encode(userChangePwReq.getUserPw()));
+    public void changeUserPw(UserChangePwReq userChangePwReq) {
+        userRepositorySupport.changeUserPw(userChangePwReq.getUserId(), passwordEncoder.encode(userChangePwReq.getUserPw()));
     }
 
     public boolean checkNickname(String userNickname) {
