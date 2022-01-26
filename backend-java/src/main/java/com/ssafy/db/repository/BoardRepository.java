@@ -10,9 +10,12 @@ import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
+
+    Optional<Board> findByBoardSeq(Long boardSeq);
     List<Board> findAll();
     List<Board> findByBoardTitleContaining(String content);
     List<Board> findByBoardContentContaining(String content);
-    List<Board> findByUserContaining(User user);
-    Optional<Board> findBoardByBoardSeq(Long boardSeq);
+    // IllegalArgumentException - did not match expected type 해결 못해서 QueryDSL 사용해서 만듬
+    //List<Board> findByUserContaining(User user);
+
 }

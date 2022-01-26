@@ -5,6 +5,7 @@ import com.ssafy.api.request.BoardUpdateReq;
 import com.ssafy.db.entity.Board;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.BoardRepository;
+import com.ssafy.db.repository.BoardRepositorySupport;
 import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    BoardRepositorySupport boardRepositorySupport;
 
     @Override
     public void createBoard(BoardRegisterPostReq boardRegisterPostReq, User user) {
@@ -49,14 +52,14 @@ public class BoardServiceImpl implements BoardService {
             boardList = boardRepository.findByBoardContentContaining(content);
         }else if(keyword.equals("writer")){
             User user = userRepository.findByUserNickname(content);
-            boardList = boardRepository.findByUserContaining(user);
+            boardList = boardRepositorySupport.findBoardListByWriter(user.getUserSeq());
         }
         return boardList;
     }
 
     @Override
     public Board getBoardByBoardSeq(Long boardSeq) {
-        Board board = boardRepository.findBoardByBoardSeq(boardSeq).orElse(null);
+        Board board = boardRepository.findByBoardSeq(boardSeq).orElse(null);
         return board;
     }
 
