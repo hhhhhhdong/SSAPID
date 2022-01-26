@@ -1,3 +1,5 @@
+@import "./Variables.scss";
+
 .wrapper {
   h4 {
     margin-top: 0px;
@@ -9,7 +11,7 @@
     text-decoration-line: none;
     color: black;
     &:hover {
-      color: #0a3d62;
+      color: $blue;
     }
   }
 }
