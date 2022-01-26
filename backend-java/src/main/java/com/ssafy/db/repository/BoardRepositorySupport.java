@@ -3,8 +3,6 @@ package com.ssafy.db.repository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.db.entity.Board;
 import com.ssafy.db.entity.QBoard;
-import com.ssafy.db.entity.QUser;
-import com.ssafy.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
