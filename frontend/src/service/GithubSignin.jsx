@@ -8,17 +8,22 @@ function GithubSignin() {
   const navigate = useNavigate();
   const onGithubClick = async (event) => {
     await authService.signInWithPopup(githubProvider);
-    const user = authService.currentUser;
+    const User = authService.currentUser;
     // 깃허브는 user email 안줌
+    const { multiFactor } = User;
+    const { user } = multiFactor;
+    const { uid } = user;
+    const userData = uid;
     axios
-      .post("/social-login", { userId: user.email, userType: 2 })
+      .post("/social-login", { userId: userData, userType: 2 })
       .then((res) => {
         sessionStorage.setItem("userNickname", res.data.userNickname);
+        window.location.reload();
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
       });
-    navigate("/");
   };
 
   return (

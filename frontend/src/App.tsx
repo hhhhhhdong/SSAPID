@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+
 import Main from "./pages/Main";
 import IdFind from "./pages/IdFind";
 import Register from "./pages/Register";
@@ -13,12 +19,13 @@ import ChatRoom from "./components/ChatRoom";
 import "./App.module.scss";
 
 function App() {
+  const userNickname = sessionStorage.getItem("userNickname");
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={userNickname ? <Main /> : <Login />} />
+          <Route path="/home" element={<Main />} />
           <Route path="/register" element={<Register />} />
           <Route path="/idFind" element={<IdFind />} />
           <Route path="/passFind" element={<PassFind />} />

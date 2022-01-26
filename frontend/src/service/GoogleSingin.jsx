@@ -12,12 +12,12 @@ function GoogleSignin() {
       .post("/social-login", { userId: user.email, userType: 2 })
       .then((res) => {
         sessionStorage.setItem("userNickname", res.data.userNickname);
+        window.location.reload();
+        navigate("/");
       })
       .catch((error) => {
         console.log("에러", error);
       });
-
-    navigate("/");
   };
 
   return (

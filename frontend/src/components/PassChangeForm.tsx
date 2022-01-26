@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Input from "./common/Input";
 import Button from "./common/Button";
+import { emailStore } from "../redux/store";
 
 function PassChangeForm() {
+  const userId = emailStore.getState();
   const [isEmpty, setEmpty] = useState(true);
   const buttonType = "button";
   const [passObj, setPass] = useState({ userPw: "", passwordConfirm: "" });
   const { userPw, passwordConfirm } = passObj;
+  const navigate = useNavigate();
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (userPw !== "" && passwordConfirm !== "") {
@@ -20,8 +24,9 @@ function PassChangeForm() {
   };
 
   const submit = () => {
-    axios.put("/user/change-pw", { userPw }).then((res) => {
-      // user req변경해야함
+    axios.put("/user/change-pw", { userId, userPw }).then((res) => {
+      alert("정상적으로 바뀌었습니다.");
+      navigate("/login");
     });
   };
 

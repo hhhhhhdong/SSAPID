@@ -12,6 +12,8 @@ import lombok.Setter;
 @Setter
 @ApiModel("UserChangePwRequest")
 public class UserChangePwReq {
+    @ApiModelProperty(name = "유저 ID", example = "ssafy@ssafy.com")
+    String userId;
     @ApiModelProperty(name = "유저 Password", example = "ssafy!@#")
     String userPw;
 }

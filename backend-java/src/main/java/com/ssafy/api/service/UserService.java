@@ -18,7 +18,7 @@ public interface UserService {
 	void deleteUser(User user);
 	String getUserId(String userName, String userPhone);
 	String getUserPw(String userId);
-	void changeUserPw(UserChangePwReq userChangePwReq, String userId);
+	void changeUserPw(UserChangePwReq userChangePwReq);
 	boolean checkNickname(String userNickname);
 	boolean checkId(String userId);
 }
