@@ -12,11 +12,12 @@ function FacebookSignin() {
       .post("/social-login", { userId: user.email, userType: 2 })
       .then((res) => {
         sessionStorage.setItem("userNickname", res.data.userNickname);
+        window.location.reload();
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
       });
-    navigate("/");
   };
 
   return (

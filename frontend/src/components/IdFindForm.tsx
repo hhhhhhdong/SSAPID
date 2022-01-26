@@ -13,7 +13,7 @@ function IdFindForm({ onSubmit }: idFindProps) {
   const submitButtonType = "submit";
   const namePlaceHolder = "이름을 입력하세요";
   const emailPlaceHolder = "휴대폰 번호를 입력하세요";
-
+  const navigate = useNavigate();
   const [isEmpty, setEmpty] = useState(false);
   const [form, setForm] = useState({
     userName: "",
@@ -54,9 +54,15 @@ function IdFindForm({ onSubmit }: idFindProps) {
   });
 
   const submit = () => {
-    axios.post("/user/find-id", form).then((res) => {
-      console.log(res);
-    });
+    axios
+      .post("/user/find-id", form)
+      .then((res) => {
+        alert(res.data.userId);
+        navigate("/login");
+      })
+      .catch((err) => {
+        alert("잘못된 정보입니다.");
+      });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

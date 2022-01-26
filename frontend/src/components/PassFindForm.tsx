@@ -1,12 +1,12 @@
-import React, { useEffect, useState, createContext, Children } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/globalForm.module.scss";
 import SelectBox from "./common/SelectBox";
-import { authString } from "../redux/actions";
-import { authStore } from "../redux/store.js";
+import { authString, emailString } from "../redux/actions";
+import { authStore, emailStore } from "../redux/store.js";
 
 const OPTIONS = [
   {
@@ -62,13 +62,18 @@ function PassFindForm() {
     }
   });
   const submit = () => {
+    const email = form.userId.concat("@", isSelect);
     axios
-      .post("/user/find-pw", { userId: form.userId.concat("@", isSelect) })
+      .post("/user/find-pw", { userId: email })
       .then((res) => {
-        // 액션을 날려줘야함
-        // console.log(res.data.authCode);
+        // 로딩 스피너 구현하고싶다.
+        emailStore.dispatch({
+          type: emailString,
+          text: email,
+        });
+        alert("인증번호를 이메일로 보냈습니다.");
         authStore.dispatch({ type: authString, text: res.data.authCode });
-        // ㅅ
+
         navigate("/authFind");
       })
       .catch((err) => {

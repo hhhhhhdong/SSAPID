@@ -24,6 +24,7 @@ function LoginForm() {
       .post("/login", form)
       .then((res) => {
         sessionStorage.setItem("userNickname", res.data.userNickname);
+        window.location.reload();
         navigate("/");
       })
       .catch((err) => {

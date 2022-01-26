@@ -1,4 +1,5 @@
 import { createStore } from "redux";
-import { makeAuth } from "./reducers";
+import { makeAuth, makeEmail } from "./reducers";
 
 export const authStore = createStore(makeAuth);
+export const emailStore = createStore(makeEmail);
