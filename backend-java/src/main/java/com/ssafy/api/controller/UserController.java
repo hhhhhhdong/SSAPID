@@ -148,11 +148,8 @@ public class UserController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> changePw(@ApiIgnore Authentication authentication,
-                                                               @RequestBody @ApiParam(value = "새로운 비밀번호", required = true) UserChangePwReq req) {
-        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
-        userService.changeUserPw(req, userId);
+    public ResponseEntity<? extends BaseResponseBody> changePw(@RequestBody @ApiParam(value = "새로운 비밀번호", required = true) UserChangePwReq req) {
+        userService.changeUserPw(req);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
