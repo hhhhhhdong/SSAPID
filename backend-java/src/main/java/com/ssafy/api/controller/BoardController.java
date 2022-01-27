@@ -128,4 +128,18 @@ public class BoardController {
         }
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "삭제 성공"));
     }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "게시글 검색", notes = "게시글 검색 결과를 목록을 보여준다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<BoardListRes> boardSearchList(@ApiIgnore Authentication authentication,
+                                                  @RequestParam(value = "keyword") String keyword,
+                                                  @RequestParam(value = "content") String content) {
+
+        List<Board> boards = boardService.getBoardSearchList(keyword,content);
+        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
+    }
 }

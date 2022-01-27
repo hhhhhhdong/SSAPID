@@ -1,6 +1,7 @@
+@import "./Variables.scss";
 .input {
   // box-sizing: border-box;
-  border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+  border: 1px solid $inputBorderColor;
   border-radius: 7px;
   font-size: 12px;
   display: flex;
@@ -17,7 +18,7 @@
     left: 14px;
     line-height: 36px;
     transition: transform ease-out 0.1s;
-    color: rgba(var(--f52, 142, 142, 142), 1);
+    color: $inputSpanColor;
     // user-select: none;
     pointer-events: none; // 마우스 무시
   }

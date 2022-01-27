@@ -1,10 +1,12 @@
+@import "./Variables.scss";
+
 .button {
   width: 240px;
   position: relative;
   border: none;
   display: inline-block;
   // background-color: rgb(241, 241, 151);
-  background-color: #f1c40f;
+  background-color: $yellow;
   padding: 10px 20px;
   border-radius: 10px;
   font-family: "paybooc-Light", sans-serif;
@@ -12,8 +14,8 @@
   font-weight: 600;
   transition: 0.25s;
   // border: 0.5px solid rgb(247, 247, 170);
-  border: 0.5px solid #f1c40f;
-  color: #0a3d62;
+  border: 0.5px solid $yellow;
+  color: $blue;
   &:hover {
     letter-spacing: 2px;
     transform: scale(1);
