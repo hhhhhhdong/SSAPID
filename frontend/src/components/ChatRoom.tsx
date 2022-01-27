@@ -21,15 +21,6 @@ function ChatRoom() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // try {
-    //   await sendChat({
-    //     message: text,
-    //     timestamp: Date.now(),
-    //     uid: state,
-    //   });
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   return (

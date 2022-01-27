@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { emailString, authString } from "redux/_actions/actions";
+
 import Button from "./common/Button";
 import Input from "./common/Input";
 import style from "../styles/globalForm.module.scss";
@@ -110,11 +111,13 @@ function PassFindForm() {
           placeHolder={idPlaceHolder}
           width={150}
         />
-        <span>@</span>
+        <i className="fas fa-at" style={{ margin: "10px 10px" }} />
         <SelectBox handleClick={handleOption} options={OPTIONS} />
       </div>
 
       <Button
+        marginLeft={5}
+        width={10}
         buttonType={submitButtonType}
         handleClick={submit}
         Disabled={isEmpty}
