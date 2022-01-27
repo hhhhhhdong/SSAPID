@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { openSidebar } from "redux/_actions/actions";
+import { RootState } from "redux/_reducers";
 import style from "styles/SidebarForm.module.scss";
 
 function SidebarForm() {
-  const [open, setOpen] = useState(true);
+  const dispatch = useDispatch();
+  const open = useSelector((state: RootState) => state.userReducer.openSidebar);
+
   const onClickSide = () => {
-    setOpen((prev) => !prev);
+    console.log(open);
+    dispatch(openSidebar(!open));
   };
+
   return (
     <div
       className={
