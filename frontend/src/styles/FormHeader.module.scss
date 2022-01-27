@@ -1,3 +1,5 @@
+@import "./Variables.scss";
+
 .header {
   position: relative;
   button {
@@ -17,7 +19,7 @@
     opacity: 0.6;
     i {
       font-size: 28px;
-      color: #f1c40f;
+      color: $yellow;
     }
     &:hover {
       opacity: 1;
@@ -25,7 +27,7 @@
     }
   }
   p {
-    color: #f1c40f;
+    color: $yellow;
     text-align: center;
     font-size: 33px;
     font-weight: 500;

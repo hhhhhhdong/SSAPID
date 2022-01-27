@@ -1,38 +1,29 @@
-import React, { useState } from "react";
-import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
-import style from "../styles/Sidebar.module.scss";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { openSidebar } from "redux/_actions/actions";
+import { RootState } from "redux/_reducers";
+import style from "styles/SidebarForm.module.scss";
 
 function SidebarForm() {
-  const [sidebar, setSidebar] = useState(false);
-  const showSidebar = () => {
-    setSidebar(!sidebar);
-    console.log(sidebar);
+  const dispatch = useDispatch();
+  const open = useSelector((state: RootState) => state.userReducer.openSidebar);
+
+  const onClickSide = () => {
+    console.log(open);
+    dispatch(openSidebar(!open));
   };
 
   return (
-    <>
-      <div className={style.navbar}>
-        <Link to="#!" className={style.menu_bars}>
-          <FaIcons.FaBars onClick={showSidebar} />
-        </Link>
-      </div>
-      <nav className={sidebar ? style.nav_menu_active : style.nav_menu}>
-        <ul className={style.nav_menu_items}>
-          {SidebarData.map((item, index) => {
-            return (
-              <li className={item.cName}>
-                <Link to={item.path}>
-                  <span>{item.title}</span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-    </>
+    <div
+      className={
+        open ? style.container : `${style.container} ${style.sidebarMove}`
+      }
+    >
+      <button type="button" onClick={onClickSide}>
+        side
+      </button>
+    </div>
   );
 }
+
 export default SidebarForm;

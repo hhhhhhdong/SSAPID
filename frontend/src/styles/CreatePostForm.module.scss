@@ -1,3 +1,5 @@
+@import "./Variables.scss";
+
 .container {
   height: 100vh;
   display: flex;
@@ -5,14 +7,14 @@
   justify-content: center;
   align-items: center;
   h1 {
-    color: #f1c40f;
+    color: $yellow;
   }
 }
 
 .textAreaDiv {
   height: 400px;
   padding: 17px 10px 15px 11px;
-  border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+  border: 1px solid $inputBorderColor;
   border-radius: 7px;
   position: relative;
 
@@ -45,7 +47,7 @@
     left: 14px;
     line-height: 36px;
     transition: transform ease-out 0.1s;
-    color: rgba(var(--f52, 142, 142, 142), 1);
+    color: $inputSpanColor;
     // user-select: none;
     pointer-events: none; // 마우스 무시
   }
@@ -58,7 +60,7 @@
   padding-top: 10px;
   padding-left: 3px;
   input {
-    border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
+    border: 1px solid $inputBorderColor;
     border-radius: 7px;
     outline: 0;
   }
