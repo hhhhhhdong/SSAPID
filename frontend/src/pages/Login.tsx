@@ -4,11 +4,9 @@ import LoginForm from "../components/LoginForm";
 
 function Login() {
   return (
-    <div>
-      <VideoBackground>
-        <LoginForm />
-      </VideoBackground>
-    </div>
+    <VideoBackground>
+      <LoginForm />
+    </VideoBackground>
   );
 }
 export default Login;

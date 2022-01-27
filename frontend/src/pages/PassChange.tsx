@@ -1,8 +1,15 @@
 import PassChangeForm from "components/PassChangeForm";
+import VideoBackground from "components/layout/VideoBackground";
+import FormHeader from "components/layout/FormHeader";
 import React from "react";
 
 function PassChange() {
-  return <PassChangeForm />;
+  return (
+    <VideoBackground>
+      <FormHeader text="Change Pw" />
+      <PassChangeForm />
+    </VideoBackground>
+  );
 }
 
 export default PassChange;

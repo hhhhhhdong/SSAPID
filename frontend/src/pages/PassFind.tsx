@@ -1,12 +1,14 @@
 import React from "react";
-import PassFindForm from "../components/PassFindForm";
-import style from "../styles/globalPage.module.scss";
+import VideoBackground from "components/layout/VideoBackground";
+import FormHeader from "components/layout/FormHeader";
+import PassFindForm from "components/PassFindForm";
 
 function PasswordFind() {
   return (
-    <div className={style.page}>
+    <VideoBackground>
+      <FormHeader text="Find Pw" />
       <PassFindForm />
-    </div>
+    </VideoBackground>
   );
 }
 
