@@ -10,6 +10,7 @@
   height: 40px;
   background-color: $yellow;
   color: $blue;
+  transition: width ease-out 0.28s;
 
   h2 {
     font-size: 26px;
@@ -20,4 +21,17 @@
     margin: 0 7px;
     padding: 0 3px;
   }
+}
+.navSidebarIcon {
+  display: inline-block;
+  width: 20px;
+  text-align: center;
+  i {
+    margin: 0 auto;
+  }
+}
+.navMove {
+  transition: width ease-out $sidebarSpeed;
+  width: calc(100% - #{$sidebarWidth});
+  // width: calc(100% - 200px);
 }

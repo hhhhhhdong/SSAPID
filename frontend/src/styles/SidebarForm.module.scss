@@ -1,13 +1,13 @@
 @import "./Variables.scss";
 .container {
-  border: 1px solid red;
+  background-color: $blue;
+  height: 100vh;
   width: $sidebarWidth;
   position: fixed;
   right: 0;
-  transition: right ease-out 0.28s;
+  transition: right ease-out $sidebarSpeed;
 }
 
 .sidebarMove {
-  right: -100px;
-  // right: -$sidebarWidth;
+  right: -$sidebarWidth;
 }
