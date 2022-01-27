@@ -23,7 +23,9 @@ function LoginForm() {
     axios
       .post("/login", form)
       .then((res) => {
+        console.log(res);
         sessionStorage.setItem("userNickname", res.data.userNickname);
+        sessionStorage.setItem("accessToken", res.data.accessToken);
         window.location.reload();
         navigate("/");
       })

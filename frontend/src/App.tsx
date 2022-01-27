@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
+import ChatRoom from "./pages/ChatRoom";
 import Main from "./pages/Main";
 import IdFind from "./pages/IdFind";
 import Register from "./pages/Register";
@@ -15,11 +16,12 @@ import UserDist from "./pages/UserDist";
 import CreatePost from "./pages/CreatePost";
 import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
-import ChatRoom from "./components/ChatRoom";
 import "./App.module.scss";
+import { token } from "./service/firebase-messaging-sw";
 
 function App() {
   const userNickname = sessionStorage.getItem("userNickname");
+  console.log(token);
   return (
     <Router>
       <div className="App">

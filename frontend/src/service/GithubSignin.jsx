@@ -18,6 +18,7 @@ function GithubSignin() {
       .post("/social-login", { userId: userData, userType: 2 })
       .then((res) => {
         sessionStorage.setItem("userNickname", res.data.userNickname);
+        sessionStorage.setItem("accessToken", res.data.accessToken);
         window.location.reload();
         navigate("/");
       })
