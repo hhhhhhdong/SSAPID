@@ -102,7 +102,7 @@ function PassFindForm() {
   };
   return (
     <form className={style.form} onSubmit={handleSubmit}>
-      <div className={style.inform}>
+      <div className={style.inform} style={{ marginBottom: "20px" }}>
         <Input
           name="userId"
           value={userId}

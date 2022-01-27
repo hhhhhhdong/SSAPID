@@ -37,7 +37,6 @@ function PassChangeForm() {
 
   return (
     <div>
-      <h1>비밀번호 변경 페이지</h1>
       <Input
         name="userPw"
         value={userPw}
