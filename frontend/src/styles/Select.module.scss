@@ -1,0 +1,10 @@
+@import "./Variables.scss";
+.basic {
+  width: 9em;
+  height: 3.3em;
+  background-color: rgba(var(--b3f, 220, 220, 220), 1);
+
+  border: 1px solid $inputBorderColor;
+  border-radius: 7px;
+  font-size: 12px;
+}

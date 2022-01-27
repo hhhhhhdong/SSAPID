@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 // import { authStore } from "../redux/store.js";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "redux/_reducers";
-import { emailString, authString } from "redux/_actions/actions";
+import { authString } from "redux/_actions/actions";
 import Input from "./common/Input";
 import Button from "./common/Button";
 

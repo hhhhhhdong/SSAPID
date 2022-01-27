@@ -17,11 +17,9 @@ import CreatePost from "./pages/CreatePost";
 import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
 import "./App.module.scss";
-import { token } from "./service/firebase-messaging-sw";
 
 function App() {
   const userNickname = sessionStorage.getItem("userNickname");
-  console.log(token);
   return (
     <Router>
       <div className="App">

@@ -6,7 +6,7 @@ import PassFindForm from "components/PassFindForm";
 function PasswordFind() {
   return (
     <VideoBackground>
-      <FormHeader text="Find Pw" />
+      <FormHeader text="Find Pw" width={300} />
       <PassFindForm />
     </VideoBackground>
   );
