@@ -9,7 +9,7 @@ import Button from "./common/Button";
 
 function AuthNumForm() {
   const buttonType = "button";
-  const namePlaceHolder = "인증번호";
+  const namePlaceHolder = "인증번호를 입력해주세요.";
   const [auth, setAuth] = useState("");
   const [isEmpty, setEmpty] = useState(true);
   const navigate = useNavigate();
@@ -40,8 +40,6 @@ function AuthNumForm() {
 
   return (
     <div>
-      <h2>인증 번호를 입력해주세요</h2>
-
       <Input
         name="auth"
         value={auth}
