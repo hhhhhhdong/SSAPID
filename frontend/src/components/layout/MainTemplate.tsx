@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
-import style from "styles/MainTemplate.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/_reducers";
+import style from "../../styles/MainTemplate.module.scss";
 import NavbarForm from "../Bars/NavbarForm";
 import SidebarForm from "../Bars/SidebarForm";
 

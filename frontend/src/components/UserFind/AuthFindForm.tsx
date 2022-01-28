@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "redux/_reducers";
-import { authString } from "redux/_actions/actions";
+import { RootState } from "../../redux/_reducers";
+import { authString } from "../../redux/_actions/actions";
 import Input from "../common/Input";
 import Button from "../common/Button";
 

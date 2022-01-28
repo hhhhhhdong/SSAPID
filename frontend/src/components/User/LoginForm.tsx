@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "api/axios";
-import FacebookSignin from "service/FaceBookSingin";
-import GithubSignin from "service/GithubSignin";
+import axios from "../../api/axios";
+import GithubSignin from "../../service/GithubSignin";
 import FormHeader from "../layout/FormHeader";
 import Input from "../common/Input";
 import GoogleSignin from "../../service/GoogleSingin";
+import FacebookSignin from "../../service/FaceBookSingin";
 import style from "../../styles/Loginform.module.scss";
 import Button from "../common/Button";
 

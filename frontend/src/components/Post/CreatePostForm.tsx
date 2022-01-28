@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import style from "styles/CreatePostForm.module.scss";
 import DatePicker from "react-datepicker";
-import axios from "api/axios";
+import style from "../../styles/CreatePostForm.module.scss";
+import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import Spacer from "../common/Spacer";

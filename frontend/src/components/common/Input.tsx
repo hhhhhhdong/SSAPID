@@ -1,6 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from "react";
-import style from "styles/Input.module.scss";
+import style from "../../styles/Input.module.scss";
 
 type InputValue = string | number | readonly string[] | undefined;
 

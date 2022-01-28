@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { emailString, authString } from "redux/_actions/actions";
+import axios from "../../api/axios";
+import { emailString, authString } from "../../redux/_actions/actions";
 
 import Button from "../common/Button";
 import Input from "../common/Input";
@@ -67,7 +67,7 @@ function PassFindForm() {
     const email = form.userId.concat("@", isSelect);
     axios
       .post("/user/find-pw", { userId: email })
-      .then((res) => {
+      .then((res: any) => {
         // 로딩 스피너 구현예정.
 
         dispatch(emailString(email));
@@ -78,7 +78,7 @@ function PassFindForm() {
 
         navigate("/authFind");
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log(err);
         alert("잘못된 이메일입니다.");
       });

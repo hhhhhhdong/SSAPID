@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { ReactNode } from "react";
-import style from "styles/VideoBackground.module.scss";
+import style from "../../styles/VideoBackground.module.scss";
 
 type Props = {
   children: ReactNode;

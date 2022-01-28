@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "redux/_reducers";
+import axios from "../../api/axios";
+import { RootState } from "../../redux/_reducers";
 import Input from "../common/Input";
 import Button from "../common/Button";
 
