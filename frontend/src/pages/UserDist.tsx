@@ -1,5 +1,5 @@
 import React from "react";
-import UserDistForm from "../components/UserDistForm";
+import UserDistForm from "../components/User/UserDistForm";
 
 function UserDist() {
   return (

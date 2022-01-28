@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openSidebar } from "redux/_actions/actions";
-import style from "styles/NavbarForm.module.scss";
 import { RootState } from "redux/_reducers";
+import style from "../../styles/NavbarForm.module.scss";
 
 function NavbarForm() {
   const dispatch = useDispatch();

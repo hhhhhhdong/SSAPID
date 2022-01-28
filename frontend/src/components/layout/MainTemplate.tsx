@@ -1,9 +1,9 @@
 import React, { ReactNode } from "react";
-import NavbarForm from "components/NavbarForm";
-import style from "styles/MainTemplate.module.scss";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/_reducers";
-import SidebarForm from "../SidebarForm";
+import style from "../../styles/MainTemplate.module.scss";
+import NavbarForm from "../Bars/NavbarForm";
+import SidebarForm from "../Bars/SidebarForm";
 
 type Props = {
   children: ReactNode;

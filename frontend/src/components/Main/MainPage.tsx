@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "styles/MainPage.module.scss";
+import style from "../../styles/MainPage.module.scss";
 import PostCard from "./PostCard";
 import Input from "../common/Input";
 

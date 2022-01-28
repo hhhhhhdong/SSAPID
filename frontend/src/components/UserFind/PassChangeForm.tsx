@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "redux/_reducers";
-import Input from "./common/Input";
-import Button from "./common/Button";
-// import { emailStore } from "../redux/store";
+import axios from "../../api/axios";
+import { RootState } from "../../redux/_reducers";
+import Input from "../common/Input";
+import Button from "../common/Button";
 
 function PassChangeForm() {
-  // const userId = emailStore.getState();
   const userId = useSelector(
     (state: RootState) => state.userReducer.emailString
   );
@@ -31,7 +29,7 @@ function PassChangeForm() {
   const submit = () => {
     axios.put("/user/change-pw", { userId, userPw }).then(() => {
       alert("정상적으로 바뀌었습니다.");
-      navigate("/login");
+      navigate("/");
     });
   };
 
@@ -53,7 +51,7 @@ function PassChangeForm() {
         buttonType={buttonType}
         handleClick={submit}
         Disabled={isEmpty}
-        text="비밀번호 찾기"
+        text="확인"
       />
     </div>
   );

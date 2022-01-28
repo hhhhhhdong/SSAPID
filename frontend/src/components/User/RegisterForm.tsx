@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import axios from "api/axios";
 import { useNavigate } from "react-router-dom";
-import Input from "./common/Input";
-import Button from "./common/Button";
-import Spacer from "./common/Spacer";
-import FormHeader from "./layout/FormHeader";
+import axios from "../../api/axios";
+import Input from "../common/Input";
+import Button from "../common/Button";
+import Spacer from "../common/Spacer";
+import FormHeader from "../layout/FormHeader";
 
 const INPUT_MARGIN_BOTTOM = 2;
 function RegisterForm() {
@@ -143,7 +143,7 @@ function RegisterForm() {
 
     axios
       .get(`/user/check-nick/${form.userNickname}`)
-      .then((res) => {
+      .then(() => {
         setIsCheckedNickname(true);
         setErrorMessage({
           ...errorMessage,
@@ -207,8 +207,7 @@ function RegisterForm() {
       .then(() => {
         navigate("/login");
       })
-      .catch((err) => {
-        console.dir(err);
+      .catch(() => {
         alert("회원가입에 실패했습니다.");
       });
   };

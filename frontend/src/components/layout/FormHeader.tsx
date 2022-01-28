@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import React from "react";
-import style from "styles/FormHeader.module.scss";
 import { useNavigate } from "react-router-dom";
+import style from "../../styles/FormHeader.module.scss";
 
 type Props = {
   text: string;
