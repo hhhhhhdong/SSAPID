@@ -8,7 +8,11 @@
 **2) 프로젝트 기간**  
 &nbsp;&nbsp;&nbsp;&nbsp;2021.01.10 ~ 2021.02.18
 
-**3) 사용 기술 :**  
+**3) 팀원**  
+&nbsp;&nbsp;&nbsp;&nbsp;Back-End : 문관필, 김은준, 이진곤  
+&nbsp;&nbsp;&nbsp;&nbsp;Front-End : 김민성, 육현동, 배준호
+
+**4) 사용 기술 :**  
 &nbsp;&nbsp;&nbsp;&nbsp;Back-End - Java, Spring Boot, Node.js  
 &nbsp;&nbsp;&nbsp;&nbsp;Front-End - React, Typescript, SCSS  
 &nbsp;&nbsp;&nbsp;&nbsp;DB : MariaDB, Firebase  
