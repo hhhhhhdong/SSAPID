@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { authStore } from "../redux/store.js";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "redux/_reducers";
 import { authString } from "redux/_actions/actions";
-import Input from "./common/Input";
-import Button from "./common/Button";
+import Input from "../common/Input";
+import Button from "../common/Button";
 
 function AuthNumForm() {
   const buttonType = "button";
@@ -13,8 +12,7 @@ function AuthNumForm() {
   const [auth, setAuth] = useState("");
   const [isEmpty, setEmpty] = useState(true);
   const navigate = useNavigate();
-  // const { auth } = authString;
-  // const select = authStore.getState();
+
   const select = useSelector(
     (state: RootState) => state.userReducer.authString
   );

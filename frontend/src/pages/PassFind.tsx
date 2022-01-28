@@ -1,7 +1,7 @@
 import React from "react";
 import VideoBackground from "components/layout/VideoBackground";
 import FormHeader from "components/layout/FormHeader";
-import PassFindForm from "components/PassFindForm";
+import PassFindForm from "components/UserFind/PassFindForm";
 
 function PasswordFind() {
   return (

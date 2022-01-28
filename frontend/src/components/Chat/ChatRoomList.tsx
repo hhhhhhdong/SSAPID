@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeChatRoom, makeUser } from "service/function";
-import Button from "./common/Button";
+import Button from "../common/Button";
 
 function ChatRoomList() {
   const [isEmpty, setEmpty] = useState(false);

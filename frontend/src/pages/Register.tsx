@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React from "react";
 import VideoBackground from "components/layout/VideoBackground";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/User/RegisterForm";
 
 function Register() {
   return (

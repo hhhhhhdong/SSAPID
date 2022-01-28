@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "api/axios";
 import FacebookSignin from "service/FaceBookSingin";
 import GithubSignin from "service/GithubSignin";
-import { useNavigate } from "react-router-dom";
-import FormHeader from "./layout/FormHeader";
-import Input from "./common/Input";
-import GoogleSignin from "../service/GoogleSingin";
-import style from "../styles/Loginform.module.scss";
-import Button from "./common/Button";
-// eslint-disable-next-line import/order
+import FormHeader from "../layout/FormHeader";
+import Input from "../common/Input";
+import GoogleSignin from "../../service/GoogleSingin";
+import style from "../../styles/Loginform.module.scss";
+import Button from "../common/Button";
 
 function LoginForm() {
   const idPlaceHolder = "아이디를 입력하세요";
@@ -22,16 +21,15 @@ function LoginForm() {
   const Submit = () => {
     axios
       .post("/login", form)
-      .then((res) => {
+      .then((res: any) => {
         console.log(res);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         window.location.reload();
         navigate("/");
       })
-      .catch((err) => {
+      .catch(() => {
         alert("존재하지않는 아이디입니다.");
-        console.log(err);
         setForm({
           userId: "",
           userPw: "",

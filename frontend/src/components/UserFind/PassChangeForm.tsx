@@ -3,12 +3,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "redux/_reducers";
-import Input from "./common/Input";
-import Button from "./common/Button";
-// import { emailStore } from "../redux/store";
+import Input from "../common/Input";
+import Button from "../common/Button";
 
 function PassChangeForm() {
-  // const userId = emailStore.getState();
   const userId = useSelector(
     (state: RootState) => state.userReducer.emailString
   );

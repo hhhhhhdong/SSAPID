@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from "react";
+import axios from "api/axios";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import style from "../styles/globalForm.module.scss";
-import Input from "./common/Input";
-import Button from "./common/Button";
+import style from "../../styles/globalForm.module.scss";
+import Input from "../common/Input";
+import Button from "../common/Button";
 
 function UserDistForm() {
   // 회원탈퇴 Form

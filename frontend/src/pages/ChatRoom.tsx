@@ -1,4 +1,4 @@
-import ChatRoomList from "components/ChatRoomList";
+import ChatRoomList from "components/Chat/ChatRoomList";
 import React from "react";
 
 function ChatRoom() {

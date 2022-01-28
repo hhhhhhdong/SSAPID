@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import style from "styles/CreatePostForm.module.scss";
 import DatePicker from "react-datepicker";
 import axios from "api/axios";
-import Input from "./common/Input";
-import Button from "./common/Button";
-import Spacer from "./common/Spacer";
+import Input from "../common/Input";
+import Button from "../common/Button";
+import Spacer from "../common/Spacer";
 import "react-datepicker/dist/react-datepicker.css";
 
 function CreatePostForm() {
@@ -43,9 +43,8 @@ function CreatePostForm() {
       .then(() => {
         navigate("/");
       })
-      .catch((err) => {
+      .catch(() => {
         alert("게시글 생성에 실패했습니다.");
-        console.dir(err);
       });
   };
 

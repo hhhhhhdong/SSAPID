@@ -1,5 +1,5 @@
 import React from "react";
-import AuthFindForm from "components/AuthFindForm";
+import AuthFindForm from "components/UserFind/AuthFindForm";
 import VideoBackground from "components/layout/VideoBackground";
 import FormHeader from "components/layout/FormHeader";
 

@@ -1,7 +1,7 @@
 // import { sendChat } from "service/function";
 import React, { useState } from "react";
-import Button from "./common/Button";
-import Input from "./common/Input";
+import Button from "../common/Button";
+import Input from "../common/Input";
 
 function ChatRoom() {
   const [isEmpty, setEmpty] = useState(true);

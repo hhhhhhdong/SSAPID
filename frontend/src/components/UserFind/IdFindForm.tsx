@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "api/axios";
-import Button from "./common/Button";
-import Input from "./common/Input";
-import style from "../styles/globalForm.module.scss";
+import Button from "../common/Button";
+import Input from "../common/Input";
+import style from "../../styles/globalForm.module.scss";
 
 type idFindProps = {
   onSubmit: (form: { userName: string; userPhone: string }) => void;
@@ -56,11 +56,11 @@ function IdFindForm({ onSubmit }: idFindProps) {
   const submit = () => {
     axios
       .post("/user/find-id", form)
-      .then((res) => {
+      .then((res: any) => {
         alert(res.data.userId);
         navigate("/login");
       })
-      .catch((err) => {
+      .catch(() => {
         alert("잘못된 정보입니다.");
       });
   };
