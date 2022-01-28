@@ -31,8 +31,15 @@ function CreatePostForm() {
 
   const onClickSubmit = () => {
     const date = `${deadline?.getFullYear()}-${
-      Number(deadline?.getMonth()) + 1
-    }-${deadline?.getDate()}`;
+      Number(deadline?.getMonth()) + 1 < 10
+        ? `0${deadline?.getMonth()}`
+        : deadline?.getMonth()
+    }-${
+      Number(deadline?.getDate()) < 10
+        ? `0${deadline?.getDate()}`
+        : deadline?.getDate()
+    }`;
+    console.log(date);
 
     axios
       .post("/board", {
