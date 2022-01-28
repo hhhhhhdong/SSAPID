@@ -29,7 +29,7 @@ function PassChangeForm() {
   const submit = () => {
     axios.put("/user/change-pw", { userId, userPw }).then(() => {
       alert("정상적으로 바뀌었습니다.");
-      navigate("/login");
+      navigate("/");
     });
   };
 
@@ -51,7 +51,7 @@ function PassChangeForm() {
         buttonType={buttonType}
         handleClick={submit}
         Disabled={isEmpty}
-        text="비밀번호 찾기"
+        text="확인"
       />
     </div>
   );
