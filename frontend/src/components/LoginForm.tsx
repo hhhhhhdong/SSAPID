@@ -68,6 +68,7 @@ function LoginForm() {
       <Input
         name="userPw"
         value={userPw}
+        type="password"
         onChange={onChange}
         placeHolder={passwordPlaceHolder}
       />
