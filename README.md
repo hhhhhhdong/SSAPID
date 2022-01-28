@@ -10,9 +10,9 @@
 
 **3) 사용 기술 :**  
 &nbsp;&nbsp;&nbsp;&nbsp;Back-End - Java, Spring Boot, Node.js  
-&nbsp;&nbsp;Front-End - React, Typescript, SCSS  
-&nbsp;&nbsp;DB : MariaDB, Firebase  
-&nbsp;&nbsp;Server : Ubuntu 20.04  
+&nbsp;&nbsp;&nbsp;&nbsp;Front-End - React, Typescript, SCSS  
+&nbsp;&nbsp;&nbsp;&nbsp;DB : MariaDB, Firebase  
+&nbsp;&nbsp;&nbsp;&nbsp;Server : Ubuntu 20.04  
 
 #### 2. 기획
 **1) ERD**  
