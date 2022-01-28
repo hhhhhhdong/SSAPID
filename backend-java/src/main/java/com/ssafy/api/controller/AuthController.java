@@ -43,12 +43,9 @@ public class AuthController {
         String password = loginInfo.getUserPw();
         try {
             User user = userService.getUserByUserId(userId);
-            // 패스워드 일치 여부 확인
             if (passwordEncoder.matches(password, user.getUserPw())) {
-                // 유효한 패스워드가 맞는 경우, 로그인 성공으로 응답.(액세스 토큰을 포함하여 응답값 전달)
                 return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId), user.getUserNickname()));
             }
-            // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
             return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null, null));
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "사용자 없음", null, null));
@@ -58,8 +55,7 @@ public class AuthController {
 
     @PostMapping("/social-login")
     @ApiOperation(value = "소셜 로그인", notes = "<strong>소셜 로그인 정보</strong>를 통해 정보를 저장하고 로그인 한다.")
-    public ResponseEntity<? extends UserLoginPostRes> socialLogin(
-            @Valid @RequestBody @ApiParam(value = "소셜 로그인 정보", required = true) UserSocialReq socialInfo) {
+    public ResponseEntity<? extends UserLoginPostRes> socialLogin(@Valid @RequestBody @ApiParam(value = "소셜 로그인 정보", required = true) UserSocialReq socialInfo) {
         String userId = "Social_" + socialInfo.getUserId();
         try {
             User user = userService.getSocialUserByUserId(userId);

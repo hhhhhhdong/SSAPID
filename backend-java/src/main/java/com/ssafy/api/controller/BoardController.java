@@ -136,10 +136,10 @@ public class BoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BoardListRes> boardSearchList(@ApiIgnore Authentication authentication,
-                                                  @RequestParam(value = "keyword") String keyword,
-                                                  @RequestParam(value = "content") String content) {
+                                                        @RequestParam(value = "keyword") String keyword,
+                                                        @RequestParam(value = "content") String content) {
 
-        List<Board> boards = boardService.getBoardSearchList(keyword,content);
+        List<Board> boards = boardService.getBoardSearchList(keyword, content);
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
     }
 }

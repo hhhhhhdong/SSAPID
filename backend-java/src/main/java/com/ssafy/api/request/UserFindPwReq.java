@@ -5,9 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * 유저 비밀번호 찾기 API ([POST] /user/find-pw) 요청에 필요한 리퀘스트 바디 정의.
- */
+
 @Getter
 @Setter
 @ApiModel("UserFindPwRequest")

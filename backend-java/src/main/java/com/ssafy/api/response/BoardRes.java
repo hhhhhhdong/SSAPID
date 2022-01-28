@@ -8,9 +8,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/**
- * 게시글 조회 API ([GET] /board/{boardSeq}) 요청에 대한 응답값 정의.
- */
+
 @Getter
 @Setter
 @ApiModel("BoardResponse")

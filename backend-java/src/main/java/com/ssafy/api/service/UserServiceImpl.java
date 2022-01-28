@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Random;
 
-/**
- * 유저 관련 비즈니스 로직 처리를 위한 서비스 구현 정의.
- */
+
 @Service("userService")
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -38,7 +36,6 @@ public class UserServiceImpl implements UserService {
     public User createUser(UserRegisterPostReq userRegisterInfo) {
         User user = new User();
         user.setUserId(userRegisterInfo.getUserId());
-        // 보안을 위해서 유저 패스워드 암호화 하여 디비에 저장.
         user.setUserPw(passwordEncoder.encode(userRegisterInfo.getUserPw()));
         user.setUserNickname(userRegisterInfo.getUserNickname());
         user.setUserPhone(userRegisterInfo.getUserPhone());
@@ -53,13 +50,12 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUserId("Social_"+socialRegisterInfo.getUserId());
         user.setUserType(socialRegisterInfo.getUserType());
-        // 난수로 닉네임 생성, 중복체크
+
         String userNickname = RandomStringUtils.random(15, true, true);
         while(checkId(userNickname)){
             userNickname = RandomStringUtils.random(15, true, true);
         }
         user.setUserNickname(userNickname);
-        // 소셜 로그인 유저일때 더미데이터
         user.setUserPw(passwordEncoder.encode("sociallogin"));
         user.setUserPhone("000-0000-0000");
         user.setUserName("social_guest");
@@ -68,7 +64,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserId(String userId) {
-        // 디비에 유저 정보 조회 (userId 를 통한 조회).
         User user = userRepositorySupport.findUserByUserId(userId).get();
         return user;
 
@@ -92,10 +87,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String getUserPw(String userId) {
-        if (Objects.isNull(userRepositorySupport.findUserPw(userId))) { // 일치하는 회원이 없는 경우
+        if (Objects.isNull(userRepositorySupport.findUserPw(userId))) {
             return "";
         }
-        // 난수 생성, 이메일 전송
+
         Random random = new Random();
         String key = "";
 
