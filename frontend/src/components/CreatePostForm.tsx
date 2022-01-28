@@ -59,7 +59,7 @@ function CreatePostForm() {
           value={title}
           onChange={onChangeTitle}
           width={500}
-          // noBackground
+          noBackground
         />
         <div className={style.textAreaDiv}>
           <span

@@ -1,10 +1,10 @@
 @import "./Variables.scss";
 .container {
-  background-color: $blue;
-  height: 100vh;
-  width: $sidebarWidth;
   position: fixed;
   right: 0;
+  height: 100vh;
+  background-color: $blue;
+  width: $sidebarWidth;
   transition: right ease-out $sidebarSpeed;
 }
 

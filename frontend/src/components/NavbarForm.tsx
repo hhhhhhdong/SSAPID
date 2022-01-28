@@ -10,23 +10,19 @@ function NavbarForm() {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.userReducer.openSidebar);
   const [openIcon, setOpenIcon] = useState<boolean>(false);
-  const [closeIcon, setCloseIcon] = useState<boolean>(false);
 
-  const onSidebarMouseEnter = () => {
-    if (!open) {
-      setOpenIcon(true);
-    } else {
-      setCloseIcon(true);
-    }
-  };
-  const onSidebarMouseLeave = () => {
-    setOpenIcon(false);
-    setCloseIcon(false);
-  };
+  // const onSidebarMouseEnter = () => {
+  //   if (!open) {
+  //     setOpenIcon(true);
+  //   }
+  // };
+  // const onSidebarMouseLeave = () => {
+  //   setOpenIcon(false);
+  // };
 
-  const onClickSide = () => {
-    dispatch(openSidebar(!open));
-  };
+  // const onClickSide = () => {
+  //   dispatch(openSidebar(!open));
+  // };
 
   const displayMenuIcon = () => {
     if (open) {
@@ -46,9 +42,9 @@ function NavbarForm() {
         <span>내정보</span>
         <span>로그아웃</span>
         <span
-          onMouseEnter={onSidebarMouseEnter}
-          onMouseLeave={onSidebarMouseLeave}
-          onClick={onClickSide}
+          onMouseEnter={() => !open && setOpenIcon(true)}
+          onMouseLeave={() => setOpenIcon(false)}
+          onClick={() => dispatch(openSidebar(!open))}
           role="button"
           className={style.navSidebarIcon}
         >
