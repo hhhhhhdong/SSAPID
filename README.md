@@ -1,4 +1,3 @@
-
 ## 프로젝트 팀원 매칭 서비스 - SSAPID
 --------------------------------------
 
@@ -26,5 +25,5 @@ Server : Ubuntu 20.04
 **4) 테스트 케이스**
     https://getbra1n.notion.site/0313bfb8ac6847b08db90232b5d7cd30
 
-**5) 와이어 프레임
+**5) 와이어 프레임**
     https://getbra1n.notion.site/e07279ede2064b1b8d37d05dee958411
