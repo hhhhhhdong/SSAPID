@@ -1,4 +1,9 @@
-import { OPEN_SIDEBAR, AUTH_STRING, EMAIL_STRING } from "./types";
+import {
+  OPEN_SIDEBAR,
+  AUTH_STRING,
+  EMAIL_STRING,
+  CHATROOM_STRING,
+} from "./types";
 
 export function openSidebar(data) {
   return {
@@ -15,6 +20,13 @@ export function authString(data) {
 export function emailString(data) {
   return {
     type: EMAIL_STRING,
+    payload: data,
+  };
+}
+
+export function chatRoomString(data) {
+  return {
+    type: CHATROOM_STRING,
     payload: data,
   };
 }

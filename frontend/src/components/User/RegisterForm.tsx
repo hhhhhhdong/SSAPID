@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { makeUser } from "service/function";
 import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
@@ -194,7 +195,8 @@ function RegisterForm() {
 
     // 비밀번호 확인 다르면 리턴
     if (form.userPw !== form.userPwCheck) return;
-
+    // 파이어베이스 데이터베이스 저장
+    makeUser(userId, userNickname);
     axios
       .post("/user/register", {
         userId,
@@ -205,7 +207,9 @@ function RegisterForm() {
         userType: 1,
       })
       .then(() => {
-        navigate("/login");
+        makeUser(userId, userNickname);
+        alert("회원가입에 성공했습니다.");
+        navigate("/");
       })
       .catch(() => {
         alert("회원가입에 실패했습니다.");

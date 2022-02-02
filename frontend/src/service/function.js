@@ -7,10 +7,9 @@ export function makeChatRoom(data) {
   });
 }
 
-export function makeUser(data) {
+export function makeUser(email, userNickName) {
   const db = getDatabase();
-  const userToken = data.accessToken;
-  push(ref(db, "uid/"), {
-    [userToken]: data.accessToken,
+  set(ref(db, `users/${userNickName}`), {
+    email,
   });
 }
