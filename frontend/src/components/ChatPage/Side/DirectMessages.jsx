@@ -16,6 +16,10 @@ function DirectMessages() {
   });
   // 가져온 users 스키마를 바탕으로 users state 형성
   const [users, setUsers] = useState([]);
+
+  // 활성화 된 채팅방인지
+  const [isActive, setActive] = useState("");
+
   const dispatch = useDispatch();
 
   // 렌더링 될때마다 db에서 스키마 로딩
@@ -58,6 +62,7 @@ function DirectMessages() {
       name: user.nickName,
     };
     dispatch(chatRoomString(chatRoomData));
+    setActive(user.nickName);
   };
 
   // 닉네임 렌더링
@@ -68,8 +73,9 @@ function DirectMessages() {
         key={user.nickName}
         onClick={() => changeChatRoom(user)}
         aria-hidden="true"
+        style={{ backgroundColor: user.nickName === isActive && "#ffffff45" }}
       >
-        {user.nickName}
+        # {user.nickName}
       </li>
     ));
 
