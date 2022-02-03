@@ -59,8 +59,10 @@ public class BoardController {
     })
     public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         List<Board> boards = boardService.getBoardList();
-        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
+        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards, user));
     }
 
     @GetMapping("/{boardSeq}")
@@ -73,11 +75,12 @@ public class BoardController {
     public ResponseEntity<BoardRes> getBoard(@ApiIgnore Authentication authentication,
                                              @PathVariable("boardSeq") @ApiParam(value = "게시글 번호", required = true) long boardSeq) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
         Board board = boardService.getBoardByBoardSeq(boardSeq);
         if (board == null) {
             return ResponseEntity.status(404).body(null);
         }
-        return ResponseEntity.status(200).body(BoardRes.of(board));
+        return ResponseEntity.status(200).body(BoardRes.of(board,user));
     }
 
     @PutMapping("/{boardSeq}")
@@ -140,9 +143,11 @@ public class BoardController {
     public ResponseEntity<BoardListRes> boardSearchList(@ApiIgnore Authentication authentication,
                                                         @RequestParam(value = "keyword") String keyword,
                                                         @RequestParam(value = "content") String content) {
-
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         List<Board> boards = boardService.getBoardSearchList(keyword, content);
-        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
+        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards, user));
     }
 
     @GetMapping ("/favorite/{boardSeq}")
