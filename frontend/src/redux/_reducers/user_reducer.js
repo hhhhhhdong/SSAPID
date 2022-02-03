@@ -1,9 +1,19 @@
 /* eslint-disable func-names */
 /* eslint-disable default-param-last */
-import { OPEN_SIDEBAR, AUTH_STRING, EMAIL_STRING } from "redux/_actions/types";
+import {
+  OPEN_SIDEBAR,
+  AUTH_STRING,
+  EMAIL_STRING,
+  CHATROOM_STRING,
+} from "redux/_actions/types";
 
 export default function (
-  state = { openSidebar: true, authString: "", emailString: "" },
+  state = {
+    openSidebar: true,
+    authString: "",
+    emailString: "",
+    currentChatRoom: null,
+  },
   action
 ) {
   switch (action.type) {
@@ -13,6 +23,8 @@ export default function (
       return { ...state, authString: action.payload };
     case EMAIL_STRING:
       return { ...state, emailString: action.payload };
+    case CHATROOM_STRING:
+      return { ...state, currentChatRoom: action.payload };
     default:
       return state;
   }

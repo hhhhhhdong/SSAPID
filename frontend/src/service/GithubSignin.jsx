@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { makeUser } from "./function";
 import { authService, githubProvider } from "./fbase";
 
 function GithubSignin() {
@@ -14,11 +14,13 @@ function GithubSignin() {
     const { user } = multiFactor;
     const { uid } = user;
     const userData = uid;
-    axios
+    await axios
       .post("/social-login", { userId: userData, userType: 2 })
       .then((res) => {
+        makeUser(userData, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
+        sessionStorage.setItem("email", userData);
         window.location.reload();
         navigate("/");
       })
@@ -26,6 +28,11 @@ function GithubSignin() {
         console.log(error);
       });
   };
+
+  makeUser(
+    sessionStorage.getItem("email"),
+    sessionStorage.getItem("userNickname")
+  );
 
   return (
     <i className="fab fa-github" onClick={onGithubClick} aria-hidden="true" />

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import ChatRoom from "./pages/ChatRoom";
+import ChatPage from "pages/ChatPage";
 import Main from "./pages/Main";
 import IdFind from "./pages/IdFind";
 import Register from "./pages/Register";
@@ -28,7 +28,7 @@ function App() {
           <Route path="/createPost" element={<CreatePost />} />
           <Route path="/authFind" element={<AuthFind />} />
           <Route path="/passChange" element={<PassChange />} />
-          <Route path="/chatRoom" element={<ChatRoom />} />
+          <Route path="/chatPage" element={<ChatPage />} />
         </Routes>
       </div>
     </Router>
