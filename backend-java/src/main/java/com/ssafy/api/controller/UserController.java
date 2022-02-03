@@ -3,19 +3,23 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.UserFindIdRes;
 import com.ssafy.api.response.UserFindPwRes;
+import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
+import com.ssafy.common.util.JwtTokenUtil;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.NoSuchElementException;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -27,6 +31,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     @ApiOperation(value = "회원 가입", notes = "<strong>회원가입 정보</strong>를 통해 회원가입 한다.")
@@ -92,14 +99,23 @@ public class UserController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteUserInfo(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<? extends BaseResponseBody> deleteUserInfo(@ApiIgnore Authentication authentication,
+                                                                     @Valid @RequestBody @ApiParam(value = "비밀번호", required = true)UserDeleteReq userDeleteReq) {
 
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
-        User user = userService.getUserByUserId(userId);
-        userService.deleteUser(user);
 
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        try {
+            User user = userService.getUserByUserId(userId);
+            if (passwordEncoder.matches(userDeleteReq.getUserPw(), user.getUserPw())) {
+                userService.deleteUser(user);
+                return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+            }
+            return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password"));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "사용자 없음"));
+        }
+
     }
 
     @PostMapping("/find-id")

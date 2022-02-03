@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 유저 모델 정의.
@@ -32,4 +34,7 @@ public class User extends BaseTimeEntity {
     String userName;
     @Column(name = "user_type", nullable = false) @NotNull
     Long userType;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Board> boardList = new HashSet<>();
 }

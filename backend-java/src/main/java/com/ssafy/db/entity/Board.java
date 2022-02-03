@@ -17,7 +17,7 @@ public class Board extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_seq")
     Long boardSeq;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_seq", nullable = false) @NotNull
     User user;
     @Column(name = "board_title", nullable = false, length = 100)
