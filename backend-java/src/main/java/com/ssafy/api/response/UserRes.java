@@ -19,6 +19,8 @@ public class UserRes{
 	String userPw;
 	String userNickname;
 	String userPhone;
+	String userName;
+	Long userType;
 	
 	public static UserRes of(User user) {
 		UserRes res = new UserRes();
@@ -26,6 +28,8 @@ public class UserRes{
 		res.setUserPw(user.getUserPw());
 		res.setUserNickname(user.getUserNickname());
 		res.setUserPhone(user.getUserPhone());
+		res.setUserName(user.getUserName());
+		res.setUserType(user.getUserType());
 		return res;
 	}
 }
