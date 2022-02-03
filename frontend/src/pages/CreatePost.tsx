@@ -1,10 +1,13 @@
 import React from "react";
+import Navbar from "components/layout/MainTemplate";
 import CreatePostForm from "components/Post/CreatePostForm";
 
 function CreatePost() {
   return (
     <div>
-      <CreatePostForm />
+      <Navbar>
+        <CreatePostForm />
+      </Navbar>
     </div>
   );
 }

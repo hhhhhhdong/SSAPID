@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openSidebar } from "redux/_actions/actions";
+import { Link } from "react-router-dom";
 import { RootState } from "redux/_reducers";
 import style from "../../styles/NavbarForm.module.scss";
 
@@ -10,19 +11,6 @@ function NavbarForm() {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.userReducer.openSidebar);
   const [openIcon, setOpenIcon] = useState<boolean>(false);
-
-  // const onSidebarMouseEnter = () => {
-  //   if (!open) {
-  //     setOpenIcon(true);
-  //   }
-  // };
-  // const onSidebarMouseLeave = () => {
-  //   setOpenIcon(false);
-  // };
-
-  // const onClickSide = () => {
-  //   dispatch(openSidebar(!open));
-  // };
 
   const displayMenuIcon = () => {
     if (open) {
@@ -36,9 +24,13 @@ function NavbarForm() {
 
   return (
     <nav className={open ? `${style.nav} ${style.navMove}` : style.nav}>
-      <h2>SSAFID</h2>
+      <h2>
+        <Link to="/">SSAFID</Link>
+      </h2>
       <div>
-        <span>글쓰기</span>
+        <span>
+          <Link to="/createpost">글쓰기</Link>
+        </span>
         <span>내정보</span>
         <span>로그아웃</span>
         <span

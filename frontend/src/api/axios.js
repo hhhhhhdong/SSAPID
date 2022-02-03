@@ -1,11 +1,21 @@
 /* eslint-disable dot-notation */
 import axios from "axios";
 
-const BASE_URL = "http://localhost:8080";
-const DEFAULT_ACCEPT_TYPE = "application/json";
-// const token = localStorage.getItem("accessToken");
-axios.defaults.baseURL = BASE_URL;
-axios.defaults.headers["Content-Type"] = DEFAULT_ACCEPT_TYPE;
-// axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+const API_END_POINT = "http://localhost:8080";
 
-export default axios;
+const token = sessionStorage.getItem("accessToken");
+const headers = token
+  ? {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    }
+  : {
+      "Content-Type": "application/json",
+    };
+
+const client = axios.create({
+  baseURL: API_END_POINT,
+  headers,
+});
+
+export default client;

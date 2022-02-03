@@ -39,7 +39,6 @@ function CreatePostForm() {
         ? `0${deadline?.getDate()}`
         : deadline?.getDate()
     }`;
-    console.log(date);
 
     axios
       .post("/board", {
