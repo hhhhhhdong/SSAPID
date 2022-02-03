@@ -205,7 +205,7 @@ function RegisterForm() {
         userType: 1,
       })
       .then(() => {
-        navigate("/login");
+        navigate("/");
       })
       .catch(() => {
         alert("회원가입에 실패했습니다.");
