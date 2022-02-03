@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -27,4 +29,6 @@ public class Board extends BaseTimeEntity {
     @Column(name = "deadline", nullable = false) @NotNull
     LocalDate deadline;
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Favorite> favoriteList = new HashSet<>();
 }

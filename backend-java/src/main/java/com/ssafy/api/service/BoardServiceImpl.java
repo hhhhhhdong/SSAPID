@@ -3,15 +3,20 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.BoardRegisterPostReq;
 import com.ssafy.api.request.BoardUpdateReq;
 import com.ssafy.db.entity.Board;
+import com.ssafy.db.entity.Favorite;
 import com.ssafy.db.entity.User;
 import com.ssafy.db.repository.BoardRepository;
 import com.ssafy.db.repository.BoardRepositorySupport;
+import com.ssafy.db.repository.FavoriteRepository;
 import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -19,6 +24,8 @@ public class BoardServiceImpl implements BoardService {
     BoardRepository boardRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    FavoriteRepository favoriteRepository;
     @Autowired
     BoardRepositorySupport boardRepositorySupport;
 
@@ -58,9 +65,44 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<Board> getLikeBoardList(Set<Favorite> favoriteList) {
+        List<Favorite> list = new ArrayList<>(favoriteList);
+        System.out.println(list.get(1));
+        return null;
+    }
+
+    @Override
     public Board getBoardByBoardSeq(Long boardSeq) {
         Board board = boardRepository.findByBoardSeq(boardSeq).orElse(null);
         return board;
+    }
+
+    public long checkLike(User user, Board board) {
+        for(Favorite favorite : board.getFavoriteList()){ //게시글의 즐겨찾기들 탐색
+            if(favorite.getUser().getUserSeq() == user.getUserSeq()){ //즐겨찾기의 userSeq == 해당유저의 userSeq
+                return favorite.getFavoriteSeq();   //해당하는 즐겨찾기의 번호 반환
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int favoriteBoard(User user, Board board) {
+        long favoriteSeq = checkLike(user,board); //중복체크
+
+        if(favoriteSeq != -1){ // 이미 등록 되어있다면
+            Favorite favorite = favoriteRepository.findByFavoriteSeq(favoriteSeq);
+            board.getFavoriteList().remove(favorite);
+            user.getFavoriteList().remove(favorite);
+            favoriteRepository.delete(favorite);
+            return -1;
+        }else{ // 미등록 상태라면
+            Favorite favorite = new Favorite();
+            favorite.setUser(user);
+            favorite.setBoard(board);
+            favoriteRepository.save(favorite);
+            return 1;
+        }
     }
 
     @Override

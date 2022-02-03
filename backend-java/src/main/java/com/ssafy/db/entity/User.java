@@ -37,4 +37,6 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Board> boardList = new HashSet<>();
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Favorite> favoriteList = new HashSet<>();
 }
