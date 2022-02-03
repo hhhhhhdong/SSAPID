@@ -16,13 +16,16 @@ public class UserLoginPostRes extends BaseResponseBody {
     String accessToken;
     @ApiModelProperty(name = "userNickname", example = "구미_2반_김은준")
     String userNickname;
+    @ApiModelProperty(name = "userType", example = "1")
+    Long userType;
 
-    public static UserLoginPostRes of(Integer statusCode, String message, String accessToken, String userNickname) {
+    public static UserLoginPostRes of(Integer statusCode, String message, String accessToken, String userNickname, Long userType) {
         UserLoginPostRes res = new UserLoginPostRes();
         res.setStatusCode(statusCode);
         res.setMessage(message);
         res.setAccessToken(accessToken);
         res.setUserNickname(userNickname);
+        res.setUserType(userType);
         return res;
     }
 }
