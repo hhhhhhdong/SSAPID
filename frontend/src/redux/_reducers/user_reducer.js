@@ -9,7 +9,7 @@ import {
 
 export default function (
   state = {
-    openSidebar: true,
+    openSidebar: false,
     authString: "",
     emailString: "",
     currentChatRoom: null,

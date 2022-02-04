@@ -22,13 +22,30 @@ function BoardCard({
   author,
   isLike,
 }: Props) {
+  const [isLikeState, setIsLikeState] = useState<boolean>(isLike === "true");
+  const onClickLike = (e: React.MouseEvent) => {
+    e.preventDefault();
+    axios
+      .get(`/board/favorite/${boardSeq}`)
+      .then((res) => {
+        console.log(res);
+        setIsLikeState((prev) => !prev);
+      })
+      .catch((err) => {
+        console.dir(err);
+      });
+  };
   return (
     <div className={style.container}>
-      <Link to="/createboard">
+      <Link to={`/board/${boardSeq}`}>
         <div className={style.header}>
           <p>작성자: ADFFSED13DGSDR4</p>
-          <span>
-            <i className="far fa-bookmark" />
+          <span onClick={onClickLike}>
+            {isLikeState ? (
+              <i className="fas fa-bookmark" />
+            ) : (
+              <i className="far fa-bookmark" />
+            )}
           </span>
         </div>
         <div className={style.footer}>마감일: 2022-05-24</div>
