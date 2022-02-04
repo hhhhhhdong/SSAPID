@@ -1,6 +1,33 @@
+@import "./Variables.scss";
 .container {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.wrapper {
+  width: 80%;
+  border: 1px solid black;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  p {
+    margin: 0;
+  }
+  span {
+    padding: 10px;
+    i {
+      color: $blue;
+      font-size: 20px;
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
 }

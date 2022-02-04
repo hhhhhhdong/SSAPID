@@ -10,7 +10,7 @@
   // 애니메이션
   transition: transform ease-out 0.2s;
   &:hover {
-    transform: scale(1.03);
+    transform: scale(1.01);
   }
   // 그림자
   -webkit-box-shadow: 6px 8px 9px -3px rgba(0, 0, 0, 0.8);
@@ -27,6 +27,13 @@
     margin: 0;
     padding-top: 2px;
     font-size: 14px;
+  }
+  span {
+    padding: 5px;
+    transition: transform ease-out 0.08s;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
 
