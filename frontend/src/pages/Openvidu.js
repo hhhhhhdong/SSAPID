@@ -50,7 +50,8 @@ class Openvidu extends Component {
     });
   }
 
-  handleJoin(e, token) {
+  handleJoin(token) {
+    console.log(token);
     this.setState({
       token,
       session: true,
@@ -63,26 +64,21 @@ class Openvidu extends Component {
     });
   }
 
-  getToken() {
-    return new Promise((resolve, reject) => {
-      axios
-        .post("/session")
-        .then(({ data }) => {
-          console.log(data);
-          resolve(data.token);
-        })
-        .catch((err) => {
-          console.dir(err);
-        });
-    });
-  }
+  // getToken() {
+  //   return new Promise((resolve, reject) => {});
+  // }
 
   joinSession(event) {
     event.preventDefault();
     if (this.state.mySessionId && this.state.myUserName) {
-      this.getToken().then((token) => {
-        this.handleJoin(token);
-      });
+      axios
+        .post("/session")
+        .then(({ data }) => {
+          this.handleJoin(data.token);
+        })
+        .catch((err) => {
+          console.dir(err);
+        });
     }
   }
 
