@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useSelector } from "react-redux";
 import Input from "../../common/Input";
+import { chatRoomString } from "../../../redux/_actions/actions";
 
 function MessageHeader() {
   const [state, setState] = useState({
     search: "",
   });
+  const select = useSelector((state) => state.userReducer.chatRoomString);
+
   const { search } = state;
   const change = (e) => {
     const { name, value } = e.target;
@@ -25,14 +29,16 @@ function MessageHeader() {
         marginBottom: "1rem",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div className="title">하윙</div>
-        <Input
+      <div style={{ textAlign: "center" }}>
+        <div className="title" style={{ marginBottom: "2em" }}>
+          {select[1]}
+        </div>
+        <input
           name="search"
           value={search}
-          placeHolder="Search Messages"
+          placeholder="Search Messages"
           onChange={change}
-          width={150}
+          style={{ width: "10rem", height: "2rem" }}
         />
       </div>
     </div>
