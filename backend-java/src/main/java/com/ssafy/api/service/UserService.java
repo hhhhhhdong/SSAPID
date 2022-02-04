@@ -12,11 +12,12 @@ public interface UserService {
 	void createSocialUser(UserSocialReq socialRegisterInfo);
 	User getUserByUserId(String userId);
 	User getSocialUserByUserId(String userId);
-	User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId);
+	void setUser(UserSetInfoPostReq userSetInfoPostReq, User user);
 	void deleteUser(User user);
 	String getUserId(String userName, String userPhone);
 	String getUserPw(String userId);
 	void changeUserPw(UserChangePwReq userChangePwReq);
 	boolean checkNickname(String userNickname);
 	boolean checkId(String userId);
+	boolean chekPw(User user, String password);
 }

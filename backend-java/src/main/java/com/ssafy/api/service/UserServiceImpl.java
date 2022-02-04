@@ -124,14 +124,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User setUser(UserSetInfoPostReq userSetInfoPostReq, String userId) {
+    public boolean chekPw(User user,String password) {
 
-        User user = getUserByUserId(userId);
+        if (passwordEncoder.matches(password, user.getUserPw())) {
+            return true;
+        }
+        return false;
+    }
 
+    @Override
+    public void setUser(UserSetInfoPostReq userSetInfoPostReq, User user) {
         user.setUserPw(passwordEncoder.encode(userSetInfoPostReq.getUserPw()));
         user.setUserNickname(userSetInfoPostReq.getUserNickname());
         user.setUserPhone(userSetInfoPostReq.getUserPhone());
-
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 }

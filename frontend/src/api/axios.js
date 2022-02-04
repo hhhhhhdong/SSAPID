@@ -1,7 +1,7 @@
 /* eslint-disable dot-notation */
 import axios from "axios";
 
-const API_END_POINT = "http://localhost:8080";
+const API_END_POINT = "https://localhost:8443";
 
 const token = sessionStorage.getItem("accessToken");
 const headers = token

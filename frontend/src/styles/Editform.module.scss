@@ -1,0 +1,17 @@
+@import "./Variables.scss";
+
+.wrapper {
+  h4 {
+    margin-top: 0px;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  a {
+    font-size: 12px;
+    text-decoration-line: none;
+    color: black;
+    &:hover {
+      color: $blue;
+    }
+  }
+}

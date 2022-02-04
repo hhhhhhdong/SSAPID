@@ -8,7 +8,6 @@ import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
-import com.ssafy.common.util.JwtTokenUtil;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,13 +60,12 @@ public class UserController {
     public ResponseEntity<UserRes> getUserInfo(@ApiIgnore Authentication authentication) {
 
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
-        User user = userService.getUserByUserId(userId);
+        User user = userDetails.getUser();
 
         return ResponseEntity.status(200).body(UserRes.of(user));
     }
 
-    @PostMapping("/setinfo")
+    @PutMapping("/update")
     @ApiOperation(value = "회원정보 수정", notes = "회원정보를 수정한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -78,12 +76,8 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> setInfo(@ApiIgnore Authentication authentication,
                                                               @Valid @RequestBody @ApiParam(value = "회원수정 정보", required = true) UserSetInfoPostReq userSetInfoPostReq) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
-        User user = userService.getUserByUserId(userId);
-        ResponseEntity.status(200).body(UserRes.of(user));
-
-
-        user = userService.setUser(userSetInfoPostReq, userId);
+        User user = userDetails.getUser();
+        userService.setUser(userSetInfoPostReq, user);
 
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 
@@ -93,26 +87,15 @@ public class UserController {
     @ApiOperation(value = "회원 탈퇴", notes = "로그인한 회원의 회원탈퇴를 진행한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<? extends BaseResponseBody> deleteUserInfo(@ApiIgnore Authentication authentication,
-                                                                     @Valid @RequestBody @ApiParam(value = "비밀번호", required = true)UserDeleteReq userDeleteReq) {
+    public ResponseEntity<? extends BaseResponseBody> deleteUserInfo(@ApiIgnore Authentication authentication) {
 
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
+        User user = userDetails.getUser();
+        userService.deleteUser(user);
 
-        try {
-            User user = userService.getUserByUserId(userId);
-            if (passwordEncoder.matches(userDeleteReq.getUserPw(), user.getUserPw())) {
-                userService.deleteUser(user);
-                return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
-            }
-            return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password"));
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "사용자 없음"));
-        }
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 
     }
 
@@ -165,7 +148,6 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "실패"),
-            @ApiResponse(code = 404, message = "찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> chekNickname(@PathVariable("userNickname") String userNickname) {
@@ -183,7 +165,6 @@ public class UserController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "실패"),
-            @ApiResponse(code = 404, message = "찾을 수 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> chekUserId(@PathVariable("userId") String userId) {
@@ -194,6 +175,30 @@ public class UserController {
         } else {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
         }
+    }
+
+    @PostMapping("check-pw")
+    @ApiOperation(value = "비밀번호 확인", notes = "입력한 비밀번호와 로그인한 사용자의 비밀번호를 비교한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> chekPw(@ApiIgnore Authentication authentication,
+                                                             @Valid @RequestBody @ApiParam(value = "비밀번호", required = true) UserCheckPwReq userCheckPwReq) {
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+
+        try {
+            if (userService.chekPw(user,userCheckPwReq.getUserPw())) {
+                return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+            }
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "Invalid Password"));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body(BaseResponseBody.of(404, "사용자 없음"));
+        }
+
     }
 
 }

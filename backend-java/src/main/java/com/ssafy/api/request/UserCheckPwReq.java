@@ -9,8 +9,8 @@ import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
-@ApiModel("UserDeleteReq")
-public class UserDeleteReq {
+@ApiModel("UserCheckPwReq")
+public class UserCheckPwReq {
     @ApiModelProperty(name = "유저 Password", example = "ssafy!@#") @NotEmpty
     String userPw;
 }
