@@ -37,10 +37,10 @@ function App() {
           <Route path="/chatPage" element={<ChatPage />} />
           <Route path="/board/:boardSeq" element={<BoardDetail />} />
           <Route path="/webrtctest" element={<WebRtcTest />} />
-          <Route path="/test" element={<Openvidu />} />
           <Route path="/inquire" element={<Inquire />} />
           <Route path="/pwcheck" element={<PwCheck />} />
           <Route path="/edit" element={<Edit />} />
+          <Route path="/openvidu" element={<Openvidu />} />
         </Routes>
       </div>
     </Router>

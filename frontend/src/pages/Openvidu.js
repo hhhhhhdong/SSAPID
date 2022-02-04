@@ -6,7 +6,7 @@
 /* eslint-disable react/sort-comp */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from "react";
-import axios from "axios";
+import axios from "api/axios";
 import OpenViduSession from "openvidu-react";
 
 class Openvidu extends Component {
@@ -52,6 +52,20 @@ class Openvidu extends Component {
   handleChangeUserName(e) {
     this.setState({
       myUserName: e.target.value,
+    });
+  }
+
+  getToken() {
+    return new Promise((resolve, reject) => {
+      axios
+        .post("/session")
+        .then(({ data }) => {
+          console.log(data);
+          resolve(data.token);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   }
 
@@ -133,11 +147,11 @@ class Openvidu extends Component {
    *   3) The Connection.token must be consumed in Session.connect() method
    */
 
-  getToken() {
-    return this.createSession(this.state.mySessionId)
-      .then((sessionId) => this.createToken(sessionId))
-      .catch((Err) => console.error(Err));
-  }
+  //   getToken() {
+  //     return this.createSession(this.state.mySessionId)
+  //       .then((sessionId) => this.createToken(sessionId))
+  //       .catch((Err) => console.error(Err));
+  //   }
 
   createSession(sessionId) {
     return new Promise((resolve, reject) => {
