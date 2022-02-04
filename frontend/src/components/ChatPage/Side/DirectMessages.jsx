@@ -80,6 +80,7 @@ function DirectMessages() {
         aria-hidden="true"
         style={{
           backgroundColor: user.nickName === isSelect && isShow && "#ffffff45",
+          marginBottom: "0.5em",
         }}
       >
         # {user.nickName}
@@ -93,11 +94,12 @@ function DirectMessages() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          fontSize: "1.5em",
         }}
       >
         <BiMessageAltDetail
           style={{
-            marginRight: "3px",
+            marginRight: "0.2em",
           }}
         />
         Direct Message ({users.length})

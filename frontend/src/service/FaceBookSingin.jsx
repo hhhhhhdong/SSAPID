@@ -1,6 +1,6 @@
-import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "../api/axios";
 import { authService, facebookProvider } from "./fbase";
 import { makeUser } from "./function";
 
@@ -19,7 +19,7 @@ function FacebookSignin() {
         navigate("/");
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
   makeUser(

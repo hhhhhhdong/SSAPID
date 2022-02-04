@@ -6,14 +6,19 @@ function Message({ message }) {
   const date = new Date(timestamp * 1000);
   const hours = date.getHours();
   const minutes = date.getMinutes();
+  let minute;
+  if (minutes < 10) {
+    minute = `0${minutes}`;
+  } else {
+    minute = minutes;
+  }
   let tmp;
   if (hours < 12) {
-    tmp = `오전${hours}: ${minutes}`;
+    tmp = `오전${hours}: ${minute}`;
+  } else if (hours === 12) {
+    tmp = `오후 ${hours}: ${minute}`;
   } else {
-    if (hours === 12) {
-      tmp = `오후${hours}: ${minutes}`;
-    }
-    tmp = `오후${hours - 12}: ${minutes}`;
+    tmp = `오후 ${hours - 12}: ${minute}`;
   }
 
   const isMessageMine = (message) => {
@@ -23,18 +28,46 @@ function Message({ message }) {
   };
 
   return (
-    <div style={{ marginBottom: "3px", display: "flex" }}>
+    <div
+      style={{
+        marginBottom: "3px",
+        display: "flex",
+        flexDirection: !isMessageMine(message) ? "row" : "row-reverse",
+      }}
+    >
       <div
         style={{
-          backgroundColor: isMessageMine(message) && "#3498db",
+          backgroundColor: !isMessageMine(message) ? "#7f8c8d" : "#f1c40f",
+          borderRadius: "1em",
+          marginBottom: "2em",
+          fontSize: "1rem",
+          maxWidth: "60%",
+          margin: "0.5em",
         }}
       >
-        <h6>
-          {message.id}{" "}
-          <span style={{ fontSize: "10px", color: "gray" }}>{tmp}</span>
-        </h6>
-        <p>{message.contents}</p>
+        <div
+          style={{
+            position: "relative",
+            alignItems: "center",
+            textAlign: "center",
+            fontSize: "0.8em",
+            padding: "1em",
+            wordWrap: "break-word",
+          }}
+        >
+          {message.contents}
+        </div>
       </div>
+      <span
+        style={{
+          fontSize: "0.8em",
+          color: "#2d3436",
+          margin: "0.4em",
+          paddingTop: "2em",
+        }}
+      >
+        {tmp}
+      </span>
     </div>
   );
 }

@@ -17,7 +17,7 @@ function WebRtcTest() {
         console.log(err);
       });
   };
-  
+
   return (
     <div>
       <button type="button" onClick={onClick}>
