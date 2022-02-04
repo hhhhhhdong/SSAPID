@@ -48,4 +48,24 @@ public class BoardListRes extends BaseResponseBody {
         res.setBoardInfos(boardInfos);
         return res;
     }
+
+    public static BoardListRes of(Integer statusCode, String message, List<Board> boardList){
+        BoardListRes res = new BoardListRes();
+        List<Map<String, Object>> boardInfos = new ArrayList<>();
+
+        for (Board board : boardList) {
+            Map<String, Object> boardInfo = new HashMap<>();
+            boardInfo.put("boardSeq", board.getBoardSeq());
+            boardInfo.put("boardTitle", board.getBoardTitle());
+            boardInfo.put("createdAt", board.getCreatedAt());
+            boardInfo.put("deadline", board.getDeadline());
+            boardInfo.put("author", board.getUser().getUserId());
+            boardInfos.add(boardInfo);
+        }
+
+        res.setStatusCode(statusCode);
+        res.setMessage(message);
+        res.setBoardInfos(boardInfos);
+        return res;
+    }
 }

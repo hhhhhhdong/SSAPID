@@ -14,7 +14,7 @@ public interface BoardService {
     void deleteBoard(Board board);
     List<Board> getBoardList();
     List<Board> getBoardSearchList(String keyword, String content);
-    List<Board> getLikeBoardList(Set<Favorite> favoriteList);
+    List<Board> getfavoriteBoardList(User user);
     Board updateBoard(Long boardSeq, BoardUpdateReq boardUpdateReq, User user);
     Board getBoardByBoardSeq(Long boardSeq);
     int favoriteBoard(User user, Board board);

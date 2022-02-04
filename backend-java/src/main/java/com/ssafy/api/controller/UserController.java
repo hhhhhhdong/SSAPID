@@ -21,9 +21,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
-/**
- * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
- */
+
 @Api(value = "유저 API", tags = {"User"})
 @RestController
 @RequestMapping("/user")

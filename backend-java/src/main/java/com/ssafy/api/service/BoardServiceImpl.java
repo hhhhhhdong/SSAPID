@@ -65,10 +65,14 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> getLikeBoardList(Set<Favorite> favoriteList) {
-        List<Favorite> list = new ArrayList<>(favoriteList);
-        System.out.println(list.get(1));
-        return null;
+    public List<Board> getfavoriteBoardList(User user) {
+        //join으로 sql 한번만 실행되게 수정
+        List<Board> list = new ArrayList<>();
+        List<Favorite> favoriteBoardList = favoriteRepository.findByUser(user);
+        for(Favorite favorite: favoriteBoardList){
+            list.add(favorite.getBoard());
+        }
+        return list;
     }
 
     @Override
@@ -77,7 +81,7 @@ public class BoardServiceImpl implements BoardService {
         return board;
     }
 
-    public long checkLike(User user, Board board) {
+    public long checkFavorite(User user, Board board) {
         for(Favorite favorite : board.getFavoriteList()){ //게시글의 즐겨찾기들 탐색
             if(favorite.getUser().getUserSeq() == user.getUserSeq()){ //즐겨찾기의 userSeq == 해당유저의 userSeq
                 return favorite.getFavoriteSeq();   //해당하는 즐겨찾기의 번호 반환
@@ -88,7 +92,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public int favoriteBoard(User user, Board board) {
-        long favoriteSeq = checkLike(user,board); //중복체크
+        long favoriteSeq = checkFavorite(user,board); //중복체크
 
         if(favoriteSeq != -1){ // 이미 등록 되어있다면
             Favorite favorite = favoriteRepository.findByFavoriteSeq(favoriteSeq);

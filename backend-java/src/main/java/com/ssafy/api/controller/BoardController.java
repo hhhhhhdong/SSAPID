@@ -118,10 +118,7 @@ public class BoardController {
     })
     public ResponseEntity<? extends BaseResponseBody> deleteBoard(@ApiIgnore Authentication authentication,
                                                                   @PathVariable("boardSeq") Long boardSeq) {
-        /**
-         * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
-         * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
-         */
+
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
@@ -158,10 +155,7 @@ public class BoardController {
     })
     public ResponseEntity<? extends BaseResponseBody> favoriteBoard(@ApiIgnore Authentication authentication,
                                                                     @PathVariable("boardSeq") Long boardSeq) {
-        /**
-         * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
-         * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
-         */
+
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
@@ -175,19 +169,18 @@ public class BoardController {
         }
     }
 
-//    @GetMapping ("/like")
-//    public ResponseEntity<BoardListRes> favoriteBoardList(@ApiIgnore Authentication authentication){
-//        /**
-//         * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
-//         * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
-//         */
-//        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-//        String userId = userDetails.getUsername();
-//        User user = userService.getUserByUserId(userId);
-//        //List<Board> boards = boardService.getLikeBoardList(user.getFavoriteList());
-//        List<Favorite> list = new ArrayList<>(user.getFavoriteList());
-//        System.out.println(list.get(0).getBoard().getBoardTitle());
-//        System.out.println(list.get(1).getBoard().getBoardTitle());
-//        return null;
-//    }
+    @GetMapping ("/favorite")
+    @ApiOperation(value = "즐겨찾기 목록", notes = "즐겨찾기 목록")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<BoardListRes> favoriteBoardList(@ApiIgnore Authentication authentication){
+
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+        List<Board> boards = boardService.getfavoriteBoardList(user);
+
+        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
+    }
 }
