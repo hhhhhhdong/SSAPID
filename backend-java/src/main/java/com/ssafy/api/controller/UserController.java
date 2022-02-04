@@ -3,7 +3,6 @@ package com.ssafy.api.controller;
 import com.ssafy.api.request.*;
 import com.ssafy.api.response.UserFindIdRes;
 import com.ssafy.api.response.UserFindPwRes;
-import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.response.UserRes;
 import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
@@ -140,6 +139,34 @@ public class UserController {
     })
     public ResponseEntity<? extends BaseResponseBody> changePw(@RequestBody @ApiParam(value = "새로운 비밀번호", required = true) UserChangePwReq req) {
         userService.changeUserPw(req);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @PutMapping("/change-nick")
+    @ApiOperation(value = "닉네임 변경", notes = "닉네임을 입력받은 값으로 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> changeNick(@ApiIgnore Authentication authentication,
+                                                                 @RequestBody @ApiParam(value = "변경할 닉네임", required = true) String req) {
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+        userService.changeUserNickname(user,req);
+        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+    }
+
+    @PutMapping("/change-phone")
+    @ApiOperation(value = "전화번호 변경", notes = "전화번호를 입력받은 값으로 변경한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> changePhone(@ApiIgnore Authentication authentication,
+                                                                  @RequestBody @ApiParam(value = "변경할 번호", required = true) String req) {
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+        userService.changeUserPhone(user,req);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
