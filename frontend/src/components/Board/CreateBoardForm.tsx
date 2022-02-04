@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import style from "../../styles/CreatePostForm.module.scss";
+import style from "../../styles/CreateBoardForm.module.scss";
 import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import Spacer from "../common/Spacer";
 import "react-datepicker/dist/react-datepicker.css";
 
-function CreatePostForm() {
+function CreateBoardForm() {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
@@ -102,4 +102,4 @@ function CreatePostForm() {
   );
 }
 
-export default CreatePostForm;
+export default CreateBoardForm;

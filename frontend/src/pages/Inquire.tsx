@@ -1,15 +1,15 @@
 import React from "react";
+import InquireForm from "components/User/Inguireform";
 import Navbar from "components/layout/MainTemplate";
-import CreatePostForm from "components/Post/CreatePostForm";
 
-function CreatePost() {
+function Inquire() {
   return (
     <div>
       <Navbar>
-        <CreatePostForm />
+        <InquireForm />
       </Navbar>
     </div>
   );
 }
 
-export default CreatePost;
+export default Inquire;
