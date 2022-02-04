@@ -7,3 +7,14 @@ $size: 30rem;
 * {
   box-sizing: border-box;
 }
+
+a {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
+  &:hover,
+  &:active {
+    text-decoration: none;
+    // color: inherit;
+  }
+}

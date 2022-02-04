@@ -1,0 +1,43 @@
+@import "./Variables.scss";
+.container {
+  width: 270px;
+  padding: 10px;
+  margin: 0 25px 30px;
+  border-radius: 10px;
+  background-color: $yellow;
+  color: $blue;
+  cursor: pointer;
+  // 애니메이션
+  transition: transform ease-out 0.2s;
+  &:hover {
+    transform: scale(1.03);
+  }
+  // 그림자
+  -webkit-box-shadow: 6px 8px 9px -3px rgba(0, 0, 0, 0.8);
+  box-shadow: 6px 8px 9px -3px rgba(0, 0, 0, 0.8);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  padding-right: 5px;
+  padding-left: 2px;
+  p {
+    margin: 0;
+    padding-top: 2px;
+    font-size: 14px;
+  }
+}
+
+.footer {
+  font-size: 13px;
+  border-bottom: 1px solid $blue;
+  padding-bottom: 7px;
+  padding-left: 2px;
+}
+
+.content {
+  padding: 10px 0;
+  font-size: 19px;
+}
