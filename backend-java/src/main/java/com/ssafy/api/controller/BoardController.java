@@ -10,6 +10,7 @@ import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Board;
+import com.ssafy.db.entity.Favorite;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -57,8 +59,10 @@ public class BoardController {
     })
     public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         List<Board> boards = boardService.getBoardList();
-        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
+        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards, user));
     }
 
     @GetMapping("/{boardSeq}")
@@ -71,11 +75,12 @@ public class BoardController {
     public ResponseEntity<BoardRes> getBoard(@ApiIgnore Authentication authentication,
                                              @PathVariable("boardSeq") @ApiParam(value = "게시글 번호", required = true) long boardSeq) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
         Board board = boardService.getBoardByBoardSeq(boardSeq);
         if (board == null) {
             return ResponseEntity.status(404).body(null);
         }
-        return ResponseEntity.status(200).body(BoardRes.of(board));
+        return ResponseEntity.status(200).body(BoardRes.of(board,user));
     }
 
     @PutMapping("/{boardSeq}")
@@ -113,10 +118,7 @@ public class BoardController {
     })
     public ResponseEntity<? extends BaseResponseBody> deleteBoard(@ApiIgnore Authentication authentication,
                                                                   @PathVariable("boardSeq") Long boardSeq) {
-        /**
-         * 요청 헤더 액세스 토큰이 포함된 경우에만 실행되는 인증 처리이후, 리턴되는 인증 정보 객체(authentication) 통해서 요청한 유저 식별.
-         * 액세스 토큰이 없이 요청하는 경우, 403 에러({"error": "Forbidden", "message": "Access Denied"}) 발생.
-         */
+
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
@@ -138,8 +140,47 @@ public class BoardController {
     public ResponseEntity<BoardListRes> boardSearchList(@ApiIgnore Authentication authentication,
                                                         @RequestParam(value = "keyword") String keyword,
                                                         @RequestParam(value = "content") String content) {
-
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         List<Board> boards = boardService.getBoardSearchList(keyword, content);
+        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards, user));
+    }
+
+    @GetMapping ("/favorite/{boardSeq}")
+    @ApiOperation(value = "즐겨찾기 등록,해제", notes = "번호에 해당하는 게시글을 즐겨찾기 등록 또는 해제한다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "즐겨찾기 등록 or 해제"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<? extends BaseResponseBody> favoriteBoard(@ApiIgnore Authentication authentication,
+                                                                    @PathVariable("boardSeq") Long boardSeq) {
+
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
+        Board board = boardService.getBoardByBoardSeq(boardSeq);
+
+        int islike = boardService.favoriteBoard(user,board);
+        if(islike==1){
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 등록"));
+        }else{
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 해제"));
+        }
+    }
+
+    @GetMapping ("/favorite")
+    @ApiOperation(value = "즐겨찾기 목록", notes = "즐겨찾기 목록")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 500, message = "서버 오류")
+    })
+    public ResponseEntity<BoardListRes> favoriteBoardList(@ApiIgnore Authentication authentication){
+
+        SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
+        User user = userDetails.getUser();
+        List<Board> boards = boardService.getfavoriteBoardList(user);
+
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
     }
 }

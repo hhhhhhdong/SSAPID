@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -17,7 +19,7 @@ public class Board extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_seq")
     Long boardSeq;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_seq", nullable = false) @NotNull
     User user;
     @Column(name = "board_title", nullable = false, length = 100)
@@ -27,4 +29,6 @@ public class Board extends BaseTimeEntity {
     @Column(name = "deadline", nullable = false) @NotNull
     LocalDate deadline;
 
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Favorite> favoriteList = new HashSet<>();
 }
