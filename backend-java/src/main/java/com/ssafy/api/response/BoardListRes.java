@@ -32,7 +32,7 @@ public class BoardListRes extends BaseResponseBody {
             boardInfo.put("boardTitle", board.getBoardTitle());
             boardInfo.put("createdAt", board.getCreatedAt());
             boardInfo.put("deadline", board.getDeadline());
-            boardInfo.put("author", board.getUser().getUserId());
+            boardInfo.put("author", board.getUser().getUserNickname());
             for(Favorite favorite : board.getFavoriteList()){ //게시글의 즐겨찾기들 탐색
                 if(favorite.getUser().getUserSeq() == user.getUserSeq()){ //즐겨찾기의 userSeq == 해당유저의 userSeq
                     islike = "true";
@@ -59,7 +59,7 @@ public class BoardListRes extends BaseResponseBody {
             boardInfo.put("boardTitle", board.getBoardTitle());
             boardInfo.put("createdAt", board.getCreatedAt());
             boardInfo.put("deadline", board.getDeadline());
-            boardInfo.put("author", board.getUser().getUserId());
+            boardInfo.put("author", board.getUser().getUserNickname());
             boardInfos.add(boardInfo);
         }
 
