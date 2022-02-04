@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import ChatPage from "pages/ChatPage";
 import Edit from "pages/Edit";
 import PwCheck from "pages/PwCheck";
 import Inquire from "pages/Inquire";
@@ -34,7 +33,6 @@ function App() {
           <Route path="/createBoard" element={<CreateBoard />} />
           <Route path="/authFind" element={<AuthFind />} />
           <Route path="/passChange" element={<PassChange />} />
-          <Route path="/chatPage" element={<ChatPage />} />
           <Route path="/board/:boardSeq" element={<BoardDetail />} />
           <Route path="/webrtctest" element={<WebRtcTest />} />
           <Route path="/test" element={<Openvidu />} />

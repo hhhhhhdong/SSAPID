@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../api/axios";
 import { makeUser } from "./function";
 import { authService, githubProvider } from "./fbase";
 

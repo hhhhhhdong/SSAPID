@@ -48,13 +48,13 @@ function Main() {
       <div
         style={{
           width: "100%",
-          height: "450px",
+          height: "40em",
           border: ".2rem solid #ececec",
-          backgroundColor: "#ecf0f1",
-          borderRadius: "4px",
-          padding: "1rem",
+          backgroundColor: "#74b9ff",
+          borderRadius: "10px",
           marginBottom: "1rem",
           overflowY: "auto",
+          overflowX: "hidden",
         }}
       >
         {renderMessages(messages)}

@@ -32,7 +32,12 @@ function MessageForm() {
           value={message}
           onChange={onChange}
           placeholder="Send the message"
-          style={{ width: "100%", height: "40px", marginBottom: "2rem" }}
+          style={{
+            width: "100%",
+            height: "40px",
+            marginBottom: "2rem",
+            borderRadius: "4px",
+          }}
         />
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
