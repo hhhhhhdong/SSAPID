@@ -1,15 +1,15 @@
 import React from "react";
 import Navbar from "components/layout/MainTemplate";
-import CreatePostForm from "components/Post/CreatePostForm";
+import CreateBoardForm from "components/Board/CreateBoardForm";
 
-function CreatePost() {
+function CreateBoard() {
   return (
     <div>
       <Navbar>
-        <CreatePostForm />
+        <CreateBoardForm />
       </Navbar>
     </div>
   );
 }
 
-export default CreatePost;
+export default CreateBoard;

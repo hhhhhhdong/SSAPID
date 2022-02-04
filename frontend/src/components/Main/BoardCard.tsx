@@ -24,7 +24,7 @@ function BoardCard({
 }: Props) {
   return (
     <div className={style.container}>
-      <Link to="/createpost">
+      <Link to="/createboard">
         <div className={style.header}>
           <p>작성자: ADFFSED13DGSDR4</p>
           <span>

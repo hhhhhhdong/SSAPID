@@ -8,9 +8,10 @@ import Register from "./pages/Register";
 import PassFind from "./pages/PassFind";
 import Login from "./pages/Login";
 import UserDist from "./pages/UserDist";
-import CreatePost from "./pages/CreatePost";
+import CreateBoard from "./pages/CreateBoard";
 import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
+import BoardDetail from "./pages/BoardDetail";
 import WebRtcTest from "./pages/WebRtcTest";
 import "./App.module.scss";
 
@@ -26,10 +27,11 @@ function App() {
           <Route path="/idFind" element={<IdFind />} />
           <Route path="/passFind" element={<PassFind />} />
           <Route path="/userDist" element={<UserDist />} />
-          <Route path="/createPost" element={<CreatePost />} />
+          <Route path="/createBoard" element={<CreateBoard />} />
           <Route path="/authFind" element={<AuthFind />} />
           <Route path="/passChange" element={<PassChange />} />
           <Route path="/chatPage" element={<ChatPage />} />
+          <Route path="/board/:boardSeq" element={<BoardDetail />} />
           <Route path="/webrtctest" element={<WebRtcTest />} />
         </Routes>
       </div>
