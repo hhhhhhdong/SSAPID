@@ -1,6 +1,8 @@
 package com.ssafy.api.response;
 
 import com.ssafy.db.entity.Board;
+import com.ssafy.db.entity.Favorite;
+import com.ssafy.db.entity.User;
 import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,16 +20,25 @@ public class BoardRes {
     String boardContent;
     LocalDateTime createdAt;
     LocalDate deadline;
-    String userId;
+    String author;
+    String isLike;
 
-    public static BoardRes of(Board board) {
+    public static BoardRes of(Board board, User user) {
         BoardRes res = new BoardRes();
         res.setBoardSeq(board.getBoardSeq());
         res.setBoardTitle(board.getBoardTitle());
         res.setBoardContent(board.getBoardContent());
         res.setCreatedAt(board.getCreatedAt());
         res.setDeadline(board.getDeadline());
-        res.setUserId(board.getUser().getUserId());
+        res.setAuthor(board.getUser().getUserId());
+        res.setIsLike("false");
+        for(Favorite favorite : board.getFavoriteList()){ //게시글의 즐겨찾기들 탐색
+            if(favorite.getUser().getUserSeq() == user.getUserSeq()){ //즐겨찾기의 userSeq == 해당유저의 userSeq
+                res.setIsLike("true");
+                break;
+            }
+        }
+
         return res;
     }
 }

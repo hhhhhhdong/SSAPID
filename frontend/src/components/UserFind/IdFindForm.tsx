@@ -58,7 +58,7 @@ function IdFindForm({ onSubmit }: idFindProps) {
       .post("/user/find-id", form)
       .then((res: any) => {
         alert(res.data.userId);
-        navigate("/login");
+        navigate("/");
       })
       .catch(() => {
         alert("잘못된 정보입니다.");

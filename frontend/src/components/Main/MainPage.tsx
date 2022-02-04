@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "api/axios";
 import style from "../../styles/MainPage.module.scss";
-import PostCard from "./PostCard";
+import BoardCard from "./BoardCard";
 import Input from "../common/Input";
+
+type Board = {
+  boardSeq: number;
+  boardTitle: string;
+  createAt: string;
+  deadline: string;
+  author: string;
+  isLike: "true" | "false";
+};
 
 function MainPage() {
   const [searchValue, setSearchValue] = useState("");
+  const [boards, setBoards] = useState<Board[]>([]);
   const onChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
+
+  useEffect(() => {
+    axios
+      .get("/board")
+      .then((res) => {
+        setBoards(res.data.boardInfos);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.dir(err);
+      });
+  }, []);
+
   const onClickSearch = () => {
     console.log(searchValue);
   };
@@ -38,13 +62,17 @@ function MainPage() {
         </div>
       </div>
       <div className={style.cards}>
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        {boards.map((board) => (
+          <BoardCard
+            key={board.boardSeq}
+            boardSeq={board.boardSeq}
+            title={board.boardTitle}
+            createAt={board.createAt}
+            deadline={board.deadline}
+            author={board.author}
+            isLike={board.isLike}
+          />
+        ))}
       </div>
     </div>
   );
