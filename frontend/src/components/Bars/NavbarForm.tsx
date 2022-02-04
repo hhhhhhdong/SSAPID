@@ -29,7 +29,7 @@ function NavbarForm() {
       </h2>
       <div>
         <span>
-          <Link to="/createpost">글쓰기</Link>
+          <Link to="/createboard">글쓰기</Link>
         </span>
         <span>내정보</span>
         <span>로그아웃</span>
