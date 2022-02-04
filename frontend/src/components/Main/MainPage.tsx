@@ -9,8 +9,8 @@ type Board = {
   boardTitle: string;
   createAt: string;
   deadline: string;
-  userNickname: string;
-  islike: boolean;
+  author: string;
+  isLike: "true" | "false";
 };
 
 function MainPage() {
@@ -63,7 +63,15 @@ function MainPage() {
       </div>
       <div className={style.cards}>
         {boards.map((board) => (
-          <BoardCard key={board.boardSeq} boardId={board.boardSeq} />
+          <BoardCard
+            key={board.boardSeq}
+            boardSeq={board.boardSeq}
+            title={board.boardTitle}
+            createAt={board.createAt}
+            deadline={board.deadline}
+            author={board.author}
+            isLike={board.isLike}
+          />
         ))}
       </div>
     </div>

@@ -11,6 +11,7 @@ import UserDist from "./pages/UserDist";
 import CreatePost from "./pages/CreatePost";
 import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
+import WebRtcTest from "./pages/WebRtcTest";
 import "./App.module.scss";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/authFind" element={<AuthFind />} />
           <Route path="/passChange" element={<PassChange />} />
           <Route path="/chatPage" element={<ChatPage />} />
+          <Route path="/webrtctest" element={<WebRtcTest />} />
         </Routes>
       </div>
     </Router>

@@ -1,41 +1,39 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from "react";
 import axios from "api/axios";
+import { Link } from "react-router-dom";
 import style from "../../styles/BoardCard.module.scss";
 
 type Props = {
-  boardId: number;
-};
-type Board = {
   boardSeq: number;
-  boardTitle: string;
-  boardContent: string;
+  title: string;
   createAt: string;
   deadline: string;
-  userNickname: string;
-  islike: boolean;
+  author: string;
+  isLike: "true" | "false";
 };
 
-function BoardCard({ boardId }: Props) {
-  const [board, setBoard] = useState<Board | undefined>(undefined);
-  useEffect(() => {
-    axios
-      .get(`/board/${boardId}`)
-      .then((res) => {
-        setBoard(res.data);
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
-  }, []);
-
+function BoardCard({
+  boardSeq,
+  title,
+  createAt,
+  deadline,
+  author,
+  isLike,
+}: Props) {
   return (
     <div className={style.container}>
-      <div className={style.header}>
-        <p>{board?.userNickname}</p>
-        <span>좋아요</span>
-      </div>
-      <div>{board?.boardTitle}</div>
-      <div>{board?.boardContent}</div>
+      <Link to="/createpost">
+        <div className={style.header}>
+          <p>작성자: ADFFSED13DGSDR4</p>
+          <span>
+            <i className="far fa-bookmark" />
+          </span>
+        </div>
+        <div className={style.footer}>마감일: 2022-05-24</div>
+        <div className={style.content}>{title}</div>
+      </Link>
     </div>
   );
 }
