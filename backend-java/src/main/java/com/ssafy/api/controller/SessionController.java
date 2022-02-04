@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value = "화상대화 API", tags = {"Session."})
+@Api(value = "[임시] 화상대화 API", tags = {"Session."})
 @RestController
 @RequestMapping("/session")
 public class SessionController {
