@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import java.util.NoSuchElementException;
 
-/**
- * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
- */
+
 @Api(value = "인증 API", tags = {"Auth."})
 @RestController
 public class AuthController {
@@ -44,11 +42,11 @@ public class AuthController {
         try {
             User user = userService.getUserByUserId(userId);
             if (passwordEncoder.matches(password, user.getUserPw())) {
-                return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId), user.getUserNickname()));
+                return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId), user.getUserNickname(),user.getUserType()));
             }
-            return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null, null));
+            return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null, null,null));
         } catch (NoSuchElementException e) {
-            return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "사용자 없음", null, null));
+            return ResponseEntity.status(404).body(UserLoginPostRes.of(404, "사용자 없음", null, null,null));
         }
 
     }
@@ -59,11 +57,11 @@ public class AuthController {
         String userId = "Social_" + socialInfo.getUserId();
         try {
             User user = userService.getSocialUserByUserId(userId);
-            return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(user.getUserId()), user.getUserNickname()));
+            return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId), user.getUserNickname(),user.getUserType()));
         } catch (NoSuchElementException e) {
             userService.createSocialUser(socialInfo);
             User user = userService.getSocialUserByUserId(userId);
-            return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(user.getUserId()), user.getUserNickname()));
+            return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId), user.getUserNickname(),user.getUserType()));
         }
 
     }
