@@ -1,15 +1,13 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/no-unused-class-component-methods */
-/* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable react/sort-comp */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/sort-comp */
+/* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
-import axios from "axios";
+// import "./App.css";
+import axios from "api/axios";
 import OpenViduSession from "openvidu-react";
 
-class Openvidu extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
@@ -204,4 +202,4 @@ class Openvidu extends Component {
   }
 }
 
-export default Openvidu;
+export default App;
