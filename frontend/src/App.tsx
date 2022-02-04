@@ -16,6 +16,7 @@ import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
 import BoardDetail from "./pages/BoardDetail";
 import WebRtcTest from "./pages/WebRtcTest";
+import Openvidu from "./pages/Openvidu";
 import "./App.module.scss";
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
           <Route path="/chatPage" element={<ChatPage />} />
           <Route path="/board/:boardSeq" element={<BoardDetail />} />
           <Route path="/webrtctest" element={<WebRtcTest />} />
+          <Route path="/test" element={<Openvidu />} />
           <Route path="/inquire" element={<Inquire />} />
           <Route path="/pwcheck" element={<PwCheck />} />
           <Route path="/edit" element={<Edit />} />
