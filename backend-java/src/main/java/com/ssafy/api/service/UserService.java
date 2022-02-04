@@ -17,6 +17,8 @@ public interface UserService {
 	String getUserId(String userName, String userPhone);
 	String getUserPw(String userId);
 	void changeUserPw(UserChangePwReq userChangePwReq);
+	void changeUserNickname(User user,String userNickname);
+	void changeUserPhone(User user, String userPhone);
 	boolean checkNickname(String userNickname);
 	boolean checkId(String userId);
 	boolean chekPw(User user, String password);
