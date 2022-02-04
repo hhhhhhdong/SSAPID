@@ -12,7 +12,8 @@ export default function (
     openSidebar: true,
     authString: "",
     emailString: "",
-    currentChatRoom: null,
+    chatRoomString: null,
+    chatRoomId: null,
   },
   action
 ) {
@@ -24,7 +25,7 @@ export default function (
     case EMAIL_STRING:
       return { ...state, emailString: action.payload };
     case CHATROOM_STRING:
-      return { ...state, currentChatRoom: action.payload };
+      return { ...state, chatRoomString: action.payload };
     default:
       return state;
   }
