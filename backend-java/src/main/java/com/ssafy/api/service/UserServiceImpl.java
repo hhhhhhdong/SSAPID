@@ -114,6 +114,17 @@ public class UserServiceImpl implements UserService {
         userRepositorySupport.changeUserPw(userChangePwReq.getUserId(), passwordEncoder.encode(userChangePwReq.getUserPw()));
     }
 
+    @Override
+    public void changeUserNickname(User user, String userNickname) {
+        user.setUserNickname(userNickname);
+        userRepository.save(user);
+    }
+    @Override
+    public void changeUserPhone(User user, String userPhone) {
+        user.setUserPhone(userPhone);
+        userRepository.save(user);
+    }
+
     public boolean checkNickname(String userNickname) {
         return userRepository.existsByUserNickname(userNickname);
     }
