@@ -26,6 +26,7 @@ class Openvidu extends Component {
     this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.joinSession = this.joinSession.bind(this);
+    this.handleJoin = this.handleJoin.bind(this);
   }
 
   handlerJoinSessionEvent() {
@@ -49,6 +50,13 @@ class Openvidu extends Component {
     });
   }
 
+  handleJoin(e, token) {
+    this.setState({
+      token,
+      session: true,
+    });
+  }
+
   handleChangeUserName(e) {
     this.setState({
       myUserName: e.target.value,
@@ -64,20 +72,17 @@ class Openvidu extends Component {
           resolve(data.token);
         })
         .catch((err) => {
-          console.log(err);
+          console.dir(err);
         });
     });
   }
 
   joinSession(event) {
+    event.preventDefault();
     if (this.state.mySessionId && this.state.myUserName) {
       this.getToken().then((token) => {
-        this.setState({
-          token,
-          session: true,
-        });
+        this.handleJoin(token);
       });
-      event.preventDefault();
     }
   }
 
