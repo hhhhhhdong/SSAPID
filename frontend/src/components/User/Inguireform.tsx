@@ -4,7 +4,7 @@ import Input from "../common/Input";
 import Button from "../common/Button";
 import Spacer from "../common/Spacer";
 import FormHeader from "../layout/FormHeader";
-import style from "../../styles/Editform.module.scss";
+import style from "../../styles/edit.module.scss";
 
 const INPUT_MARGIN_BOTTOM = 2;
 
@@ -45,7 +45,7 @@ function InquireForm() {
   };
 
   return (
-    <div className={style.wrapper}>
+    <div className={style.container}>
       <FormHeader text="Inform" />
       <Input
         name="userId"
