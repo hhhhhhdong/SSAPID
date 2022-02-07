@@ -28,6 +28,7 @@ function LoginForm() {
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userId);
+        axios.defaults.headers.common.Authorization = `Bearer ${res.data.accessToken}`;
         navigate("/");
       })
       .catch((err) => {

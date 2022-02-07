@@ -35,7 +35,7 @@ function DirectMessages() {
     }
     return () => setUsers([]);
   }, []);
-  console.log(chatRooms);
+  // console.log(chatRooms);
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addUsersListeners() {
     const { usersRef } = state;
