@@ -3,13 +3,11 @@ package com.ssafy.api.service;
 import com.ssafy.api.request.BoardRegisterPostReq;
 import com.ssafy.api.request.BoardUpdateReq;
 import com.ssafy.db.entity.Board;
-import com.ssafy.db.entity.Favorite;
 import com.ssafy.db.entity.User;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Set;
+
 
 public interface BoardService {
     void createBoard(BoardRegisterPostReq boardRegisterPostReq, User user);

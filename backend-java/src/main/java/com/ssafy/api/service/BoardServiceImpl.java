@@ -10,15 +10,13 @@ import com.ssafy.db.repository.BoardRepositorySupport;
 import com.ssafy.db.repository.FavoriteRepository;
 import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -68,10 +66,10 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<Board> getfavoriteBoardList(User user) {
-        //join으로 sql 한번만 실행되게 수정
+        //join으로 sql 한번만 실행되게 수정해보기
         List<Board> boardList = new ArrayList<>();
         List<Favorite> favoriteBoardList = favoriteRepository.findByUser(user); //유저의 즐겨찾기 리스트
-        for(Favorite favorite: favoriteBoardList){ //즐겨찾기 리스트의 보드->
+        for(Favorite favorite: favoriteBoardList){
             boardList.add(favorite.getBoard());
         }
         return boardList;
