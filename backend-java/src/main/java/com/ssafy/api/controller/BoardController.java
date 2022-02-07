@@ -23,6 +23,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 
 @Api(value = "게시판 API", tags = {"Board"})
@@ -61,8 +62,8 @@ public class BoardController {
                                                   @PageableDefault(size=6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
-        List<Board> boards = boardService.getBoardList(pageable);
-        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards, user));
+        Map<String,Object> map = boardService.getBoardPage(pageable);
+        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", (List<Board>) map.get("boardList"), user, (Boolean) map.get("isLast")));
     }
 
     @GetMapping("/{boardSeq}")

@@ -9,13 +9,16 @@ import com.ssafy.db.repository.BoardRepository;
 import com.ssafy.db.repository.BoardRepositorySupport;
 import com.ssafy.db.repository.FavoriteRepository;
 import com.ssafy.db.repository.UserRepository;
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Service("boardService")
@@ -46,8 +49,15 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> getBoardList(Pageable pageable) {
-        return boardRepository.findAll(pageable).getContent();
+    public List<Board> getBoardList() { return boardRepository.findAll();}
+
+    @Override
+    public Map<String, Object> getBoardPage(Pageable pageable) {
+        Page page = boardRepository.findAll(pageable);
+        Map<String, Object> map = new HashedMap<>();
+        map.put("boardList",page.getContent());
+        map.put("isLast",page.isLast());
+        return map;
     }
 
     @Override
@@ -108,6 +118,7 @@ public class BoardServiceImpl implements BoardService {
             return 1;
         }
     }
+
 
     @Override
     public Board updateBoard(Long boardSeq, BoardUpdateReq boardUpdateReq, User user) {
