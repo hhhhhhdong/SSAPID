@@ -1,14 +1,14 @@
 import { getDatabase, push, ref, set } from "firebase/database";
 import { Timestamp } from "firebase/firestore";
 
-export function makeUser(email, userNickName) {
+export async function makeUser(email, userNickName) {
   const db = getDatabase();
-  set(ref(db, `users/${userNickName}`), {
+  await set(ref(db, `users/${userNickName}`), {
     email,
   });
 }
 
-export function makeMessage(message, room) {
+export async function makeMessage(message, room) {
   const db = getDatabase();
   const user = sessionStorage.getItem("userNickname");
   let timestamp = "";
@@ -22,5 +22,5 @@ export function makeMessage(message, room) {
     time: Timestamp.now().seconds,
   };
 
-  set(push(ref(db, `messages/${room[0]}`)), msg);
+  await set(push(ref(db, `messages/${room[0]}`)), msg);
 }

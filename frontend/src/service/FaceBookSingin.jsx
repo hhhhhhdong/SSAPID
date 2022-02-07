@@ -5,7 +5,6 @@ import { authService, facebookProvider } from "./fbase";
 import { makeUser } from "./function";
 
 function FacebookSignin() {
-  const navigate = useNavigate();
   const onFacebookClick = async (event) => {
     await authService.signInWithPopup(facebookProvider);
     const user = authService.currentUser;
@@ -16,7 +15,7 @@ function FacebookSignin() {
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", user.email);
-        navigate("/");
+        window.location.replace("/");
       })
       .catch((error) => {
         console.error(error);
