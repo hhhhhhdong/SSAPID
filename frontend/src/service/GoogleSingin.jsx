@@ -9,10 +9,13 @@ function GoogleSignin() {
   const onGoogleClick = async (event) => {
     await authService.signInWithPopup(googleProvider);
     const user = authService.currentUser;
+    const pattern = /[.#/$]/;
+    const regexAllCase = new RegExp(pattern, "gi");
     await axios
       .post("/social-login", { userId: user.email, userType: 2 })
       .then((res) => {
-        makeUser(user.email, res.data.userNickname);
+        const token = res.data.accessToken.replace(regexAllCase, "");
+        makeUser(user.email, res.data.userNickname, token);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", user.email);
@@ -23,11 +26,6 @@ function GoogleSignin() {
         console.log("에러", error);
       });
   };
-
-  makeUser(
-    sessionStorage.getItem("email"),
-    sessionStorage.getItem("userNickname")
-  );
 
   return (
     <i className="fab fa-google" onClick={onGoogleClick} aria-hidden="true" />

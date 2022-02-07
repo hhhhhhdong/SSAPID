@@ -1,10 +1,11 @@
 import { getDatabase, push, ref, set } from "firebase/database";
 import { Timestamp } from "firebase/firestore";
 
-export function makeUser(email, userNickName) {
+export function makeUser(email, userNickName, token) {
   const db = getDatabase();
   set(ref(db, `users/${userNickName}`), {
     email,
+    token,
   });
 }
 

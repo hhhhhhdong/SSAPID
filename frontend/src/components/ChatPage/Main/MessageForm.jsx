@@ -8,9 +8,12 @@ function MessageForm() {
   const [errors, setErrors] = useState([]);
   const room = useSelector((state) => state.userReducer.chatRoomString);
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
     try {
-      await makeMessage(message, room);
+      e.preventDefault();
+      if (message) {
+        await makeMessage(message, room);
+      }
       setMessage("");
       setErrors([]);
     } catch (error) {
@@ -31,12 +34,13 @@ function MessageForm() {
           name="message"
           value={message}
           onChange={onChange}
-          placeholder="Send the message"
+          placeholder="  Send the message"
           style={{
             width: "100%",
             height: "40px",
             marginBottom: "2rem",
-            borderRadius: "4px",
+            borderRadius: "10px",
+            border: "none",
           }}
         />
         <div style={{ display: "flex", justifyContent: "center" }}>
