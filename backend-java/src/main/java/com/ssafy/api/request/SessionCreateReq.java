@@ -4,11 +4,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotEmpty;
 
 @Getter
 @Setter
+@ToString
 @ApiModel("CreateSessionRequest")
 public class SessionCreateReq {
 
