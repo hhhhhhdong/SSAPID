@@ -1,6 +1,6 @@
 import React from "react";
-import PwCheckForm from "components/User/PwCheckForm";
 import Navbar from "components/layout/MainTemplate";
+import PwCheckForm from "components/UserEdit/PwCheckForm";
 
 function PwCheck() {
   return (

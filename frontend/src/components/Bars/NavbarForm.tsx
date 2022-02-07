@@ -31,7 +31,9 @@ function NavbarForm() {
         <span>
           <Link to="/createboard">글쓰기</Link>
         </span>
-        <span>내정보</span>
+        <span>
+          <Link to="/pwcheck">내정보</Link>
+        </span>
         <span>로그아웃</span>
         <span
           onMouseEnter={() => !open && setOpenIcon(true)}
