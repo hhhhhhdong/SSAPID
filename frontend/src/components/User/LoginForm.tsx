@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeUser } from "service/function";
+import { useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import GithubSignin from "../../service/GithubSignin";
 import FormHeader from "../layout/FormHeader";
@@ -10,6 +11,7 @@ import style from "../../styles/Loginform.module.scss";
 import Button from "../common/Button";
 
 function LoginForm() {
+  const navigate = useNavigate();
   const idPlaceHolder = "아이디를 입력하세요";
   const passwordPlaceHolder = "비밀번호를 입력하세요";
   const [isEmpty, setEmpty] = useState(false);
@@ -26,6 +28,7 @@ function LoginForm() {
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userId);
+        navigate("/");
       })
       .catch((err) => {
         console.error(err);
