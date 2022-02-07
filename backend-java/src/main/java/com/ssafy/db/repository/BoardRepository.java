@@ -14,6 +14,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Optional<Board> findByBoardSeq(Long boardSeq);
     Page<Board> findAll(Pageable pageable);
+    List<Board> findAll();
     List<Board> findByBoardTitleContaining(String content);
     List<Board> findByBoardContentContaining(String content);
     // IllegalArgumentException - did not match expected type 해결 못해서 QueryDSL 사용해서 만듬
