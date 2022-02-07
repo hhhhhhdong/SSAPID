@@ -1,3 +1,5 @@
+// docker run -p 4443:4443 --rm -e OPENVIDU_SECRET=MY_SECRET openvidu/openvidu-server-kms:2.20.0
+
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/sort-comp */
@@ -11,8 +13,8 @@ class Openvidu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mySessionId: "SessionA",
-      myUserName: `OpenVidu_User_${Math.floor(Math.random() * 100)}`,
+      sessionName: "SessionA",
+      userNickname: `OpenVidu_User_${Math.floor(Math.random() * 100)}`,
       token: undefined,
     };
 
@@ -41,40 +43,52 @@ class Openvidu extends Component {
 
   handleChangeSessionId(e) {
     this.setState({
-      mySessionId: e.target.value,
+      sessionName: e.target.value,
     });
   }
 
   handleChangeUserName(e) {
     this.setState({
-      myUserName: e.target.value,
+      userNickname: e.target.value,
     });
   }
 
+  // joinSession(event) {
+  //   if (this.state.sessionName && this.state.userNickname) {
+  //     this.getToken().then((token) => {
+  //       this.setState({
+  //         token,
+  //         session: true,
+  //       });
+  //     });
+  //     event.preventDefault();
+  //   }
+  // }
+
   joinSession(event) {
-    if (this.state.mySessionId && this.state.myUserName) {
-      this.getToken().then((token) => {
+    axios
+      .post("/session", this.state)
+      .then((res) => {
         this.setState({
-          token,
+          token: res.data.token,
           session: true,
         });
+      })
+      .catch((err) => {
+        console.dir(err);
       });
-      event.preventDefault();
-    }
+    event.preventDefault();
   }
 
-  getToken() {
-    // axios.post(`/session`, data).then(
-    // ).catch();
-
-    return this.createSession(this.state.mySessionId)
-      .then((sessionId) => this.createToken(sessionId))
-      .catch((Err) => console.error(Err));
-  }
+  // getToken() {
+  //   return this.createSession(this.state.sessionName)
+  //     .then((sessionId) => this.createToken(sessionId))
+  //     .catch((Err) => console.error(Err));
+  // }
 
   render() {
-    const { mySessionId } = this.state;
-    const { myUserName } = this.state;
+    const { sessionName } = this.state;
+    const { userNickname } = this.state;
     const { token } = this.state;
     return (
       <div>
@@ -88,7 +102,7 @@ class Openvidu extends Component {
                   <input
                     type="text"
                     id="userName"
-                    value={myUserName}
+                    value={userNickname}
                     onChange={this.handleChangeUserName}
                     required
                   />
@@ -98,7 +112,7 @@ class Openvidu extends Component {
                   <input
                     type="text"
                     id="sessionId"
-                    value={mySessionId}
+                    value={sessionName}
                     onChange={this.handleChangeSessionId}
                     required
                   />
@@ -113,8 +127,8 @@ class Openvidu extends Component {
           <div id="session">
             <OpenViduSession
               id="opv-session"
-              sessionName={mySessionId}
-              user={myUserName}
+              sessionName={sessionName}
+              user={userNickname}
               token={token}
               joinSession={this.handlerJoinSessionEvent}
               leaveSession={this.handlerLeaveSessionEvent}
