@@ -14,6 +14,8 @@ function DirectMessages() {
   // DB에서 users 스키마를 res 해서 state
   const [state, setState] = useState({
     usersRef: ref(getDatabase(), "users"),
+    roomsRef: ref(getDatabase(), "messages"),
+    chatRooms: [],
   });
   // 가져온 users 스키마를 바탕으로 users state 형성
   const [users, setUsers] = useState([]);
@@ -24,21 +26,23 @@ function DirectMessages() {
   const dispatch = useDispatch();
   const pattern = /[.#/$]/;
   const regexAllCase = new RegExp(pattern, "gi");
-
+  const { chatRooms } = state;
   // 렌더링 될때마다 db에서 스키마 로딩
   useEffect(() => {
     if (users) {
       addUsersListeners();
+      chatRoomListeners();
     }
     return () => setUsers([]);
   }, []);
+  console.log(chatRooms);
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
-  async function addUsersListeners() {
+  function addUsersListeners() {
     const { usersRef } = state;
     const myName = sessionStorage.getItem("userNickname");
     const usersArray = [];
 
-    await onChildAdded(usersRef, (DataSnapshot) => {
+    onChildAdded(usersRef, (DataSnapshot) => {
       if (myName !== DataSnapshot.key) {
         // eslint-disable-next-line prefer-const
         let user = DataSnapshot.val();
@@ -55,7 +59,7 @@ function DirectMessages() {
     const mine = sessionStorage.getItem("email");
     const user = mine.replace(regexAllCase, "");
     const your = userId.replace(regexAllCase, "");
-    return user > your ? `${user}/${your}` : `${your}/${user}`;
+    return user > your ? `${user}${your}` : `${your}${user}`;
   };
 
   // 채팅 룸 변경
@@ -69,6 +73,16 @@ function DirectMessages() {
     } else {
       setShow(true);
     }
+  };
+
+  const chatRoomListeners = () => {
+    const chatRooms = [];
+    const { roomsRef } = state;
+
+    onChildAdded(roomsRef, (DataSnapshot) => {
+      chatRooms.push(DataSnapshot.key);
+    });
+    setState({ chatRooms });
   };
 
   // 닉네임 렌더링
@@ -85,6 +99,7 @@ function DirectMessages() {
         }}
       >
         # {user.nickName}
+        <span style={{ backgroundColor: "red" }}>1</span>
       </li>
     ));
 
