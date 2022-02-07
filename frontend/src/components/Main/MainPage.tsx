@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable no-unused-expressions */
+import React, { useEffect, useState, useRef } from "react";
 import axios from "api/axios";
 import style from "../../styles/MainPage.module.scss";
 import BoardCard from "./BoardCard";
@@ -14,27 +15,65 @@ type Board = {
 };
 
 function MainPage() {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [boards, setBoards] = useState<Board[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [isLast, setIsLast] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const targetRef = useRef<HTMLDivElement>(null);
+
   const onChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
 
   useEffect(() => {
-    axios
-      .get("/board")
-      .then((res) => {
-        setBoards(res.data.boardInfos);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.dir(err);
-      });
+    getItems();
+    setPage((prev) => prev + 1);
   }, []);
 
   const onClickSearch = () => {
     console.log(searchValue);
   };
+
+  // 데이터 받아오기
+  const getItems = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      // page, size
+      axios
+        .get(`/board?page=${page}&size=3`)
+        .then((res) => {
+          if (res.data.last) setIsLast(true);
+          setBoards((prev) => prev.concat(res.data.boardInfos));
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.dir(err);
+        });
+    }, 500);
+  };
+  // 옵저버 설정 함수
+  const intersectionObserver = (
+    entries: IntersectionObserverEntry[],
+    io: IntersectionObserver
+  ) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        io.unobserve(entry.target);
+        // 데이터 가져오기
+        getItems();
+        setPage((prev) => prev + 1);
+      }
+    });
+  };
+
+  const obsever = new IntersectionObserver(intersectionObserver);
+  useEffect(() => {
+    !isLast && targetRef.current && obsever.observe(targetRef.current);
+    return () => obsever && obsever.disconnect();
+  }, [boards]);
+
   return (
     <div className={style.container}>
       <div className={style.filter}>
@@ -62,18 +101,36 @@ function MainPage() {
         </div>
       </div>
       <div className={style.cards}>
-        {boards.map((board) => (
-          <BoardCard
-            key={board.boardSeq}
-            boardSeq={board.boardSeq}
-            title={board.boardTitle}
-            createAt={board.createAt}
-            deadline={board.deadline}
-            author={board.author}
-            isLike={board.isLike}
-          />
-        ))}
+        {boards.map((board, idx) => {
+          if (boards.length - 1 === idx) {
+            return (
+              <div ref={targetRef} key={board.boardSeq}>
+                <BoardCard
+                  boardSeq={board.boardSeq}
+                  title={board.boardTitle}
+                  createAt={board.createAt}
+                  deadline={board.deadline}
+                  author={board.author}
+                  isLike={board.isLike}
+                />
+              </div>
+            );
+          }
+          return (
+            <div key={board.boardSeq}>
+              <BoardCard
+                boardSeq={board.boardSeq}
+                title={board.boardTitle}
+                createAt={board.createAt}
+                deadline={board.deadline}
+                author={board.author}
+                isLike={board.isLike}
+              />
+            </div>
+          );
+        })}
       </div>
+      {isLoading && <div>데이터 가져오는 중..</div>}
     </div>
   );
 }
