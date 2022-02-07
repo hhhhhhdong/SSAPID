@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BiMessageAltDetail } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   getDatabase,
   ref,
@@ -22,6 +22,8 @@ function DirectMessages() {
   const [isSelect, setSelect] = useState("");
 
   const dispatch = useDispatch();
+  const pattern = /[.#/$]/;
+  const regexAllCase = new RegExp(pattern, "gi");
 
   // 렌더링 될때마다 db에서 스키마 로딩
   useEffect(() => {
@@ -50,16 +52,14 @@ function DirectMessages() {
 
   // 방 ID 생성
   const getChatRoomId = (userId) => {
-    const myId = sessionStorage.getItem("userNickname");
-    const currentUserId = myId;
-    return userId > currentUserId
-      ? `${userId}/${currentUserId}`
-      : `${currentUserId}/${userId}`;
+    const mine = sessionStorage.getItem("accessToken");
+    const ID = mine.replace(regexAllCase, "");
+    return ID > userId ? `${ID}/${userId}` : `${userId}/${ID}`;
   };
 
   // 채팅 룸 변경
   const changeChatRoom = (user) => {
-    const chatRoomId = getChatRoomId(user.nickName);
+    const chatRoomId = getChatRoomId(user.token);
     const chatRoomData = [chatRoomId, user.nickName];
     dispatch(chatRoomString(chatRoomData));
     setSelect(user.nickName);

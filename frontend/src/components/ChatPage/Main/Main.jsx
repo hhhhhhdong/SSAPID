@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   getDatabase,
@@ -13,9 +13,38 @@ import MessageForm from "./MessageForm";
 
 function Main() {
   const [messages, setMessages] = useState([]);
-  const [state] = useState({
+  const [state, setState] = useState({
     messagesRef: ref(getDatabase(), "messages"),
+    searchTerm: "",
+    searchResults: [],
+    searchLoading: false,
   });
+  const { searchTerm, searchResults } = state;
+  const handleSearchMessages = () => {
+    if (searchTerm) {
+      const chatRoomMessages = [...messages];
+      const regex = new RegExp(searchTerm, "gi");
+      const searchResults = chatRoomMessages.reduce((acc, message) => {
+        if (message.contents && message.contents.match(regex)) {
+          acc.push(message);
+        }
+        return acc;
+      }, []);
+
+      setState({ searchResults });
+    }
+  };
+
+  const handleSearchChange = (event) => {
+    setState({ searchTerm: event.target.value, searchLoading: true });
+  };
+
+  useEffect(() => {
+    if (searchTerm) {
+      handleSearchMessages();
+    }
+  }, [searchTerm]);
+
   const room = useSelector((state) => state.userReducer.chatRoomString);
 
   const renderMessages = (messages) =>
@@ -30,6 +59,17 @@ function Main() {
     }
     return () => setMessages([]);
   }, []);
+
+  // 스크롤을 맨 아래로 내리는 로직
+  const scrollRef = useRef();
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addMessageListeners(room) {
     const { messagesRef } = state;
@@ -44,7 +84,10 @@ function Main() {
 
   return (
     <div style={{ padding: "2rem 2rem 0 2rem" }}>
-      <MessageHeader />
+      <MessageHeader
+        handleSearchChange={handleSearchChange}
+        value={searchTerm}
+      />
       <div
         style={{
           width: "100%",
@@ -56,8 +99,11 @@ function Main() {
           overflowY: "auto",
           overflowX: "hidden",
         }}
+        ref={scrollRef}
       >
-        {renderMessages(messages)}
+        {searchResults !== undefined && searchResults.length !== 0
+          ? renderMessages(searchResults)
+          : renderMessages(messages)}
       </div>
 
       <MessageForm />

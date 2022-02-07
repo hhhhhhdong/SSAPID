@@ -1,5 +1,4 @@
 import React from "react";
-import { IoMdFunnel } from "react-icons/io";
 
 function Message({ message }) {
   const timestamp = message.time;

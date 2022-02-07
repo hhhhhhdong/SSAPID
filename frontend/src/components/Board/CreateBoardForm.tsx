@@ -49,7 +49,8 @@ function CreateBoardForm() {
       .then(() => {
         navigate("/");
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log("에러: ", err);
         alert("게시글 생성에 실패했습니다.");
       });
   };
