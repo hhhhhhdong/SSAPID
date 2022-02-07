@@ -33,12 +33,12 @@ function DirectMessages() {
     return () => setUsers([]);
   }, []);
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
-  function addUsersListeners() {
+  async function addUsersListeners() {
     const { usersRef } = state;
     const myName = sessionStorage.getItem("userNickname");
     const usersArray = [];
 
-    onChildAdded(usersRef, (DataSnapshot) => {
+    await onChildAdded(usersRef, (DataSnapshot) => {
       if (myName !== DataSnapshot.key) {
         // eslint-disable-next-line prefer-const
         let user = DataSnapshot.val();
@@ -52,14 +52,15 @@ function DirectMessages() {
 
   // 방 ID 생성
   const getChatRoomId = (userId) => {
-    const mine = sessionStorage.getItem("accessToken");
-    const ID = mine.replace(regexAllCase, "");
-    return ID > userId ? `${ID}/${userId}` : `${userId}/${ID}`;
+    const mine = sessionStorage.getItem("email");
+    const user = mine.replace(regexAllCase, "");
+    const your = userId.replace(regexAllCase, "");
+    return user > your ? `${user}/${your}` : `${your}/${user}`;
   };
 
   // 채팅 룸 변경
   const changeChatRoom = (user) => {
-    const chatRoomId = getChatRoomId(user.token);
+    const chatRoomId = getChatRoomId(user.email);
     const chatRoomData = [chatRoomId, user.nickName];
     dispatch(chatRoomString(chatRoomData));
     setSelect(user.nickName);

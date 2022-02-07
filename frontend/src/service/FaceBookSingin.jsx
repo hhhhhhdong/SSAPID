@@ -6,20 +6,16 @@ import { makeUser } from "./function";
 
 function FacebookSignin() {
   const navigate = useNavigate();
-  const pattern = /[.#/$]/;
-  const regexAllCase = new RegExp(pattern, "gi");
   const onFacebookClick = async (event) => {
     await authService.signInWithPopup(facebookProvider);
     const user = authService.currentUser;
     await axios
       .post("/social-login", { userId: user.email, userType: 2 })
       .then((res) => {
-        const token = res.data.accessToken.replace(regexAllCase, "");
-        makeUser(user.email, res.data.userNickname, token);
+        makeUser(user.email, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", user.email);
-        window.location.reload();
         navigate("/");
       })
       .catch((error) => {

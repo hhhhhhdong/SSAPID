@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "../api/axios";
 import { makeUser } from "./function";
 import { authService, githubProvider } from "./fbase";
@@ -14,18 +14,14 @@ function GithubSignin() {
     const { user } = multiFactor;
     const { uid } = user;
     const userData = uid;
-    const pattern = /[.#/$]/;
-    const regexAllCase = new RegExp(pattern, "gi");
+
     await axios
       .post("/social-login", { userId: userData, userType: 2 })
       .then((res) => {
-        const token = res.data.accessToken.replace(regexAllCase, "");
-        makeUser(userData, res.data.userNickname, token);
+        makeUser(userData, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userData);
-        window.location.reload();
-        navigate("/");
       })
       .catch((error) => {
         console.log(error);
