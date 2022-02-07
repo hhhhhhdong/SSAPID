@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { makeUser } from "service/function";
 import axios from "../../api/axios";
 import GithubSignin from "../../service/GithubSignin";
@@ -14,7 +13,6 @@ function LoginForm() {
   const idPlaceHolder = "아이디를 입력하세요";
   const passwordPlaceHolder = "비밀번호를 입력하세요";
   const [isEmpty, setEmpty] = useState(false);
-  const navigate = useNavigate();
   const [form, setForm] = useState({
     userId: "",
     userPw: "",
@@ -27,7 +25,7 @@ function LoginForm() {
         makeUser(userId, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
-        window.location.replace("/");
+        sessionStorage.setItem("email", userId);
       })
       .catch((err) => {
         console.error(err);
