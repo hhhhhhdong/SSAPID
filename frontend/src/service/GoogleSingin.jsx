@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "../api/axios";
 import { makeUser } from "./function";
 import { authService, googleProvider } from "./fbase";
@@ -9,18 +9,14 @@ function GoogleSignin() {
   const onGoogleClick = async (event) => {
     await authService.signInWithPopup(googleProvider);
     const user = authService.currentUser;
-    const pattern = /[.#/$]/;
-    const regexAllCase = new RegExp(pattern, "gi");
+
     await axios
       .post("/social-login", { userId: user.email, userType: 2 })
       .then((res) => {
-        const token = res.data.accessToken.replace(regexAllCase, "");
-        makeUser(user.email, res.data.userNickname, token);
+        makeUser(user.email, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", user.email);
-        window.location.reload();
-        navigate("/");
       })
       .catch((error) => {
         console.log("에러", error);
