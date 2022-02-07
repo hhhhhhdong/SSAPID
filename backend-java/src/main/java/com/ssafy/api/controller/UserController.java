@@ -41,7 +41,6 @@ public class UserController {
             @Valid @RequestBody @ApiParam(value = "회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
         try {
             User user= userService.getUserbyUserNameAndUserPhone(registerInfo.getUserName(),registerInfo.getUserPhone());
-            System.out.println("확인:"+user.getUserId());
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증 실패"));
         } catch (NoSuchElementException e) {
             userService.createUser(registerInfo);
