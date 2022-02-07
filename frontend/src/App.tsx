@@ -9,6 +9,9 @@ import {
 import Edit from "pages/Edit";
 import PwCheck from "pages/PwCheck";
 import Inquire from "pages/Inquire";
+import ChangePW from "pages/ChangePw";
+import ChangePhone from "pages/ChangePhone";
+import ChangeNick from "pages/ChangeNick";
 import Main from "./pages/Main";
 import IdFind from "./pages/IdFind";
 import Register from "./pages/Register";
@@ -24,13 +27,12 @@ import Openvidu from "./pages/Openvidu.jsx";
 import "./App.module.scss";
 
 function App() {
-  const userNickname = sessionStorage.getItem("userNickname");
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={userNickname ? <Main /> : <Login />} />
-          <Route path="/home" element={<Main />} />
+          <Route path="/" element={<Main />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/idFind" element={<IdFind />} />
           <Route path="/passFind" element={<PassFind />} />
@@ -44,6 +46,9 @@ function App() {
           <Route path="/pwcheck" element={<PwCheck />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/openvidu" element={<Openvidu />} />
+          <Route path="/changepw" element={<ChangePW />} />
+          <Route path="/changenick" element={<ChangeNick />} />
+          <Route path="/changephone" element={<ChangePhone />} />
         </Routes>
       </div>
     </Router>

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import FormHeader from "components/layout/FormHeader";
 import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
-import Spacer from "../common/Spacer";
+// import Spacer from "../common/Spacer";
+import style from "../../styles/edit.module.scss";
 
 function ChangePhoneForm() {
   const [form, setForm] = useState({
@@ -13,9 +15,9 @@ function ChangePhoneForm() {
   const Submit = () => {
     console.log(form);
     axios
-      .put("/user/change-nick", form)
+      .put("/user/change-phone", form)
       .then(() => {
-        alert("닉네임이 변경되었습니다.");
+        alert("휴대폰 번호가 변경되었습니다.");
         navigate("/inquire");
       })
       .catch((error) => {
@@ -30,10 +32,11 @@ function ChangePhoneForm() {
     });
   };
   return (
-    <div>
+    <div className={style.container}>
+      <FormHeader text="Change Phone" />
       <Input
-        name="userPw"
-        placeHolder="password"
+        name="userPhone"
+        placeHolder="phone number"
         value={form.userPhone}
         onChange={onChange}
       />
