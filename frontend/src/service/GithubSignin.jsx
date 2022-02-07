@@ -5,7 +5,6 @@ import { makeUser } from "./function";
 import { authService, githubProvider } from "./fbase";
 
 function GithubSignin() {
-  const navigate = useNavigate();
   const onGithubClick = async (event) => {
     await authService.signInWithPopup(githubProvider);
     const User = authService.currentUser;
@@ -22,6 +21,7 @@ function GithubSignin() {
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userData);
+        window.location.replace("/");
       })
       .catch((error) => {
         console.log(error);

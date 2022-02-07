@@ -20,10 +20,17 @@ function Main() {
     searchLoading: false,
   });
   const { searchTerm, searchResults } = state;
+
+  function changeStr(str) {
+    const specials = /[.*+?|()[\]{}\\]/g;
+    return str.replace(specials, "\\$&");
+  }
+
   const handleSearchMessages = () => {
     if (searchTerm) {
       const chatRoomMessages = [...messages];
-      const regex = new RegExp(searchTerm, "gi");
+      const str = changeStr(searchTerm);
+      const regex = new RegExp(str, "gi");
       const searchResults = chatRoomMessages.reduce((acc, message) => {
         if (message.contents && message.contents.match(regex)) {
           acc.push(message);
