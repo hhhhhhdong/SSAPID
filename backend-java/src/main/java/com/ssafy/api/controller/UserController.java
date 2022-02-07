@@ -28,23 +28,26 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @PostMapping("/register")
     @ApiOperation(value = "회원 가입", notes = "<strong>회원가입 정보</strong>를 통해 회원가입 한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "인증 실패"),
-            @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
 
     public ResponseEntity<? extends BaseResponseBody> register(
             @Valid @RequestBody @ApiParam(value = "회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
+        try {
+            User user= userService.getUserbyUserNameAndUserPhone(registerInfo.getUserName(),registerInfo.getUserPhone());
+            System.out.println("확인:"+user.getUserId());
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증 실패"));
+        } catch (NoSuchElementException e) {
+            userService.createUser(registerInfo);
+            return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
 
-        User user = userService.createUser(registerInfo);
-        return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
+        }
     }
 
 

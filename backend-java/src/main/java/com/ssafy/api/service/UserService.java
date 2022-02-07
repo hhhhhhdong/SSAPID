@@ -12,6 +12,7 @@ public interface UserService {
 	void createSocialUser(UserSocialReq socialRegisterInfo);
 	User getUserByUserId(String userId);
 	User getSocialUserByUserId(String userId);
+	User getUserbyUserNameAndUserPhone(String userName, String userPhone);
 	void setUser(UserSetInfoPostReq userSetInfoPostReq, User user);
 	void deleteUser(User user);
 	String getUserId(String userName, String userPhone);
