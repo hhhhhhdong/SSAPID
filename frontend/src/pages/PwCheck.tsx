@@ -5,9 +5,9 @@ import Navbar from "components/layout/MainTemplate";
 function PwCheck() {
   return (
     <div>
-      {/* <Navbar> */}
-      <PwCheckForm />
-      {/* </Navbar> */}
+      <Navbar>
+        <PwCheckForm />
+      </Navbar>
     </div>
   );
 }
