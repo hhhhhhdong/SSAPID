@@ -3,4 +3,10 @@
   justify-content: center;
   align-items: center;
   padding-top: 20ch;
+  .Link {
+    box-sizing: border-box;
+    display: block;
+    // padding: 4px;
+    font-size: xx-small;
+  }
 }

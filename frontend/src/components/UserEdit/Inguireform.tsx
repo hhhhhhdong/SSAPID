@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import Spacer from "../common/Spacer";
 import FormHeader from "../layout/FormHeader";
-import style from "../../styles/Editform.module.scss";
+import style from "../../styles/edit.module.scss";
 
 const INPUT_MARGIN_BOTTOM = 2;
 
@@ -19,7 +19,6 @@ function InquireForm() {
     userPhone: "",
     userName: "",
   });
-  // const navigate = useNavigate();
   useEffect(() => {
     axios
       .get("/user/info", {
@@ -32,20 +31,10 @@ function InquireForm() {
         setForm(res.data);
       });
   }, []);
-  // console.log(form);
-  // const submit = () => {
-  //   navigate("/edit");
-  // };
-  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   setForm({
-  //     ...form,
-  //     [name]: value,
-  //   });
-  // };
+  console.log(form);
 
   return (
-    <div className={style.wrapper}>
+    <div className={style.container}>
       <FormHeader text="Inform" />
       <Input
         name="userId"
@@ -67,6 +56,9 @@ function InquireForm() {
         value={form.userNickname}
         onChange={undefined}
       />
+      <p className={style.Link}>
+        <Link to="/changenick">닉네임 변경</Link>
+      </p>
       <Spacer size={INPUT_MARGIN_BOTTOM} />
       <Input
         name="userPhone"
@@ -74,11 +66,13 @@ function InquireForm() {
         value={form.userPhone}
         onChange={undefined}
       />
-      {/* <Button buttonType="submit" text="edit" handleClick={submit} /> */}
-      <a href="/Changepw">비밀번호 변경</a>
-      <a href="/UserDistForm"> 회원탈퇴</a>
-      <a href="/UserDistForm"> 닉네임 변경</a>
-      <a href="/UserDistForm"> 휴대폰번호 변경</a>
+      <p className={style.Link}>
+        <Link to="/changephone">휴대폰 번호 변경</Link>
+        <hr />
+        <Link to="/changepw">비밀번호 변경</Link>
+        <br />
+        <Link to="/userDist">회원탈퇴</Link>
+      </p>
     </div>
   );
 }

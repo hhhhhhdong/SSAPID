@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "components/layout/MainTemplate";
-import EditForm from "../components/User/EditForm";
+import EditForm from "components/UserEdit/EditForm";
 
 function Edit() {
   return (

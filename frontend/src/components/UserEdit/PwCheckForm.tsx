@@ -5,6 +5,7 @@ import Input from "../common/Input";
 import Button from "../common/Button";
 import Spacer from "../common/Spacer";
 import FormHeader from "../layout/FormHeader";
+import style from "../../styles/edit.module.scss";
 
 const INPUT_MARGIN_BOTTOM = 2;
 
@@ -42,7 +43,7 @@ function PwCheckForm() {
   });
 
   return (
-    <div>
+    <div className={style.container}>
       <Spacer size={INPUT_MARGIN_BOTTOM} />
       <FormHeader text="Check Pw" />
       <Spacer size={INPUT_MARGIN_BOTTOM} />

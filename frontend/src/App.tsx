@@ -9,6 +9,9 @@ import {
 import Edit from "pages/Edit";
 import PwCheck from "pages/PwCheck";
 import Inquire from "pages/Inquire";
+import ChangePW from "pages/ChangePw";
+import ChangePhone from "pages/ChangePhone";
+import ChangeNick from "pages/ChangeNick";
 import Main from "./pages/Main";
 import IdFind from "./pages/IdFind";
 import Register from "./pages/Register";
@@ -44,6 +47,9 @@ function App() {
           <Route path="/pwcheck" element={<PwCheck />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/openvidu" element={<Openvidu />} />
+          <Route path="/changepw" element={<ChangePW />} />
+          <Route path="/changenick" element={<ChangeNick />} />
+          <Route path="/changephone" element={<ChangePhone />} />
         </Routes>
       </div>
     </Router>

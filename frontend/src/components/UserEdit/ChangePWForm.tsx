@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import FormHeader from "components/layout/FormHeader";
 import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import Spacer from "../common/Spacer";
+import style from "../../styles/edit.module.scss";
 
 function ChangePWForm() {
   const token = sessionStorage.getItem("accessToken");
@@ -46,7 +48,8 @@ function ChangePWForm() {
     });
   };
   return (
-    <div>
+    <div className={style.container}>
+      <FormHeader text="Change PW" />
       <Input
         name="userPw"
         placeHolder="password"
