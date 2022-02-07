@@ -4,7 +4,6 @@ import com.ssafy.api.request.UserLoginPostReq;
 import com.ssafy.api.request.UserSocialReq;
 import com.ssafy.api.response.UserLoginPostRes;
 import com.ssafy.api.service.UserService;
-import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.common.util.JwtTokenUtil;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;

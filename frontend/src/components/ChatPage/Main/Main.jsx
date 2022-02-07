@@ -55,7 +55,7 @@ function Main() {
   // 렌더링 될때마다 db에서 스키마 로딩
   useEffect(() => {
     if (room) {
-      addMessageListeners(room);
+      addMessageListeners(room[0]);
     }
     return () => setMessages([]);
   }, []);
@@ -75,7 +75,7 @@ function Main() {
     const { messagesRef } = state;
     const messagesArray = [];
 
-    onChildAdded(child(messagesRef, room[0]), (DataSnapshot) => {
+    onChildAdded(child(messagesRef, room), (DataSnapshot) => {
       const messages = DataSnapshot.val();
       messagesArray.push(messages);
       setMessages([...messagesArray]);
