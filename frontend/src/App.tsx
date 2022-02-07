@@ -15,7 +15,7 @@ import AuthFind from "./pages/AuthFind";
 import PassChange from "./pages/PassChange";
 import BoardDetail from "./pages/BoardDetail";
 import WebRtcTest from "./pages/WebRtcTest.jsx";
-import Openvidu from "./pages/Openvidu";
+import Openvidu from "./pages/Openvidu.jsx";
 import "./App.module.scss";
 
 function App() {

@@ -7,7 +7,7 @@ import React, { Component } from "react";
 import axios from "api/axios";
 import OpenViduSession from "openvidu-react";
 
-class App extends Component {
+class Openvidu extends Component {
   constructor(props) {
     super(props);
     this.OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
@@ -202,4 +202,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Openvidu;
