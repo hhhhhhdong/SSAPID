@@ -10,6 +10,8 @@ import com.ssafy.db.repository.BoardRepositorySupport;
 import com.ssafy.db.repository.FavoriteRepository;
 import com.ssafy.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -46,8 +48,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> getBoardList() {
-        return boardRepository.findAll();
+    public List<Board> getBoardList(Pageable pageable) {
+        return boardRepository.findAll(pageable).getContent();
     }
 
     @Override
@@ -67,12 +69,12 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<Board> getfavoriteBoardList(User user) {
         //join으로 sql 한번만 실행되게 수정
-        List<Board> list = new ArrayList<>();
-        List<Favorite> favoriteBoardList = favoriteRepository.findByUser(user);
-        for(Favorite favorite: favoriteBoardList){
-            list.add(favorite.getBoard());
+        List<Board> boardList = new ArrayList<>();
+        List<Favorite> favoriteBoardList = favoriteRepository.findByUser(user); //유저의 즐겨찾기 리스트
+        for(Favorite favorite: favoriteBoardList){ //즐겨찾기 리스트의 보드->
+            boardList.add(favorite.getBoard());
         }
-        return list;
+        return boardList;
     }
 
     @Override

@@ -10,17 +10,18 @@ import com.ssafy.api.service.UserService;
 import com.ssafy.common.auth.SsafyUserDetails;
 import com.ssafy.common.model.response.BaseResponseBody;
 import com.ssafy.db.entity.Board;
-import com.ssafy.db.entity.Favorite;
 import com.ssafy.db.entity.User;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,8 +46,7 @@ public class BoardController {
     public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication,
                                                                @Valid @RequestBody @ApiParam(value = "작성한 내용의 정보", required = true) BoardRegisterPostReq registerInfo) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
-        User user = userService.getUserByUserId(userId);
+        User user = userDetails.getUser();
         boardService.createBoard(registerInfo, user);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -57,11 +57,11 @@ public class BoardController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication) {
+    public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication,
+                                                  @PageableDefault(size=6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
-        User user = userService.getUserByUserId(userId);
-        List<Board> boards = boardService.getBoardList();
+        User user = userDetails.getUser();
+        List<Board> boards = boardService.getBoardList(pageable);
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards, user));
     }
 
