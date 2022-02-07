@@ -75,6 +75,7 @@ function MessageHeader({ handleSearchChange, searchTerm }) {
             borderRadius: "10px",
             border: "none",
           }}
+          autoComplete="off"
         />
       </div>
     </div>

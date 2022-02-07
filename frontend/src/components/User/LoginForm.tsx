@@ -27,7 +27,7 @@ function LoginForm() {
         makeUser(userId, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
-        navigate("/");
+        window.location.replace("/");
       })
       .catch((err) => {
         console.error(err);
