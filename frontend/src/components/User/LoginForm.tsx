@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { makeUser } from "service/function";
 import axios from "../../api/axios";
 import GithubSignin from "../../service/GithubSignin";
 import FormHeader from "../layout/FormHeader";
@@ -14,20 +15,26 @@ function LoginForm() {
   const passwordPlaceHolder = "비밀번호를 입력하세요";
   const [isEmpty, setEmpty] = useState(false);
   const navigate = useNavigate();
+  const pattern = /[.#/$]/;
+  const regexAllCase = new RegExp(pattern, "gi");
   const [form, setForm] = useState({
     userId: "",
     userPw: "",
   });
+  const { userId, userPw } = form;
   const Submit = () => {
     axios
       .post("/login", form)
       .then((res: any) => {
+        const token = res.data.accessToken.replace(regexAllCase, "");
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
+        makeUser(userId, res.data.userNickname, token);
         window.location.reload();
         navigate("/");
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err);
         alert("존재하지않는 아이디입니다.");
         setForm({
           userId: "",
@@ -44,7 +51,6 @@ function LoginForm() {
     }
   });
 
-  const { userId, userPw } = form;
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({

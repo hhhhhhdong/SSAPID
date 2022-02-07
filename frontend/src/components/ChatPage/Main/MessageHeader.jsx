@@ -1,24 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
 import { FaUserFriends } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import Input from "../../common/Input";
-import { chatRoomString } from "../../../redux/_actions/actions";
+import {
+  getDatabase,
+  ref,
+  child,
+  DataSnapshot,
+  onChildAdded,
+} from "firebase/database";
 
-function MessageHeader() {
+function MessageHeader({ handleSearchChange, searchTerm }) {
   const [state, setState] = useState({
     search: "",
+    messages: [],
+    messagesRef: ref(getDatabase(), "messages"),
   });
   const select = useSelector((state) => state.userReducer.chatRoomString);
 
-  const { search } = state;
-  const change = (e) => {
-    const { name, value } = e.target;
-    setState({
-      ...state,
-      [name]: value,
+  const { messagesRef } = state;
+
+  const room = useSelector((state) => state.userReducer.chatRoomString);
+
+  useEffect(() => {
+    if (room) {
+      addMessageListeners(room);
+    }
+    return () => setState({ messages: [] });
+  }, [room]);
+
+  function addMessageListeners(room) {
+    const messagesArray = [];
+
+    onChildAdded(child(messagesRef, room[0]), (DataSnapshot) => {
+      const messages = DataSnapshot.val();
+      messagesArray.push(messages);
+      setState({ messages: messagesArray });
     });
-  };
+  }
+
   return (
     <div
       style={{
@@ -46,10 +65,16 @@ function MessageHeader() {
         </div>
         <input
           name="search"
-          value={search}
-          placeholder="Search Messages"
-          onChange={change}
-          style={{ width: "10rem", height: "2rem", backgroundColor: "" }}
+          value={searchTerm}
+          placeholder="  Search Messages"
+          onChange={handleSearchChange}
+          style={{
+            width: "10rem",
+            height: "2rem",
+            backgroundColor: "",
+            borderRadius: "10px",
+            border: "none",
+          }}
         />
       </div>
     </div>
