@@ -4,13 +4,13 @@ import Navbar from "components/layout/MainTemplate";
 import { useNavigate } from "react-router-dom";
 
 function Main() {
-  const token = sessionStorage.getItem("accessToken");
   const navigate = useNavigate();
   useEffect(() => {
+    const token = sessionStorage.getItem("accessToken");
     if (!token) {
       navigate("/login");
     }
-  }, [token]);
+  }, []);
   return (
     <div>
       <Navbar>
