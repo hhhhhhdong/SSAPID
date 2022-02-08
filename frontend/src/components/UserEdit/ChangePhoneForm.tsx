@@ -15,7 +15,7 @@ function ChangePhoneForm() {
   const Submit = () => {
     console.log(form);
     axios
-      .put("/user/change-phone", form, {
+      .put("/user/change-phone", form.userPhone, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },

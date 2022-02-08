@@ -65,6 +65,7 @@ function InquireForm() {
         placeHolder="phone number"
         value={form.userPhone}
         onChange={undefined}
+        type="tel"
       />
       <p className={style.Link}>
         <Link to="/changephone">휴대폰 번호 변경</Link>
