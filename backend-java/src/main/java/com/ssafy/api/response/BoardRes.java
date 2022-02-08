@@ -30,7 +30,7 @@ public class BoardRes {
         res.setBoardContent(board.getBoardContent());
         res.setCreatedAt(board.getCreatedAt());
         res.setDeadline(board.getDeadline());
-        res.setAuthor(board.getUser().getUserId());
+        res.setAuthor(board.getUser().getUserNickname());
         res.setIsLike("false");
         for(Favorite favorite : board.getFavoriteList()){ //게시글의 즐겨찾기들 탐색
             if(favorite.getUser().getUserSeq() == user.getUserSeq()){ //즐겨찾기의 userSeq == 해당유저의 userSeq
