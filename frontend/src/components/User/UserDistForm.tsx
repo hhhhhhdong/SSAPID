@@ -19,10 +19,10 @@ function UserDistForm() {
       })
       .then((res) => {
         alert("회원탈퇴가 완료되었습니다.");
-        navigate("/");
         sessionStorage.removeItem("userNickname");
         sessionStorage.removeItem("accessToken");
         sessionStorage.removeItem("email");
+        navigate("/");
       })
       .catch((error) => {
         alert("회원탈퇴를 실패하였습니다.");

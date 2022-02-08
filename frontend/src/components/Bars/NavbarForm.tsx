@@ -21,7 +21,6 @@ function NavbarForm() {
     }
     return <i className="fas fa-align-justify" />;
   };
-
   return (
     <nav className={open ? `${style.nav} ${style.navMove}` : style.nav}>
       <h2>
@@ -32,7 +31,7 @@ function NavbarForm() {
           <Link to="/createboard">글쓰기</Link>
         </span>
         <span>
-          <Link to="/pwcheck">내정보</Link>
+          <Link to="/inquire">내정보</Link>
         </span>
         <span>로그아웃</span>
         <span
