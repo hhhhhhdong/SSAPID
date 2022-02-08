@@ -41,11 +41,19 @@ function CreateBoardForm() {
     }`;
 
     axios
-      .post("/board", {
-        boardTitle: title,
-        boardContent: content,
-        deadline: date,
-      })
+      .post(
+        "/board",
+        {
+          boardTitle: title,
+          boardContent: content,
+          deadline: date,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        }
+      )
       .then(() => {
         navigate("/");
       })

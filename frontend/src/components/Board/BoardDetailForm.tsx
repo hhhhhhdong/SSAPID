@@ -26,7 +26,11 @@ function BoardDetailForm() {
   const onClickLike = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
-      .get(`/board/favorite/${boardSeq}`)
+      .get(`/board/favorite/${boardSeq}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
       .then(() => {
         setIsLikeState((prev) => !prev);
       })
@@ -37,7 +41,11 @@ function BoardDetailForm() {
 
   useEffect(() => {
     axios
-      .get(`/board/${boardSeq}`)
+      .get(`/board/${boardSeq}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
       .then((res) => {
         setBoard({
           ...res.data,

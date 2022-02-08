@@ -26,7 +26,11 @@ function BoardCard({
   const onClickLike = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
-      .get(`/board/favorite/${boardSeq}`)
+      .get(`/board/favorite/${boardSeq}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
       .then((res) => {
         console.log(res);
         setIsLikeState((prev) => !prev);

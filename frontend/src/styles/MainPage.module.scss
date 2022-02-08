@@ -1,3 +1,5 @@
+@import "./Variables.scss";
+
 .container {
   display: flex;
   flex-direction: column;
@@ -27,4 +29,23 @@
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.search {
+  display: flex;
+  select {
+    outline: 0 none;
+    height: 38px;
+    font-size: 12px;
+    margin-left: 10px;
+    color: $blue;
+    border: 1px solid $yellow;
+    border-radius: 5px;
+    background: $yellow;
+  }
+  select option {
+    background: $yellow;
+    color: $blue;
+    padding: 3px 0;
+  }
 }

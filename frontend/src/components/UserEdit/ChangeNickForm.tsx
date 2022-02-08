@@ -14,7 +14,11 @@ function ChangeNickForm() {
   const Submit = () => {
     console.log(form);
     axios
-      .put("/user/change-nick", form)
+      .put("/user/change-nick", form, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
       .then(() => {
         alert("닉네임이 변경되었습니다.");
         navigate("/inquire");
