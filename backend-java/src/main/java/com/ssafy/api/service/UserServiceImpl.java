@@ -66,7 +66,6 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserId(String userId) {
         User user = userRepositorySupport.findUserByUserId(userId).get();
         return user;
-
     }
 
     @Override
@@ -77,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserbyUserNameAndUserPhone(String userName, String userPhone) {
-        User user = userRepository.findByUserNameAndUserPhone(userName, userPhone);
+        User user = userRepository.findByUserNameAndUserPhone(userName, userPhone).get();
         return user;
     }
 

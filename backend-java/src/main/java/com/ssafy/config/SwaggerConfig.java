@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import org.springframework.data.domain.Page;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.AlternateTypeRules;
@@ -35,22 +34,6 @@ import static com.google.common.collect.Lists.newArrayList;
 @RequiredArgsConstructor
 @EnableSwagger2
 public class SwaggerConfig {
-
-    private final TypeResolver typeResolver;
-
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false)
-                .alternateTypeRules(AlternateTypeRules
-                        .newRule(typeResolver.resolve(Pageable.class), typeResolver.resolve(Page.class)))
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.ant("/**"))
-                .build()
-                .securityContexts(newArrayList(securityContext()))
-                .securitySchemes(newArrayList(apiKey()))
-                ;
-    }
     @Getter @Setter
     @ApiModel
     static class Page {
@@ -63,6 +46,23 @@ public class SwaggerConfig {
         @ApiModelProperty(value = "정렬(사용법: 컬럼명,ASC|DESC)")
         private List<String> sort;
     }
+
+    private final TypeResolver typeResolver;
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2).
+                useDefaultResponseMessages(false)
+                .alternateTypeRules(AlternateTypeRules
+                        .newRule(typeResolver.resolve(Pageable.class), typeResolver.resolve(Page.class)))
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.ant("/**"))
+                .build()
+                .securityContexts(newArrayList(securityContext()))
+                .securitySchemes(newArrayList(apiKey()));
+    }
+
 
     private ApiKey apiKey() {
         return new ApiKey(SECURITY_SCHEMA_NAME, "Authorization", "header");
