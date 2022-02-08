@@ -13,12 +13,15 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 
 @Service("boardService")
@@ -61,25 +64,33 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> getBoardSearchList(String keyword, String content) {
-        List<Board> boardList = new ArrayList<>();
+    public Map<String, Object> getBoardSearchPage(String keyword, String content, Pageable pageable) {
+        Map<String, Object> map = new HashedMap<>();
         if (keyword.equals("title")){
-            boardList = boardRepository.findByBoardTitleContaining(content);
+            Page page = boardRepository.findByBoardTitleContaining(content,pageable);
+            map.put("boardList",page.getContent());
+            map.put("isLast",page.isLast());
         }else if(keyword.equals("content")){
-            boardList = boardRepository.findByBoardContentContaining(content);
-        }else if(keyword.equals("writer")){
+            Page page = boardRepository.findByBoardContentContaining(content,pageable);
+            map.put("boardList",page.getContent());
+            map.put("isLast",page.isLast());
+        }else if(keyword.equals("author")){
             User user = userRepository.findByUserNickname(content);
-            boardList = boardRepositorySupport.findBoardListByWriter(user.getUserSeq());
+            Page page = boardRepository.findByUser(user, pageable);
+            map.put("boardList",page.getContent());
+            map.put("isLast",page.isLast());
+        }else if(keyword.equals("keyword")){
+            Page page = boardRepository.findByBoardContentContainingOrBoardTitleContaining(content, content, pageable);
+            map.put("boardList",page.getContent());
+            map.put("isLast",page.isLast());
         }
-        return boardList;
+        return map;
     }
 
     @Override
     public List<Board> getfavoriteBoardList(User user) {
-        //join으로 sql 한번만 실행되게 수정해보기
         List<Board> boardList = new ArrayList<>();
-        List<Favorite> favoriteBoardList = favoriteRepository.findByUser(user); //유저의 즐겨찾기 리스트
-        for(Favorite favorite: favoriteBoardList){
+        for(Favorite favorite: user.getFavoriteList()){
             boardList.add(favorite.getBoard());
         }
         return boardList;

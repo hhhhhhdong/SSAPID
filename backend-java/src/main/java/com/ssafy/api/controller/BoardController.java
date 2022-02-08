@@ -140,12 +140,12 @@ public class BoardController {
     })
     public ResponseEntity<BoardListRes> boardSearchList(@ApiIgnore Authentication authentication,
                                                         @RequestParam(value = "keyword") String keyword,
-                                                        @RequestParam(value = "content") String content) {
+                                                        @RequestParam(value = "content") String content,
+                                                        @PageableDefault(size=6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        String userId = userDetails.getUsername();
-        User user = userService.getUserByUserId(userId);
-        List<Board> boards = boardService.getBoardSearchList(keyword, content);
-        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards, user));
+        User user = userDetails.getUser();
+        Map<String,Object> map = boardService.getBoardSearchPage(keyword, content, pageable);
+        return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", (List<Board>) map.get("boardList"), user, (Boolean) map.get("isLast")));
     }
 
     @GetMapping ("/favorite/{boardSeq}")
