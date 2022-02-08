@@ -9,12 +9,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel("")
-public class CreateSessionRes extends BaseResponseBody {
+public class SessionCreateRes extends BaseResponseBody {
     @ApiModelProperty(name = "", example = "")
     String token;
 
-    public static CreateSessionRes of(Integer statusCode, String message, String token) {
-        CreateSessionRes res = new CreateSessionRes();
+    public static SessionCreateRes of(Integer statusCode, String message, String token) {
+        SessionCreateRes res = new SessionCreateRes();
         res.setStatusCode(statusCode);
         res.setMessage(message);
         res.setToken(token);
