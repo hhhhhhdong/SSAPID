@@ -11,19 +11,6 @@
 .filter {
   margin: 200px 0;
 }
-.checkbox {
-  font-size: 14px;
-  label {
-    padding-right: 7px;
-    padding-left: 19px;
-    position: relative;
-  }
-  input {
-    position: absolute;
-    top: 2px;
-    left: 0;
-  }
-}
 
 .cards {
   display: flex;
@@ -38,10 +25,10 @@
     height: 38px;
     font-size: 12px;
     margin-left: 10px;
+    margin-right: 10px;
     color: $blue;
     border: 1px solid $yellow;
     border-radius: 5px;
-    background: $yellow;
   }
   select option {
     background: $yellow;

@@ -16,9 +16,9 @@ type Board = {
 
 function MainPage() {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [keywordType, setKeywordType] = useState<string>("keyword");
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [boards, setBoards] = useState<Board[]>([]);
-  // const [page, setPage] = useState<number>(1);
   const page = useRef(1);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,12 +29,18 @@ function MainPage() {
     setSearchValue(e.target.value);
   };
 
+  const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setKeywordType(e.target.value);
+    console.log(e.target.value);
+  };
+
   useEffect(() => {
     getItems();
-    page.current += 1;
   }, []);
 
-  const onClickSearch = () => {
+  const onClickSearch = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
     if (!searchValue) {
       setIsSearching(false);
       page.current = 1;
@@ -66,7 +72,7 @@ function MainPage() {
     if (search) {
       axios
         .get(
-          `/board/search?keyword=keyword&content=${searchValue}&page=${page.current}&size=3`,
+          `/board/search?keyword=${keywordType}&content=${searchValue}&page=${page.current}&size=3`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -74,7 +80,6 @@ function MainPage() {
           }
         )
         .then((res) => {
-          console.log(res);
           setIsLast(res.data.last);
           if (page.current === 1) {
             setBoards(res.data.boardInfos);
@@ -82,6 +87,7 @@ function MainPage() {
             setBoards((prev) => prev.concat(res.data.boardInfos));
           }
           setIsLoading(false);
+          page.current += 1;
         })
         .catch((err) => {
           console.dir(err);
@@ -99,6 +105,7 @@ function MainPage() {
             setBoards((prev) => prev.concat(res.data.boardInfos));
           }
           setIsLoading(false);
+          page.current += 1;
         })
         .catch((err) => {
           console.dir(err);
@@ -116,7 +123,6 @@ function MainPage() {
         io.unobserve(entry.target);
         // 데이터 가져오기
         getItems(isSearching);
-        page.current += 1;
       }
     });
   };
@@ -131,6 +137,15 @@ function MainPage() {
     <div className={style.container}>
       <div className={style.filter}>
         <div className={style.search}>
+          <select
+            name="keywordType"
+            id="keywordType"
+            onChange={onChangeSelect}
+            value={keywordType}
+          >
+            <option value="keyword">제목+내용</option>
+            <option value="author">작성자</option>
+          </select>
           <Input
             name="search"
             placeHolder="게시글 검색"
@@ -139,24 +154,6 @@ function MainPage() {
             buttonText="검색"
             onClickInputButton={onClickSearch}
           />
-          <select name="keywordType" id="keywordType">
-            <option value="keyword">제목+내용</option>
-            <option value="author">작성자</option>
-          </select>
-        </div>
-        <div className={style.checkbox}>
-          <label htmlFor="backEnd">
-            <input type="checkbox" name="backEnd" id="backEnd" />
-            백엔드
-          </label>
-          <label htmlFor="frontEnd">
-            <input type="checkbox" name="frontEnd" id="frontEnd" />
-            프론트엔드
-          </label>
-          <label htmlFor="mobile">
-            <input type="checkbox" name="mobile" id="mobile" />
-            모바일
-          </label>
         </div>
       </div>
       <div className={style.cards}>
