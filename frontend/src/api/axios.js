@@ -16,4 +16,6 @@ const client = axios.create({
   headers,
 });
 
+axios.defaults.withCredentials = true;
+
 export default client;
