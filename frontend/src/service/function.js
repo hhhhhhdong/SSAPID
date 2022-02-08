@@ -6,7 +6,7 @@ export async function makeUser(email, userNickName) {
   await set(ref(db, `users/${userNickName}`), {
     email,
   });
-  console.log("만들어짐");
+  // console.log("만들어짐");
 }
 
 export async function makeMessage(message, room) {
