@@ -16,7 +16,6 @@ function GoogleSignin() {
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", user.email);
-        axios.defaults.headers.common.Authorization = `Bearer ${res.data.accessToken}`;
         navigate("/");
       })
       .catch((error) => {

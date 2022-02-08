@@ -31,7 +31,13 @@ function EditForm() {
   }, []);
   console.log(form);
   const submit = () => {
-    axios.put(`/user/update`, form).then(() => alert("수정되었습니다."));
+    axios
+      .put(`/user/update`, form, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => alert("수정되었습니다."));
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

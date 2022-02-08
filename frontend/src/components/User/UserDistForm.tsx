@@ -12,7 +12,11 @@ function UserDistForm() {
   const navigate = useNavigate();
   const Submit = () => {
     axios
-      .delete("/user/delete")
+      .delete("/user/delete", {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
       .then((res) => {
         alert("회원탈퇴가 완료되었습니다.");
         navigate("/");

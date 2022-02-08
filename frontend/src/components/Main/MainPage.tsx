@@ -16,6 +16,7 @@ type Board = {
 
 function MainPage() {
   const [searchValue, setSearchValue] = useState<string>("");
+  const [isSearching, setIsSearching] = useState<boolean>(false);
   const [boards, setBoards] = useState<Board[]>([]);
   const [page, setPage] = useState<number>(1);
   const [isLast, setIsLast] = useState<boolean>(false);
@@ -33,16 +34,43 @@ function MainPage() {
   }, []);
 
   const onClickSearch = () => {
-    console.log(searchValue);
+    if (!searchValue) {
+      setIsSearching(false);
+      setPage(1);
+    } else {
+      setIsSearching(true);
+      setPage(1);
+    }
+    /*
+    검색 버튼 클릭
+      내용이 있으면
+        검색중 true
+        page=1
+      없으면
+        검색중 false
+        page=1
+    검색 관련 게시글 리스트 받아옴
+    메인페이지에 보여줌
+    타겟걸림, 옵저버 걸림
+    다음 데이터 받아옴 (검색중이라면 검색관련 다음 페이지를 받아와야함)
+    */
   };
 
   // 데이터 받아오기
-  const getItems = () => {
+  const getItems = (search = false) => {
     setIsLoading(true);
-    setTimeout(() => {
-      // page, size
+    const token = sessionStorage.getItem("accessToken");
+    // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    if (search) {
       axios
-        .get(`/board?page=${page}&size=3`)
+        .get(
+          `/board/search?keyword={}&content=${searchValue}&page=${page}&size=3`,
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            },
+          }
+        )
         .then((res) => {
           if (res.data.last) setIsLast(true);
           setBoards((prev) => prev.concat(res.data.boardInfos));
@@ -51,8 +79,22 @@ function MainPage() {
         .catch((err) => {
           console.dir(err);
         });
-    }, 500);
+    } else {
+      axios
+        .get(`/board?page=${page}&size=3`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          if (res.data.last) setIsLast(true);
+          setBoards((prev) => prev.concat(res.data.boardInfos));
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.dir(err);
+        });
+    }
   };
+
   // 옵저버 설정 함수
   const intersectionObserver = (
     entries: IntersectionObserverEntry[],
@@ -62,7 +104,7 @@ function MainPage() {
       if (entry.isIntersecting) {
         io.unobserve(entry.target);
         // 데이터 가져오기
-        getItems();
+        getItems(isSearching);
         setPage((prev) => prev + 1);
       }
     });
@@ -77,14 +119,20 @@ function MainPage() {
   return (
     <div className={style.container}>
       <div className={style.filter}>
-        <Input
-          name="search"
-          placeHolder="게시글 검색"
-          value={searchValue}
-          onChange={onChangeSearchValue}
-          buttonText="검색"
-          onClickInputButton={onClickSearch}
-        />
+        <div className={style.search}>
+          <Input
+            name="search"
+            placeHolder="게시글 검색"
+            value={searchValue}
+            onChange={onChangeSearchValue}
+            buttonText="검색"
+            onClickInputButton={onClickSearch}
+          />
+          <select name="keywordType" id="keywordType">
+            <option value="keyword">제목+내용</option>
+            <option value="author">작성자</option>
+          </select>
+        </div>
         <div className={style.checkbox}>
           <label htmlFor="backEnd">
             <input type="checkbox" name="backEnd" id="backEnd" />

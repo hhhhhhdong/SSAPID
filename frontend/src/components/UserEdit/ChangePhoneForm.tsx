@@ -15,7 +15,11 @@ function ChangePhoneForm() {
   const Submit = () => {
     console.log(form);
     axios
-      .put("/user/change-phone", form)
+      .put("/user/change-phone", form, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
       .then(() => {
         alert("휴대폰 번호가 변경되었습니다.");
         navigate("/inquire");
