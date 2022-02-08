@@ -12,7 +12,6 @@ import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -40,7 +39,7 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> register(
             @Valid @RequestBody @ApiParam(value = "회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
         try {
-            User user= userService.getUserbyUserNameAndUserPhone(registerInfo.getUserName(),registerInfo.getUserPhone());
+            userService.getUserbyUserNameAndUserPhone(registerInfo.getUserName(),registerInfo.getUserPhone());
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증 실패"));
         } catch (NoSuchElementException e) {
             userService.createUser(registerInfo);
