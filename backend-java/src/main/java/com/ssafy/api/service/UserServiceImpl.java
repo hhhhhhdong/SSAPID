@@ -48,11 +48,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createSocialUser(UserSocialReq socialRegisterInfo) {
         User user = new User();
-        user.setUserId("Social_"+socialRegisterInfo.getUserId());
+        user.setUserId("Social_" + socialRegisterInfo.getUserId());
         user.setUserType(socialRegisterInfo.getUserType());
 
         String userNickname = RandomStringUtils.random(15, true, true);
-        while(checkId(userNickname)){
+        while (checkId(userNickname)) {
             userNickname = RandomStringUtils.random(15, true, true);
         }
         user.setUserNickname(userNickname);
@@ -124,6 +124,7 @@ public class UserServiceImpl implements UserService {
         user.setUserNickname(userNickname);
         userRepository.save(user);
     }
+
     @Override
     public void changeUserPhone(User user, String userPhone) {
         user.setUserPhone(userPhone);
@@ -140,7 +141,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean chekPw(User user,String password) {
+    public boolean chekPw(User user, String password) {
 
         if (passwordEncoder.matches(password, user.getUserPw())) {
             return true;

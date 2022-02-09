@@ -8,19 +8,33 @@ import com.ssafy.db.entity.User;
 
 
 public interface UserService {
-	User createUser(UserRegisterPostReq userRegisterInfo);
-	void createSocialUser(UserSocialReq socialRegisterInfo);
-	User getUserByUserId(String userId);
-	User getSocialUserByUserId(String userId);
-	User getUserbyUserNameAndUserPhone(String userName, String userPhone);
-	void setUser(UserSetInfoPostReq userSetInfoPostReq, User user);
-	void deleteUser(User user);
-	String getUserId(String userName, String userPhone);
-	String getUserPw(String userId);
-	void changeUserPw(UserChangePwReq userChangePwReq);
-	void changeUserNickname(User user,String userNickname);
-	void changeUserPhone(User user, String userPhone);
-	boolean checkNickname(String userNickname);
-	boolean checkId(String userId);
-	boolean chekPw(User user, String password);
+    User createUser(UserRegisterPostReq userRegisterInfo);
+
+    void createSocialUser(UserSocialReq socialRegisterInfo);
+
+    User getUserByUserId(String userId);
+
+    User getSocialUserByUserId(String userId);
+
+    User getUserbyUserNameAndUserPhone(String userName, String userPhone);
+
+    void setUser(UserSetInfoPostReq userSetInfoPostReq, User user);
+
+    void deleteUser(User user);
+
+    String getUserId(String userName, String userPhone);
+
+    String getUserPw(String userId);
+
+    void changeUserPw(UserChangePwReq userChangePwReq);
+
+    void changeUserNickname(User user, String userNickname);
+
+    void changeUserPhone(User user, String userPhone);
+
+    boolean checkNickname(String userNickname);
+
+    boolean checkId(String userId);
+
+    boolean chekPw(User user, String password);
 }

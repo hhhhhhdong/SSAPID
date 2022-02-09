@@ -59,10 +59,10 @@ public class BoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication,
-                                                  @PageableDefault(size=6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
+                                                  @PageableDefault(size = 6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
-        Map<String,Object> map = boardService.getBoardPage(pageable);
+        Map<String, Object> map = boardService.getBoardPage(pageable);
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", (List<Board>) map.get("boardList"), user, (Boolean) map.get("isLast")));
     }
 
@@ -81,7 +81,7 @@ public class BoardController {
         if (board == null) {
             return ResponseEntity.status(404).body(null);
         }
-        return ResponseEntity.status(200).body(BoardRes.of(board,user));
+        return ResponseEntity.status(200).body(BoardRes.of(board, user));
     }
 
     @PutMapping("/{boardSeq}")
@@ -141,14 +141,14 @@ public class BoardController {
     public ResponseEntity<BoardListRes> boardSearchList(@ApiIgnore Authentication authentication,
                                                         @RequestParam(value = "keyword") String keyword,
                                                         @RequestParam(value = "content") String content,
-                                                        @PageableDefault(size=6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
+                                                        @PageableDefault(size = 6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
-        Map<String,Object> map = boardService.getBoardSearchPage(keyword, content, pageable);
+        Map<String, Object> map = boardService.getBoardSearchPage(keyword, content, pageable);
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", (List<Board>) map.get("boardList"), user, (Boolean) map.get("isLast")));
     }
 
-    @GetMapping ("/favorite/{boardSeq}")
+    @GetMapping("/favorite/{boardSeq}")
     @ApiOperation(value = "즐겨찾기 등록,해제", notes = "번호에 해당하는 게시글을 즐겨찾기 등록 또는 해제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "즐겨찾기 등록 or 해제"),
@@ -162,21 +162,21 @@ public class BoardController {
         User user = userService.getUserByUserId(userId);
         Board board = boardService.getBoardByBoardSeq(boardSeq);
 
-        int islike = boardService.favoriteBoard(user,board);
-        if(islike==1){
+        int islike = boardService.favoriteBoard(user, board);
+        if (islike == 1) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 등록"));
-        }else{
+        } else {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 해제"));
         }
     }
 
-    @GetMapping ("/favorite")
+    @GetMapping("/favorite")
     @ApiOperation(value = "즐겨찾기 목록", notes = "즐겨찾기 목록")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
-    public ResponseEntity<BoardListRes> favoriteBoardList(@ApiIgnore Authentication authentication){
+    public ResponseEntity<BoardListRes> favoriteBoardList(@ApiIgnore Authentication authentication) {
 
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         User user = userDetails.getUser();

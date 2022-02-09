@@ -7,10 +7,12 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotEmpty;
 
+
 @Getter
 @Setter
 @ApiModel("UserCheckPwReq")
 public class UserCheckPwReq {
-    @ApiModelProperty(name = "유저 Password", example = "ssafy!@#") @NotEmpty
+    @ApiModelProperty(name = "유저 Password", example = "ssafy!@#")
+    @NotEmpty
     String userPw;
 }
