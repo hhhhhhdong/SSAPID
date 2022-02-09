@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface FavoriteRepository extends JpaRepository<Favorite, Long> {
     Favorite findByFavoriteSeq(Long boardSeq);
+
     List<Favorite> findByUser(User user);
 }

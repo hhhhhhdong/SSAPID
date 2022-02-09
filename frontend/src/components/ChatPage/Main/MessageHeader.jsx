@@ -13,29 +13,30 @@ function MessageHeader({ handleSearchChange, searchTerm }) {
   const [state, setState] = useState({
     search: "",
     messages: [],
-    messagesRef: ref(getDatabase(), "messages"),
   });
-  const select = useSelector((state) => state.userReducer.chatRoomString);
-
-  const { messagesRef } = state;
 
   const room = useSelector((state) => state.userReducer.chatRoomString);
 
   useEffect(() => {
-    if (room) {
+    let isComponentMounted = true;
+    if (room && isComponentMounted) {
       addMessageListeners(room);
     }
-    return () => setState({ messages: [] });
+    return () => {
+      isComponentMounted = false;
+    };
   }, [room]);
 
   function addMessageListeners(room) {
     const messagesArray = [];
-
-    onChildAdded(child(messagesRef, room[0]), (DataSnapshot) => {
-      const messages = DataSnapshot.val();
-      messagesArray.push(messages);
-      setState({ messages: messagesArray });
-    });
+    onChildAdded(
+      child(ref(getDatabase(), "messages"), room[0]),
+      (DataSnapshot) => {
+        const messages = DataSnapshot.val();
+        messagesArray.push(messages);
+        setState({ messages: messagesArray });
+      }
+    );
   }
 
   return (
@@ -61,7 +62,7 @@ function MessageHeader({ handleSearchChange, searchTerm }) {
           }}
         >
           <FaUserFriends style={{ fontSize: "2rem", marginRight: "0.3em" }} />
-          {select[1]}
+          {room[1]}
         </div>
         <input
           name="search"

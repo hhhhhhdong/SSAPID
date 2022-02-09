@@ -22,21 +22,36 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_seq")
     Long userSeq;
-    @Column(name = "user_id", nullable = false) @NotNull
+
+    @Column(name = "user_id", nullable = false)
+    @NotNull
     String userId;
-    @Column(name = "user_pw", nullable = false) @NotNull @JsonIgnore @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
+    @Column(name = "user_pw", nullable = false)
+    @NotNull
+    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     String userPw;
-    @Column(name = "user_nickname", nullable = false) @NotNull
+
+    @Column(name = "user_nickname", nullable = false)
+    @NotNull
     String userNickname;
-    @Column(name = "user_phone", nullable = false) @NotNull
+
+    @Column(name = "user_phone", nullable = false)
+    @NotNull
     String userPhone;
-    @Column(name = "user_name", nullable = false) @NotNull
+
+    @Column(name = "user_name", nullable = false)
+    @NotNull
     String userName;
-    @Column(name = "user_type", nullable = false) @NotNull
+
+    @Column(name = "user_type", nullable = false)
+    @NotNull
     Long userType;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Board> boardList = new HashSet<>();
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Favorite> favoriteList = new HashSet<>();
 }

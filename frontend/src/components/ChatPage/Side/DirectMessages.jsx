@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import {
-  getDatabase,
-  ref,
-  DataSnapshot,
-  onChildAdded,
-} from "firebase/database";
+import { getDatabase, ref, onValue, onChildAdded } from "firebase/database";
 import { chatRoomString } from "redux/_actions/actions";
+import Badge from "react-bootstrap/Badge";
 import Main from "../Main/Main";
 
 function DirectMessages() {
@@ -16,38 +12,54 @@ function DirectMessages() {
     usersRef: ref(getDatabase(), "users"),
     roomsRef: ref(getDatabase(), "messages"),
     chatRooms: [],
+    notifications: [],
+    selectRoom: "",
   });
+  const lastSelect = useRef("");
+
+  const [data, setData] = useState([]);
   // 가져온 users 스키마를 바탕으로 users state 형성
   const [users, setUsers] = useState([]);
   const [isShow, setShow] = useState(false);
   // 선택 정보
-  const [isSelect, setSelect] = useState("");
-
   const dispatch = useDispatch();
   const pattern = /[.#/$]/;
   const regexAllCase = new RegExp(pattern, "gi");
-  const { chatRooms } = state;
+
   // 렌더링 될때마다 db에서 스키마 로딩
   useEffect(() => {
-    if (users) {
+    let isComponentMounted = true;
+    if (users && isComponentMounted) {
       addUsersListeners();
+    }
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    let isComponentMounted = true;
+    if (isComponentMounted) {
       chatRoomListeners();
     }
-    return () => setUsers([]);
-  }, []);
+    return () => {
+      isComponentMounted = false;
+    };
+  }, [data]);
   // console.log(chatRooms);
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addUsersListeners() {
     const { usersRef } = state;
-    const myName = sessionStorage.getItem("userNickname");
     const usersArray = [];
+    const myEmail = sessionStorage.getItem("email");
 
     onChildAdded(usersRef, (DataSnapshot) => {
-      if (myName !== DataSnapshot.key) {
+      if (myEmail !== DataSnapshot.val().email) {
         // eslint-disable-next-line prefer-const
         let user = DataSnapshot.val();
         user.nickName = DataSnapshot.key;
         user.status = "offline";
+        user.roomId = getChatRoomId(user.email);
         usersArray.push(user);
         setUsers([...usersArray]);
       }
@@ -57,9 +69,12 @@ function DirectMessages() {
   // 방 ID 생성
   const getChatRoomId = (userId) => {
     const mine = sessionStorage.getItem("email");
-    const user = mine.replace(regexAllCase, "");
-    const your = userId.replace(regexAllCase, "");
-    return user > your ? `${user}${your}` : `${your}${user}`;
+    if (mine) {
+      const user = mine.replace(regexAllCase, "");
+      const your = userId.replace(regexAllCase, "");
+      return user > your ? `${user}${your}` : `${your}${user}`;
+    }
+    return null;
   };
 
   // 채팅 룸 변경
@@ -67,8 +82,8 @@ function DirectMessages() {
     const chatRoomId = getChatRoomId(user.email);
     const chatRoomData = [chatRoomId, user.nickName];
     dispatch(chatRoomString(chatRoomData));
-    setSelect(user.nickName);
-    if (user.nickName === isSelect) {
+    lastSelect.current = user.roomId;
+    if (user.email === state.selectRoom) {
       setShow(!isShow);
     } else {
       setShow(true);
@@ -77,12 +92,69 @@ function DirectMessages() {
 
   const chatRoomListeners = () => {
     const chatRooms = [];
-    const { roomsRef } = state;
-
-    onChildAdded(roomsRef, (DataSnapshot) => {
-      chatRooms.push(DataSnapshot.key);
+    onChildAdded(ref(getDatabase(), "messages"), (DataSnapshot) => {
+      chatRooms.push(DataSnapshot.val());
+      addNotificationListener(DataSnapshot.key);
     });
     setState({ chatRooms });
+  };
+
+  const addNotificationListener = (roomId) => {
+    const { notifications } = state;
+    if (notifications) {
+      onValue(ref(getDatabase(), `messages/${roomId}`), (DataSnapshot) => {
+        handleNotification(
+          roomId,
+          lastSelect.current,
+          notifications,
+          DataSnapshot
+        );
+      });
+    }
+  };
+
+  const handleNotification = (
+    roomId,
+    currentRoom,
+    notifications,
+    DataSnapshot
+  ) => {
+    const index = notifications.findIndex(
+      (notification) => notification.id === roomId
+    );
+    if (index === -1) {
+      notifications.push({
+        id: roomId,
+        total: DataSnapshot.size,
+        lastKnownTotal: DataSnapshot.size,
+        count: 0,
+      });
+    } else {
+      // eslint-disable-next-line no-lonely-if
+      if (roomId !== currentRoom) {
+        const lastTotal = notifications[index].lastKnownTotal;
+        if (DataSnapshot.size - lastTotal > 0) {
+          // eslint-disable-next-line no-param-reassign
+          notifications[index].count = DataSnapshot.size - lastTotal;
+        }
+      }
+      // eslint-disable-next-line no-param-reassign
+      notifications[index].total = DataSnapshot.size;
+    }
+    setState({ notifications });
+  };
+  const getNotification = (chatRoom) => {
+    let count = 0;
+    const { notifications } = state;
+    if (notifications) {
+      notifications.forEach((notification) => {
+        if (notification.id === chatRoom) {
+          count = notification.count;
+        }
+      });
+      if (count > 0) return count;
+    }
+    return null;
   };
 
   // 닉네임 렌더링
@@ -94,12 +166,14 @@ function DirectMessages() {
         onClick={() => changeChatRoom(user)}
         aria-hidden="true"
         style={{
-          backgroundColor: user.nickName === isSelect && isShow && "#ffffff45",
+          backgroundColor: user.email === isShow && "#ffffff45",
           marginBottom: "0.5em",
         }}
       >
         # {user.nickName}
-        <span style={{ backgroundColor: "red" }}>1</span>
+        <Badge variant="danger" style={{ marginLeft: "1em" }}>
+          {getNotification(user.roomId)}
+        </Badge>
       </li>
     ));
 
@@ -131,7 +205,7 @@ function DirectMessages() {
         {renderDirectMessages(users)}
       </ul>
       <hr />
-      {isShow && <Main key={isSelect} />}
+      {isShow && <Main key={state.selectRoom} setData={setData} />}
     </div>
   );
 }

@@ -15,11 +15,14 @@ import java.time.LocalDate;
 @Setter
 @ApiModel("BoardRegisterPostReq")
 public class BoardRegisterPostReq {
-    @ApiModelProperty(name="글 제목", example="Example Title") @NotEmpty
+    @ApiModelProperty(name = "글 제목", example = "Example Title")
+    @NotEmpty
     String boardTitle;
-    @ApiModelProperty(name="글 내용", example="Hi, This is example Content !!") @NotEmpty
+    @ApiModelProperty(name = "글 내용", example = "Hi, This is example Content !!")
+    @NotEmpty
     String boardContent;
-    @ApiModelProperty(name="마감일", example="2022-09-25") @NotNull
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @ApiModelProperty(name = "마감일", example = "2022-09-25")
+    @NotNull
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     LocalDate deadline;
 }

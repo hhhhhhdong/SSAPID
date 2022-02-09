@@ -21,13 +21,13 @@ public class BoardRepositorySupport {
     public Optional<Board> findBoardByBoardSeq(Long boardSeq) {
         Board board = jpaQueryFactory.select(qBoard).from(qBoard).where(qBoard.boardSeq.eq(boardSeq)).fetchOne();
 
-        if(board == null){
+        if (board == null) {
             return Optional.empty();
         }
         return Optional.ofNullable(board);
     }
 
-    public List<Board> findBoardListByWriter(Long userSeq){
+    public List<Board> findBoardListByWriter(Long userSeq) {
         List<Board> boardList = jpaQueryFactory.selectFrom(qBoard).where(qBoard.user.userSeq.in(
                 JPAExpressions.select(qUser.userSeq).from(qUser).where(qUser.userSeq.eq(userSeq)))).fetch();
 

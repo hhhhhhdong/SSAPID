@@ -34,13 +34,13 @@ public class BoardListRes extends BaseResponseBody {
             boardInfo.put("createdAt", board.getCreatedAt());
             boardInfo.put("deadline", board.getDeadline());
             boardInfo.put("author", board.getUser().getUserNickname());
-            for(Favorite favorite : board.getFavoriteList()){ //게시글의 즐겨찾기들 탐색
-                if(favorite.getUser().getUserSeq() == user.getUserSeq()){ //즐겨찾기의 userSeq == 해당유저의 userSeq
+            for (Favorite favorite : board.getFavoriteList()) { //게시글의 즐겨찾기들 탐색
+                if (favorite.getUser().getUserSeq() == user.getUserSeq()) { //즐겨찾기의 userSeq == 해당유저의 userSeq
                     isLike = "true";
                     break;
                 }
             }
-            boardInfo.put("isLike",isLike);
+            boardInfo.put("isLike", isLike);
             boardInfos.add(boardInfo);
         }
 
@@ -50,6 +50,7 @@ public class BoardListRes extends BaseResponseBody {
         res.setLast(isLast);
         return res;
     }
+
     public static BoardListRes of(Integer statusCode, String message, List<Board> boardList, User user) {
         BoardListRes res = new BoardListRes();
         List<Map<String, Object>> boardInfos = new ArrayList<>();
@@ -62,13 +63,13 @@ public class BoardListRes extends BaseResponseBody {
             boardInfo.put("createdAt", board.getCreatedAt());
             boardInfo.put("deadline", board.getDeadline());
             boardInfo.put("author", board.getUser().getUserNickname());
-            for(Favorite favorite : board.getFavoriteList()){ //게시글의 즐겨찾기들 탐색
-                if(favorite.getUser().getUserSeq() == user.getUserSeq()){ //즐겨찾기의 userSeq == 해당유저의 userSeq
+            for (Favorite favorite : board.getFavoriteList()) { //게시글의 즐겨찾기들 탐색
+                if (favorite.getUser().getUserSeq() == user.getUserSeq()) { //즐겨찾기의 userSeq == 해당유저의 userSeq
                     isLike = "true";
                     break;
                 }
             }
-            boardInfo.put("isLike",isLike);
+            boardInfo.put("isLike", isLike);
             boardInfos.add(boardInfo);
         }
 
@@ -78,7 +79,8 @@ public class BoardListRes extends BaseResponseBody {
 
         return res;
     }
-    public static BoardListRes of(Integer statusCode, String message, List<Board> boardList){
+
+    public static BoardListRes of(Integer statusCode, String message, List<Board> boardList) {
         BoardListRes res = new BoardListRes();
         List<Map<String, Object>> boardInfos = new ArrayList<>();
 

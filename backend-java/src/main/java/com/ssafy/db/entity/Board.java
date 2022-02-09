@@ -19,14 +19,20 @@ public class Board extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_seq")
     Long boardSeq;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_seq", nullable = false) @NotNull
+    @JoinColumn(name = "user_seq", nullable = false)
+    @NotNull
     User user;
+
     @Column(name = "board_title", nullable = false, length = 100)
     String boardTitle;
+
     @Column(name = "board_content", nullable = false, length = 1000)
     String boardContent;
-    @Column(name = "deadline", nullable = false) @NotNull
+
+    @Column(name = "deadline", nullable = false)
+    @NotNull
     LocalDate deadline;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

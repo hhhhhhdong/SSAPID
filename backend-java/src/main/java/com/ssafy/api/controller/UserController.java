@@ -39,7 +39,7 @@ public class UserController {
     public ResponseEntity<? extends BaseResponseBody> register(
             @Valid @RequestBody @ApiParam(value = "회원가입 정보", required = true) UserRegisterPostReq registerInfo) {
         try {
-            userService.getUserbyUserNameAndUserPhone(registerInfo.getUserName(),registerInfo.getUserPhone());
+            userService.getUserbyUserNameAndUserPhone(registerInfo.getUserName(), registerInfo.getUserPhone());
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "인증 실패"));
         } catch (NoSuchElementException e) {
             userService.createUser(registerInfo);
@@ -153,7 +153,7 @@ public class UserController {
                                                                  @RequestBody @ApiParam(value = "변경할 닉네임", required = true) String req) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
-        userService.changeUserNickname(user,req);
+        userService.changeUserNickname(user, req);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -167,7 +167,7 @@ public class UserController {
                                                                   @RequestBody @ApiParam(value = "변경할 번호", required = true) String req) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
-        userService.changeUserPhone(user,req);
+        userService.changeUserPhone(user, req);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -219,7 +219,7 @@ public class UserController {
         User user = userDetails.getUser();
 
         try {
-            if (userService.chekPw(user,userCheckPwReq.getUserPw())) {
+            if (userService.chekPw(user, userCheckPwReq.getUserPw())) {
                 return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
             }
             return ResponseEntity.status(401).body(BaseResponseBody.of(401, "Invalid Password"));

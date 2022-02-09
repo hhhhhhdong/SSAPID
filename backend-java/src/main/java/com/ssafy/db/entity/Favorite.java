@@ -16,10 +16,10 @@ public class Favorite {
     Long favoriteSeq;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_seq")
+    @JoinColumn(name = "user_seq")
     User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="board_seq")
+    @JoinColumn(name = "board_seq")
     Board board;
 }

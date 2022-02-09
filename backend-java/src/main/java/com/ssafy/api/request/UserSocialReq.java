@@ -13,8 +13,10 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ApiModel("UserSocialReq")
 public class UserSocialReq {
-    @ApiModelProperty(name="유저 ID", example="ssafy205@example.com") @NotEmpty
+    @ApiModelProperty(name = "유저 ID", example = "ssafy205@example.com")
+    @NotEmpty
     String userId;
-    @ApiModelProperty(name="유저 Type", example="2")@NotNull
+    @ApiModelProperty(name = "유저 Type", example = "2")
+    @NotNull
     Long userType;
 }

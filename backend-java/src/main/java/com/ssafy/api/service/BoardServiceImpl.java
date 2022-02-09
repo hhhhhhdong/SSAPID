@@ -52,37 +52,39 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<Board> getBoardList() { return boardRepository.findAll();}
+    public List<Board> getBoardList() {
+        return boardRepository.findAll();
+    }
 
     @Override
     public Map<String, Object> getBoardPage(Pageable pageable) {
         Page page = boardRepository.findAll(pageable);
         Map<String, Object> map = new HashedMap<>();
-        map.put("boardList",page.getContent());
-        map.put("isLast",page.isLast());
+        map.put("boardList", page.getContent());
+        map.put("isLast", page.isLast());
         return map;
     }
 
     @Override
     public Map<String, Object> getBoardSearchPage(String keyword, String content, Pageable pageable) {
         Map<String, Object> map = new HashedMap<>();
-        if (keyword.equals("title")){
-            Page page = boardRepository.findByBoardTitleContaining(content,pageable);
-            map.put("boardList",page.getContent());
-            map.put("isLast",page.isLast());
-        }else if(keyword.equals("content")){
-            Page page = boardRepository.findByBoardContentContaining(content,pageable);
-            map.put("boardList",page.getContent());
-            map.put("isLast",page.isLast());
-        }else if(keyword.equals("author")){
+        if (keyword.equals("title")) {
+            Page page = boardRepository.findByBoardTitleContaining(content, pageable);
+            map.put("boardList", page.getContent());
+            map.put("isLast", page.isLast());
+        } else if (keyword.equals("content")) {
+            Page page = boardRepository.findByBoardContentContaining(content, pageable);
+            map.put("boardList", page.getContent());
+            map.put("isLast", page.isLast());
+        } else if (keyword.equals("author")) {
             User user = userRepository.findByUserNickname(content);
             Page page = boardRepository.findByUser(user, pageable);
-            map.put("boardList",page.getContent());
-            map.put("isLast",page.isLast());
-        }else if(keyword.equals("keyword")){
+            map.put("boardList", page.getContent());
+            map.put("isLast", page.isLast());
+        } else if (keyword.equals("keyword")) {
             Page page = boardRepository.findByBoardContentContainingOrBoardTitleContaining(content, content, pageable);
-            map.put("boardList",page.getContent());
-            map.put("isLast",page.isLast());
+            map.put("boardList", page.getContent());
+            map.put("isLast", page.isLast());
         }
         return map;
     }
@@ -90,7 +92,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<Board> getfavoriteBoardList(User user) {
         List<Board> boardList = new ArrayList<>();
-        for(Favorite favorite: user.getFavoriteList()){
+        for (Favorite favorite : user.getFavoriteList()) {
             boardList.add(favorite.getBoard());
         }
         return boardList;
@@ -103,8 +105,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public long checkFavorite(User user, Board board) {
-        for(Favorite favorite : board.getFavoriteList()){ //게시글의 즐겨찾기들 탐색
-            if(favorite.getUser().getUserSeq() == user.getUserSeq()){ //즐겨찾기의 userSeq == 해당유저의 userSeq
+        for (Favorite favorite : board.getFavoriteList()) { //게시글의 즐겨찾기들 탐색
+            if (favorite.getUser().getUserSeq() == user.getUserSeq()) { //즐겨찾기의 userSeq == 해당유저의 userSeq
                 return favorite.getFavoriteSeq();   //해당하는 즐겨찾기의 번호 반환
             }
         }
@@ -113,15 +115,15 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public int favoriteBoard(User user, Board board) {
-        long favoriteSeq = checkFavorite(user,board); //중복체크
+        long favoriteSeq = checkFavorite(user, board); //중복체크
 
-        if(favoriteSeq != -1){ // 이미 등록 되어있다면
+        if (favoriteSeq != -1) { // 이미 등록 되어있다면
             Favorite favorite = favoriteRepository.findByFavoriteSeq(favoriteSeq);
             board.getFavoriteList().remove(favorite);
             user.getFavoriteList().remove(favorite);
             favoriteRepository.delete(favorite);
             return -1;
-        }else{ // 미등록 상태라면
+        } else { // 미등록 상태라면
             Favorite favorite = new Favorite();
             favorite.setUser(user);
             favorite.setBoard(board);
