@@ -41,14 +41,14 @@ function App() {
           <Route path="/authFind" element={<AuthFind />} />
           <Route path="/passChange" element={<PassChange />} />
           <Route path="/board/:boardSeq" element={<BoardDetail />} />
-          <Route path="/webrtctest" element={<WebRtcTest />} />
           <Route path="/inquire" element={<Inquire />} />
           <Route path="/pwcheck" element={<PwCheck />} />
           <Route path="/edit" element={<Edit />} />
-          <Route path="/openvidu" element={<Openvidu />} />
           <Route path="/changepw" element={<ChangePW />} />
           <Route path="/changenick" element={<ChangeNick />} />
           <Route path="/changephone" element={<ChangePhone />} />
+          <Route path="/webrtctest" element={<WebRtcTest />} />
+          <Route path="/openvidu" element={<Openvidu />} />
         </Routes>
       </div>
     </Router>

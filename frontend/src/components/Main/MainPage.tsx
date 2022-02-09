@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-expressions */
 import React, { useEffect, useState, useRef } from "react";
 import axios from "api/axios";
-import style from "../../styles/MainPage.module.scss";
+import Spinner from "components/layout/Spinner";
+import style from "styles/MainPage.module.scss";
 import BoardCard from "./BoardCard";
 import Input from "../common/Input";
 
@@ -157,7 +158,11 @@ function MainPage() {
           );
         })}
       </div>
-      {isLoading && <div>데이터 가져오는 중..</div>}
+      {isLoading && (
+        <div style={{ padding: "20px" }}>
+          <Spinner />
+        </div>
+      )}
     </div>
   );
 }
