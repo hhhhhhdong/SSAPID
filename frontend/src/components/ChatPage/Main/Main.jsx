@@ -21,7 +21,9 @@ function Main(props) {
   });
   const { searchTerm, searchResults } = state;
   const { setData } = props;
+  const room = useSelector((state) => state.userReducer.chatRoomString);
   useEffect(() => {
+    console.log("message 바뀜");
     let isComponentMounted = true;
     if (isComponentMounted) {
       setData(messages);
@@ -30,7 +32,7 @@ function Main(props) {
     return () => {
       isComponentMounted = false;
     };
-  }, []);
+  }, [room]);
 
   function changeStr(str) {
     const specials = /[.*+?|()[\]{}\\]/g;
@@ -67,8 +69,6 @@ function Main(props) {
     };
   }, [searchTerm]);
 
-  const room = useSelector((state) => state.userReducer.chatRoomString);
-
   const renderMessages = (messages) =>
     messages.length > 0 &&
     messages.map((message) => (
@@ -83,7 +83,7 @@ function Main(props) {
     return () => {
       isComponentMounted = false;
     };
-  }, []);
+  }, [room]);
 
   // 스크롤을 맨 아래로 내리는 로직
   const scrollRef = useRef();
@@ -106,7 +106,6 @@ function Main(props) {
   function addMessageListeners(room) {
     const { messagesRef } = state;
     const messagesArray = [];
-
     onChildAdded(child(messagesRef, room), (DataSnapshot) => {
       const messages = DataSnapshot.val();
       messagesArray.push(messages);

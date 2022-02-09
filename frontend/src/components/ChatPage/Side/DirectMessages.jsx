@@ -3,6 +3,7 @@ import { BiMessageAltDetail } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { getDatabase, ref, onValue, onChildAdded } from "firebase/database";
 import { chatRoomString } from "redux/_actions/actions";
+import Badge from "react-bootstrap/Badge";
 import Main from "../Main/Main";
 
 function DirectMessages() {
@@ -81,7 +82,7 @@ function DirectMessages() {
     const chatRoomId = getChatRoomId(user.email);
     const chatRoomData = [chatRoomId, user.nickName];
     dispatch(chatRoomString(chatRoomData));
-    lastSelect.current = chatRoomId;
+    lastSelect.current = user.roomId;
     if (user.email === state.selectRoom) {
       setShow(!isShow);
     } else {
@@ -100,7 +101,6 @@ function DirectMessages() {
 
   const addNotificationListener = (roomId) => {
     const { notifications } = state;
-
     if (notifications) {
       onValue(ref(getDatabase(), `messages/${roomId}`), (DataSnapshot) => {
         handleNotification(
@@ -146,7 +146,6 @@ function DirectMessages() {
   const getNotification = (chatRoom) => {
     let count = 0;
     const { notifications } = state;
-
     if (notifications) {
       notifications.forEach((notification) => {
         if (notification.id === chatRoom) {
@@ -167,15 +166,14 @@ function DirectMessages() {
         onClick={() => changeChatRoom(user)}
         aria-hidden="true"
         style={{
-          backgroundColor:
-            user.email === state.selectRoom && isShow && "#ffffff45",
+          backgroundColor: user.email === isShow && "#ffffff45",
           marginBottom: "0.5em",
         }}
       >
         # {user.nickName}
-        <span style={{ backgroundColor: "red" }}>
+        <Badge variant="danger" style={{ marginLeft: "1em" }}>
           {getNotification(user.roomId)}
-        </span>
+        </Badge>
       </li>
     ));
 
