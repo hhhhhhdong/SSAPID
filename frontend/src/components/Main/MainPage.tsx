@@ -41,6 +41,7 @@ function MainPage() {
   const onClickSearch = async (e: React.MouseEvent) => {
     e.preventDefault();
 
+    // 입력값 없이 검색버튼을 클릭하면 검색상태를 해제되고 모든 리스트를 불러온다.
     if (!searchValue) {
       setIsSearching(false);
       page.current = 1;
@@ -50,67 +51,37 @@ function MainPage() {
       page.current = 1;
       getItems(true);
     }
-    /*
-    검색 버튼 클릭
-      내용이 있으면
-        검색중 true
-        page=1
-      없으면
-        검색중 false
-        page=1
-    검색 관련 게시글 리스트 받아옴
-    메인페이지에 보여줌
-    타겟걸림, 옵저버 걸림
-    다음 데이터 받아옴 (검색중이라면 검색관련 다음 페이지를 받아와야함)
-    */
   };
 
   // 데이터 받아오기
   const getItems = (search = false) => {
     setIsLoading(true);
     const token = sessionStorage.getItem("accessToken");
-    if (search) {
-      axios
-        .get(
-          `/board/search?keyword=${keywordType}&content=${searchValue}&page=${page.current}&size=3`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setIsLast(res.data.last);
-          if (page.current === 1) {
-            setBoards(res.data.boardInfos);
-          } else {
-            setBoards((prev) => prev.concat(res.data.boardInfos));
-          }
-          setIsLoading(false);
-          page.current += 1;
-        })
-        .catch((err) => {
-          console.dir(err);
-        });
-    } else {
-      axios
-        .get(`/board?page=${page.current}&size=3`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          setIsLast(res.data.last);
-          if (page.current === 1) {
-            setBoards(res.data.boardInfos);
-          } else {
-            setBoards((prev) => prev.concat(res.data.boardInfos));
-          }
-          setIsLoading(false);
-          page.current += 1;
-        })
-        .catch((err) => {
-          console.dir(err);
-        });
-    }
+    // 검색 중이면 검색된 데이터들을 받아오고 검색중이아니면 전체 리스트를 받아온다.
+    axios
+      .get(
+        search
+          ? `/board/search?keyword=${keywordType}&content=${searchValue}&page=${page.current}&size=3`
+          : `/board?page=${page.current}&size=3`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setIsLast(res.data.last);
+        if (page.current === 1) {
+          setBoards(res.data.boardInfos);
+        } else {
+          setBoards((prev) => prev.concat(res.data.boardInfos));
+        }
+        setIsLoading(false);
+        page.current += 1;
+      })
+      .catch((err) => {
+        console.dir(err);
+      });
   };
 
   // 옵저버 설정 함수
