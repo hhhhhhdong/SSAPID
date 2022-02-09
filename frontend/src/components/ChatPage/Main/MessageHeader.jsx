@@ -22,10 +22,13 @@ function MessageHeader({ handleSearchChange, searchTerm }) {
   const room = useSelector((state) => state.userReducer.chatRoomString);
 
   useEffect(() => {
-    if (room) {
+    let isComponentMounted = true;
+    if (room && isComponentMounted) {
       addMessageListeners(room);
     }
-    return () => setState({ messages: [] });
+    return () => {
+      isComponentMounted = false;
+    };
   }, [room]);
 
   function addMessageListeners(room) {

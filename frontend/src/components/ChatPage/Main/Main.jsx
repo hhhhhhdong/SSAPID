@@ -11,7 +11,7 @@ import Message from "./Message";
 import MessageHeader from "./MessageHeader";
 import MessageForm from "./MessageForm";
 
-function Main() {
+function Main(props) {
   const [messages, setMessages] = useState([]);
   const [state, setState] = useState({
     messagesRef: ref(getDatabase(), "messages"),
@@ -20,6 +20,17 @@ function Main() {
     searchLoading: false,
   });
   const { searchTerm, searchResults } = state;
+  const { setData } = props;
+  useEffect(() => {
+    let isComponentMounted = true;
+    if (isComponentMounted) {
+      setData(messages);
+    }
+
+    return () => {
+      isComponentMounted = false;
+    };
+  }, []);
 
   function changeStr(str) {
     const specials = /[.*+?|()[\]{}\\]/g;
@@ -47,9 +58,13 @@ function Main() {
   };
 
   useEffect(() => {
-    if (searchTerm) {
+    let isComponentMounted = true;
+    if (searchTerm && isComponentMounted) {
       handleSearchMessages();
     }
+    return () => {
+      isComponentMounted = false;
+    };
   }, [searchTerm]);
 
   const room = useSelector((state) => state.userReducer.chatRoomString);
@@ -61,10 +76,13 @@ function Main() {
     ));
   // 렌더링 될때마다 db에서 스키마 로딩
   useEffect(() => {
-    if (room) {
+    let isComponentMounted = true;
+    if (room && isComponentMounted) {
       addMessageListeners(room[0]);
     }
-    return () => setMessages([]);
+    return () => {
+      isComponentMounted = false;
+    };
   }, []);
 
   // 스크롤을 맨 아래로 내리는 로직
@@ -75,7 +93,14 @@ function Main() {
     }
   };
   useEffect(() => {
-    scrollToBottom();
+    let isComponentMounted = true;
+    if (isComponentMounted) {
+      scrollToBottom();
+    }
+
+    return () => {
+      isComponentMounted = false;
+    };
   }, [messages]);
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addMessageListeners(room) {
