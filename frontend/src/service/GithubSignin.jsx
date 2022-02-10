@@ -21,6 +21,7 @@ function GithubSignin() {
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userData);
+        // sessionStorage.setItem("userType", res.data.userType);
         navigate("/");
       })
       .catch((error) => {

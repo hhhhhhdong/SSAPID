@@ -28,6 +28,7 @@ function LoginForm() {
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userId);
+        sessionStorage.setItem("userType", res.data.userType);
         navigate("/");
       })
       .catch((err) => {

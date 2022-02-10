@@ -37,7 +37,7 @@ function NavbarForm() {
           <Link to="/createboard">글쓰기</Link>
         </span>
         <span>
-          <Link to="/inquire">내정보</Link>
+          <Link to="/pwcheck">내정보</Link>
         </span>
         <span onClick={onClickLogout}>로그아웃</span>
         <span

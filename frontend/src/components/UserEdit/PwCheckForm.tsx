@@ -10,16 +10,27 @@ import style from "../../styles/edit.module.scss";
 const INPUT_MARGIN_BOTTOM = 2;
 
 function PwCheckForm() {
+  const token = sessionStorage.getItem("userType");
   const [form, setForm] = useState({
     userPw: "",
   });
   const [isEmpty, setEmpty] = useState(true);
   const navigate = useNavigate();
   const { userPw } = form;
+  useEffect(() => {
+    if (!token) {
+      navigate("/inquire");
+      window.location.replace("/inquire");
+    }
+  }, []);
   const Submit = () => {
     console.log(form.userPw);
     axios
-      .post("/user/check-pw", form)
+      .post("/user/check-pw", form, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
       .then(() => {
         navigate("/inquire");
       })

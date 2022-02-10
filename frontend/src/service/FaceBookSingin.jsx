@@ -16,6 +16,7 @@ function FacebookSignin() {
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", user.email);
+        // sessionStorage.setItem("userType", res.data.userType);
         navigate("/");
       })
       .catch((error) => {
