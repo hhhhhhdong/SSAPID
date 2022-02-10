@@ -8,6 +8,7 @@ import com.ssafy.db.entity.QUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,5 +33,10 @@ public class BoardRepositorySupport {
                 JPAExpressions.select(qUser.userSeq).from(qUser).where(qUser.userSeq.eq(userSeq)))).fetch();
 
         return boardList;
+    }
+    public void updateBoardStatus() {
+        jpaQueryFactory.update(qBoard)
+                .set(qBoard.boardStatus, false).where(qBoard.boardSeq.in(jpaQueryFactory.select(qBoard.boardSeq).from(qBoard).where(qBoard.deadline.lt(LocalDate.now())).fetch())).execute();
+
     }
 }

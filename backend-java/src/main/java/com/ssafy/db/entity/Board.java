@@ -35,6 +35,9 @@ public class Board extends BaseTimeEntity {
     @NotNull
     LocalDate deadline;
 
+    @Column(name = "board_status",columnDefinition = "boolean default false")
+    Boolean boardStatus;
+
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     Set<Favorite> favoriteList = new HashSet<>();
 }

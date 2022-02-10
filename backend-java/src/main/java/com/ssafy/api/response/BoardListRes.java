@@ -40,6 +40,7 @@ public class BoardListRes extends BaseResponseBody {
                     break;
                 }
             }
+            boardInfo.put("boardStatus",board.getBoardStatus());
             boardInfo.put("isLike", isLike);
             boardInfos.add(boardInfo);
         }
@@ -69,6 +70,7 @@ public class BoardListRes extends BaseResponseBody {
                     break;
                 }
             }
+            boardInfo.put("boardStatus",board.getBoardStatus());
             boardInfo.put("isLike", isLike);
             boardInfos.add(boardInfo);
         }
@@ -91,6 +93,7 @@ public class BoardListRes extends BaseResponseBody {
             boardInfo.put("createdAt", board.getCreatedAt());
             boardInfo.put("deadline", board.getDeadline());
             boardInfo.put("author", board.getUser().getUserNickname());
+            boardInfo.put("boardStatus",board.getBoardStatus());
             boardInfos.add(boardInfo);
         }
 
