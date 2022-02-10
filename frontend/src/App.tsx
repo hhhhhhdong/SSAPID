@@ -27,6 +27,7 @@ import Openvidu from "./pages/Openvidu.jsx";
 import "./App.module.scss";
 
 function App() {
+  const userType = sessionStorage.getItem("userType");
   return (
     <Router>
       <div className="App">
