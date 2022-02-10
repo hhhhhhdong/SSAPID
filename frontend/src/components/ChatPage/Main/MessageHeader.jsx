@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaUserFriends } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import {
-  getDatabase,
-  ref,
-  child,
-  DataSnapshot,
-  onChildAdded,
-} from "firebase/database";
+import { getDatabase, ref, child, onChildAdded } from "firebase/database";
 
 function MessageHeader({ handleSearchChange, searchTerm }) {
   const [state, setState] = useState({
@@ -16,28 +10,6 @@ function MessageHeader({ handleSearchChange, searchTerm }) {
   });
 
   const room = useSelector((state) => state.userReducer.chatRoomString);
-
-  useEffect(() => {
-    let isComponentMounted = true;
-    if (room && isComponentMounted) {
-      addMessageListeners(room);
-    }
-    return () => {
-      isComponentMounted = false;
-    };
-  }, [room]);
-
-  function addMessageListeners(room) {
-    const messagesArray = [];
-    onChildAdded(
-      child(ref(getDatabase(), "messages"), room[0]),
-      (DataSnapshot) => {
-        const messages = DataSnapshot.val();
-        messagesArray.push(messages);
-        setState({ messages: messagesArray });
-      }
-    );
-  }
 
   return (
     <div
