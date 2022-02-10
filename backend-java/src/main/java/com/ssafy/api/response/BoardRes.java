@@ -22,6 +22,7 @@ public class BoardRes {
     LocalDate deadline;
     String author;
     String isLike;
+    boolean boardStatus;
 
     public static BoardRes of(Board board, User user) {
         BoardRes res = new BoardRes();
@@ -38,6 +39,7 @@ public class BoardRes {
                 break;
             }
         }
+        res.setBoardStatus(board.getBoardStatus());
 
         return res;
     }
