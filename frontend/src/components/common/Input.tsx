@@ -6,7 +6,7 @@ type InputValue = string | number | readonly string[] | undefined;
 
 type Props = {
   value: InputValue;
-  onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
   placeHolder: string;
   name: string;
   type?: React.HTMLInputTypeAttribute | undefined;
@@ -15,11 +15,13 @@ type Props = {
   onClickInputButton?: (e: React.MouseEvent) => void;
   errorMessage?: string;
   noBackground?: boolean;
+  onKeyPressEventHandler?: React.KeyboardEventHandler<HTMLInputElement>;
 };
 
 function Input({
   value,
   onChange,
+  onKeyPressEventHandler,
   placeHolder,
   name,
   type = "text",
@@ -45,6 +47,7 @@ function Input({
             type={type}
             value={value}
             onChange={onChange}
+            onKeyPress={onKeyPressEventHandler}
           />
         </label>
         {buttonText && (

@@ -29,17 +29,22 @@ function LoginForm() {
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userId);
         sessionStorage.setItem("userType", res.data.userType);
-        // axios.defaults.headers.common.Authorization = `Bearer ${res.data.accessToken}`;
         navigate("/");
       })
       .catch((err) => {
         console.error(err);
-        alert("존재하지않는 아이디입니다.");
+        alert("로그인에 실패했습니다.");
         setForm({
-          userId: "",
+          ...form,
           userPw: "",
         });
       });
+  };
+
+  const onEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      Submit();
+    }
   };
 
   useEffect(() => {
@@ -66,6 +71,7 @@ function LoginForm() {
         value={userId}
         onChange={onChange}
         placeHolder={idPlaceHolder}
+        onKeyPressEventHandler={onEnter}
       />
       <Input
         name="userPw"
@@ -73,6 +79,7 @@ function LoginForm() {
         type="password"
         onChange={onChange}
         placeHolder={passwordPlaceHolder}
+        onKeyPressEventHandler={onEnter}
       />
       <h4>
         <a href="../idFind">아이디 찾기 | </a>

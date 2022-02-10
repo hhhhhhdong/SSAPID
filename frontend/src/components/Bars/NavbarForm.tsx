@@ -1,16 +1,22 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { openSidebar } from "redux/_actions/actions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "redux/_reducers";
-import style from "../../styles/NavbarForm.module.scss";
+import style from "styles/NavbarForm.module.scss";
 
 function NavbarForm() {
   const dispatch = useDispatch();
   const open = useSelector((state: RootState) => state.userReducer.openSidebar);
   const [openIcon, setOpenIcon] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const onClickLogout = () => {
+    sessionStorage.clear();
+    navigate("/login");
+  };
 
   const displayMenuIcon = () => {
     if (open) {
@@ -33,7 +39,7 @@ function NavbarForm() {
         <span>
           <Link to="/pwcheck">내정보</Link>
         </span>
-        <span>로그아웃</span>
+        <span onClick={onClickLogout}>로그아웃</span>
         <span
           onMouseEnter={() => !open && setOpenIcon(true)}
           onMouseLeave={() => setOpenIcon(false)}
