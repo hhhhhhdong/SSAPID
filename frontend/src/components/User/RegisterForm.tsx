@@ -41,24 +41,12 @@ function RegisterForm() {
 
     // 전화번호 입력 유효성 체크
     if (name === "userPhone") {
-      if (userPhoneRegex.test(value) || value === "") {
-        setForm({
-          ...form,
-          [name]: value,
-        });
-      }
-      return;
+      if (!userPhoneRegex.test(value) && value !== "") return;
     }
 
     // 이름 입력 유효성 체크
     if (name === "userName") {
-      if (!userNameRegex.test(value)) {
-        setForm({
-          ...form,
-          [name]: value,
-        });
-      }
-      return;
+      if (userNameRegex.test(value)) return;
     }
 
     // userId, userNickname 변경시 중복체크초기화
@@ -73,6 +61,14 @@ function RegisterForm() {
       setErrorMessage({
         ...errorMessage,
         userNickname: "",
+      });
+    }
+
+    // 작성시 에러메세지 삭제
+    if (name !== "userPwCheck") {
+      setErrorMessage({
+        ...errorMessage,
+        [name]: "",
       });
     }
 
@@ -95,7 +91,7 @@ function RegisterForm() {
         userPwCheck: "",
       });
     }
-  }, [form.userPwCheck]);
+  }, [form.userPwCheck, form.userPw]);
 
   // Id, Nickname 비어있으면 에러메세지 삭제
   useEffect(() => {
@@ -161,7 +157,16 @@ function RegisterForm() {
   // 회원가입 버튼 클릭
   const onClickSubmit = () => {
     // 비어있는 값이 있을 경우 리턴
-    if (Object.values(form).some((v) => v === "")) return;
+    const emptyInput = Object.entries(form)
+      .filter(([k, v]) => !v && k)
+      .map((v) => v[0]);
+    if (emptyInput.length !== 0) {
+      setErrorMessage({
+        ...errorMessage,
+        [emptyInput[0]]: "입력해 주세요.",
+      });
+      return;
+    }
 
     // 이메일 형식 체크
     const emailRegex =
