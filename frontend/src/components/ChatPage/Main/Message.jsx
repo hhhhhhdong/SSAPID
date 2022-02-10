@@ -21,8 +21,7 @@ function Message({ message }) {
   }
 
   const isMessageMine = (message) => {
-    const myId = sessionStorage.getItem("userNickname");
-
+    const myId = sessionStorage.getItem("email");
     return message.id === myId;
   };
 

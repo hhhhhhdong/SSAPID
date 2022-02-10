@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "components/common/Button";
-import { makeMessage } from "service/function";
+import { makeMessage, makeRead } from "service/function";
 
 function MessageForm() {
+  // 메시지의 정보를 DB에 저장하는 로직
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState([]);
   const room = useSelector((state) => state.userReducer.chatRoomString);
@@ -12,7 +13,8 @@ function MessageForm() {
     try {
       e.preventDefault();
       if (message) {
-        await makeMessage(message, room);
+        makeMessage(message, room);
+        makeRead(room);
       }
       setMessage("");
       setErrors([]);
@@ -20,6 +22,7 @@ function MessageForm() {
       setErrors((pre) => pre.concat(error.message));
     }
   };
+  // 스크롤을 맨 아래로 내리는 로직
 
   const onChange = (e) => {
     const { value } = e.target;

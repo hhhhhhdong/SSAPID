@@ -34,6 +34,7 @@ function DirectMessages() {
     }
     return () => {
       isComponentMounted = false;
+      setUsers([]);
     };
   }, []);
 
@@ -41,25 +42,46 @@ function DirectMessages() {
     let isComponentMounted = true;
     if (isComponentMounted) {
       chatRoomListeners();
+      // readDataListeners();
     }
     return () => {
       isComponentMounted = false;
+      setState({ notifications: [] });
     };
-  }, [data]);
-  // console.log(chatRooms);
+  }, [lastSelect]);
+
+  const getNotification = (chatRoom) => {
+    let count = 0;
+    const { notifications } = state;
+    if (notifications) {
+      notifications.forEach((notification) => {
+        if (notification.id === chatRoom) {
+          count = notification.count;
+        }
+      });
+      if (count > 0) return count;
+    }
+    return null;
+  };
+  // 전에 내가 보낸
+  // db에 noticount 정보(내가 안읽은 정보)가 있다 ? noti identitiy 내거의 count를 return 전에 현재 noti의 count를 db의 정보로 동기화 : getNoti함수 실행
+  // const readDataListeners = () => {
+  //   let count;
+  //   return count;
+  // };
+
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addUsersListeners() {
     const { usersRef } = state;
     const usersArray = [];
     const myEmail = sessionStorage.getItem("email");
-
     onChildAdded(usersRef, (DataSnapshot) => {
       if (myEmail !== DataSnapshot.val().email) {
         // eslint-disable-next-line prefer-const
         let user = DataSnapshot.val();
+        const room = getChatRoomId(user.email);
         user.nickName = DataSnapshot.key;
-        user.status = "offline";
-        user.roomId = getChatRoomId(user.email);
+        user.roomId = room;
         usersArray.push(user);
         setUsers([...usersArray]);
       }
@@ -102,14 +124,17 @@ function DirectMessages() {
   const addNotificationListener = (roomId) => {
     const { notifications } = state;
     if (notifications) {
-      onValue(ref(getDatabase(), `messages/${roomId}`), (DataSnapshot) => {
-        handleNotification(
-          roomId,
-          lastSelect.current,
-          notifications,
-          DataSnapshot
-        );
-      });
+      onValue(
+        ref(getDatabase(), `messages/${roomId}/message`),
+        (DataSnapshot) => {
+          handleNotification(
+            roomId,
+            lastSelect.current,
+            notifications,
+            DataSnapshot
+          );
+        }
+      );
     }
   };
 
@@ -134,27 +159,15 @@ function DirectMessages() {
       if (roomId !== currentRoom) {
         const lastTotal = notifications[index].lastKnownTotal;
         if (DataSnapshot.size - lastTotal > 0) {
+          const notiCount = DataSnapshot.size - lastTotal;
           // eslint-disable-next-line no-param-reassign
-          notifications[index].count = DataSnapshot.size - lastTotal;
+          notifications[index].count = notiCount;
         }
       }
       // eslint-disable-next-line no-param-reassign
       notifications[index].total = DataSnapshot.size;
     }
     setState({ notifications });
-  };
-  const getNotification = (chatRoom) => {
-    let count = 0;
-    const { notifications } = state;
-    if (notifications) {
-      notifications.forEach((notification) => {
-        if (notification.id === chatRoom) {
-          count = notification.count;
-        }
-      });
-      if (count > 0) return count;
-    }
-    return null;
   };
 
   // 닉네임 렌더링
@@ -170,10 +183,10 @@ function DirectMessages() {
           marginBottom: "0.5em",
         }}
       >
-        # {user.nickName}
-        <Badge variant="danger" style={{ marginLeft: "1em" }}>
+        <Badge variant="danger" style={{ marginRight: "1em" }}>
           {getNotification(user.roomId)}
         </Badge>
+        # {user.nickName}
       </li>
     ));
 
@@ -182,8 +195,7 @@ function DirectMessages() {
       <span
         style={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "right",
           fontSize: "1.5em",
         }}
       >
@@ -199,7 +211,7 @@ function DirectMessages() {
           listStyleType: "none",
           padding: 0,
           cursor: "pointer",
-          textAlign: "center",
+          textAlign: "right",
         }}
       >
         {renderDirectMessages(users)}

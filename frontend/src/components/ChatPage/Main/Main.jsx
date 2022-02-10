@@ -1,12 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import {
-  getDatabase,
-  ref,
-  child,
-  DataSnapshot,
-  onChildAdded,
-} from "firebase/database";
+import { getDatabase, ref, child, onChildAdded } from "firebase/database";
 import Message from "./Message";
 import MessageHeader from "./MessageHeader";
 import MessageForm from "./MessageForm";
@@ -14,25 +8,44 @@ import MessageForm from "./MessageForm";
 function Main(props) {
   const [messages, setMessages] = useState([]);
   const [state, setState] = useState({
-    messagesRef: ref(getDatabase(), "messages"),
+    messagesRef: ref(getDatabase()),
     searchTerm: "",
     searchResults: [],
     searchLoading: false,
   });
   const { searchTerm, searchResults } = state;
   const { setData } = props;
+  const scrollRef = useRef();
   const room = useSelector((state) => state.userReducer.chatRoomString);
+
+  // 렌더링 될때마다 db에서 스키마 로딩
   useEffect(() => {
-    console.log("message 바뀜");
     let isComponentMounted = true;
-    if (isComponentMounted) {
+    if (room && isComponentMounted) {
+      addMessageListeners(room[0]);
       setData(messages);
     }
+    return () => {
+      isComponentMounted = false;
+      setMessages([]);
+    };
+  }, [room]);
 
+  const scrollToBottom = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    let isComponentMounted = true;
+    if (searchTerm && isComponentMounted) {
+      handleSearchMessages();
+    }
     return () => {
       isComponentMounted = false;
     };
-  }, [room]);
+  }, [searchTerm]);
 
   function changeStr(str) {
     const specials = /[.*+?|()[\]{}\\]/g;
@@ -56,61 +69,36 @@ function Main(props) {
   };
 
   const handleSearchChange = (event) => {
-    setState({ searchTerm: event.target.value, searchLoading: true });
+    setState({ searchTerm: event.target.value });
   };
-
-  useEffect(() => {
-    let isComponentMounted = true;
-    if (searchTerm && isComponentMounted) {
-      handleSearchMessages();
-    }
-    return () => {
-      isComponentMounted = false;
-    };
-  }, [searchTerm]);
 
   const renderMessages = (messages) =>
     messages.length > 0 &&
     messages.map((message) => (
       <Message key={message.timestamp} message={message} />
     ));
-  // 렌더링 될때마다 db에서 스키마 로딩
-  useEffect(() => {
-    let isComponentMounted = true;
-    if (room && isComponentMounted) {
-      addMessageListeners(room[0]);
-    }
-    return () => {
-      isComponentMounted = false;
-    };
-  }, [room]);
-
-  // 스크롤을 맨 아래로 내리는 로직
-  const scrollRef = useRef();
-  const scrollToBottom = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  };
   useEffect(() => {
     let isComponentMounted = true;
     if (isComponentMounted) {
       scrollToBottom();
     }
-
     return () => {
       isComponentMounted = false;
     };
-  }, [messages]);
+  }, [renderMessages]);
+
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
+
   function addMessageListeners(room) {
-    const { messagesRef } = state;
     const messagesArray = [];
-    onChildAdded(child(messagesRef, room), (DataSnapshot) => {
-      const messages = DataSnapshot.val();
-      messagesArray.push(messages);
-      setMessages([...messagesArray]);
-    });
+    onChildAdded(
+      child(ref(getDatabase(), "messages"), `${room}/message`),
+      (DataSnapshot) => {
+        const messages = DataSnapshot.val();
+        messagesArray.push(messages);
+        setMessages(messagesArray);
+      }
+    );
   }
 
   return (

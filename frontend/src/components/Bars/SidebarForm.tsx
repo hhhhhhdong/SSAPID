@@ -12,6 +12,7 @@ function SidebarForm() {
       className={
         open ? style.container : `${style.container} ${style.sidebarMove}`
       }
+      style={{ overflow: "auto" }}
     >
       <Side />
     </div>

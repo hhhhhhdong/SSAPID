@@ -12,7 +12,6 @@ function Side() {
         minHeight: "100%",
         color: "white",
         minWidth: "275px",
-        overflow: "auto",
       }}
     >
       <UserPanel />
