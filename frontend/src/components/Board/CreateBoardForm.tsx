@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
-import style from "../../styles/CreateBoardForm.module.scss";
-import axios from "../../api/axios";
+import style from "styles/CreateBoardForm.module.scss";
+import axios from "api/axios";
+import FormHeader from "components/layout/FormHeader";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import Spacer from "../common/Spacer";
@@ -65,7 +66,7 @@ function CreateBoardForm() {
 
   return (
     <div className={style.container}>
-      <h1>게시글 작성</h1>
+      <FormHeader text="CREATE POST" width={500} />
       <div>
         <Input
           name="search"

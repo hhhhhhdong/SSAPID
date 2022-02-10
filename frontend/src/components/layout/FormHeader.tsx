@@ -6,14 +6,18 @@ import style from "../../styles/FormHeader.module.scss";
 type Props = {
   text: string;
   width?: number;
+  widthPer?: number;
 };
-function FormHeader({ text, width = 240 }: Props) {
+function FormHeader({ text, widthPer, width = 240 }: Props) {
   const navigate = useNavigate();
   const onClickBack = () => {
     navigate(-1);
   };
   return (
-    <div className={style.header} style={{ width: `${width}px` }}>
+    <div
+      className={style.header}
+      style={{ width: widthPer ? `${widthPer}%` : `${width}px` }}
+    >
       <button type="button" onClick={onClickBack}>
         <i className="fas fa-angle-left" />
         {/* <i class="fas fa-arrow-circle-left"></i> */}

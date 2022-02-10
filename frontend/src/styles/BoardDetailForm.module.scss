@@ -2,24 +2,33 @@
 .container {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .wrapper {
   width: 80%;
-  border: 1px solid black;
+  border: 1px solid $inputBorderColor;
+  border-radius: 10px;
+  // 그림자
+  -webkit-box-shadow: 6px 8px 9px -3px rgba(0, 0, 0, 0.8);
+  box-shadow: 6px 8px 9px -3px rgba(0, 0, 0, 0.8);
   padding: 20px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid $inputBorderColor;
+  padding-bottom: 7px;
+  margin-bottom: 10px;
   p {
     margin: 0;
   }
   span {
     padding: 10px;
+    cursor: pointer;
     i {
       color: $blue;
       font-size: 20px;
