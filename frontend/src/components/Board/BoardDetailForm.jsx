@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import axios from "api/axios";
 import OpenViduSession from "openvidu-react";
 import Spinner from "components/layout/Spinner";
+import FormHeader from "components/layout/FormHeader";
 import Button from "../common/Button";
 
 function BoardDetailForm() {
@@ -82,6 +83,7 @@ function BoardDetailForm() {
       <div>
         {!isSession ? (
           <div className={style.container}>
+            <FormHeader text="POST DETAIL" widthPer={80} />
             <div className={style.wrapper}>
               <div className={style.header}>
                 <p>작성자: {board.author}</p>

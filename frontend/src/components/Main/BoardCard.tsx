@@ -43,7 +43,7 @@ function BoardCard({
     <div className={style.container}>
       <Link to={`/board/${boardSeq}`}>
         <div className={style.header}>
-          <p>작성자: ADFFSED13DGSDR4</p>
+          <p>작성자: {author}</p>
           <span onClick={onClickLike}>
             {isLikeState ? (
               <i className="fas fa-bookmark" />
@@ -52,7 +52,7 @@ function BoardCard({
             )}
           </span>
         </div>
-        <div className={style.footer}>마감일: 2022-05-24</div>
+        <div className={style.footer}>마감일: {deadline}</div>
         <div className={style.content}>{title}</div>
       </Link>
     </div>

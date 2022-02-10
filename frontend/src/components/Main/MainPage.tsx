@@ -14,6 +14,7 @@ type Board = {
   author: string;
   isLike: "true" | "false";
 };
+const SIZE_OF_BOARDS_PER_REQ = 15;
 
 function MainPage() {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -62,8 +63,8 @@ function MainPage() {
     axios
       .get(
         search
-          ? `/board/search?keyword=${keywordType}&content=${searchValue}&page=${page.current}&size=3`
-          : `/board?page=${page.current}&size=3`,
+          ? `/board/search?keyword=${keywordType}&content=${searchValue}&page=${page.current}&size=${SIZE_OF_BOARDS_PER_REQ}`
+          : `/board?page=${page.current}&size=${SIZE_OF_BOARDS_PER_REQ}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -30,7 +30,7 @@ function NavbarForm() {
   return (
     <nav className={open ? `${style.nav} ${style.navMove}` : style.nav}>
       <h2>
-        <Link to="/">SSAFID</Link>
+        <Link to="/">SSAPID</Link>
       </h2>
       <div>
         <span>
