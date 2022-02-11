@@ -47,7 +47,8 @@ public class BoardController {
     public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication,
                                                                @Valid @RequestBody @ApiParam(value = "작성한 내용의 정보", required = true) BoardRegisterPostReq registerInfo) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         boardService.createBoard(registerInfo, user);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -61,7 +62,8 @@ public class BoardController {
     public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication,
                                                   @PageableDefault(size = 6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         Map<String, Object> map = boardService.getBoardPage(pageable);
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", (List<Board>) map.get("boardList"), user, (Boolean) map.get("isLast")));
     }
@@ -76,7 +78,8 @@ public class BoardController {
     public ResponseEntity<BoardRes> getBoard(@ApiIgnore Authentication authentication,
                                              @PathVariable("boardSeq") @ApiParam(value = "게시글 번호", required = true) long boardSeq) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         Board board = boardService.getBoardByBoardSeq(boardSeq);
         if (board == null) {
             return ResponseEntity.status(404).body(null);
