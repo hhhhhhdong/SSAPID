@@ -160,7 +160,7 @@ public class BoardController {
     })
     public ResponseEntity<? extends BaseResponseBody> favoriteBoard(@ApiIgnore Authentication authentication,
                                                                     @PathVariable("boardSeq") Long boardSeq) {
-
+        //빌드 테스트
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
