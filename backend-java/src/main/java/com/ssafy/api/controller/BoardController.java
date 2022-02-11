@@ -152,6 +152,7 @@ public class BoardController {
     @ApiOperation(value = "즐겨찾기 등록,해제", notes = "번호에 해당하는 게시글을 즐겨찾기 등록 또는 해제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "즐겨찾기 등록 or 해제"),
+            @ApiResponse(code = 401, message = "즐겨찾기 갯수 초과"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> favoriteBoard(@ApiIgnore Authentication authentication,
@@ -163,9 +164,12 @@ public class BoardController {
         Board board = boardService.getBoardByBoardSeq(boardSeq);
 
         int islike = boardService.favoriteBoard(user, board);
+
         if (islike == 1) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 등록"));
-        } else {
+        }else if(islike==2){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"즐겨찾기 갯수 초과"));
+        }else {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 해제"));
         }
     }
@@ -179,7 +183,8 @@ public class BoardController {
     public ResponseEntity<BoardListRes> favoriteBoardList(@ApiIgnore Authentication authentication) {
 
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         List<Board> boards = boardService.getfavoriteBoardList(user);
 
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
