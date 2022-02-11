@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
@@ -90,6 +91,7 @@ public class BoardServiceImpl implements BoardService {
         return map;
     }
 
+
     @Override
     public List<Board> getfavoriteBoardList(User user) {
         List<Board> boardList = new ArrayList<>();
@@ -125,6 +127,9 @@ public class BoardServiceImpl implements BoardService {
             favoriteRepository.delete(favorite);
             return -1;
         } else { // 미등록 상태라면
+            if( user.getFavoriteList().size() > 9 ){
+                return 2;
+            }
             Favorite favorite = new Favorite();
             favorite.setUser(user);
             favorite.setBoard(board);
