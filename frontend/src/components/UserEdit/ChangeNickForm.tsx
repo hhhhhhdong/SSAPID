@@ -32,7 +32,7 @@ function ChangeNickForm() {
     }
     console.log(form);
     axios
-      .put("/user/change-nick", form.userNickname, {
+      .put("/user/change-nick", form, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
