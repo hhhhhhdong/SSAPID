@@ -6,7 +6,6 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import Edit from "pages/Edit";
 import PwCheck from "pages/PwCheck";
 import Inquire from "pages/Inquire";
 import ChangePW from "pages/ChangePw";
@@ -44,7 +43,6 @@ function App() {
           <Route path="/board/:boardSeq" element={<BoardDetail />} />
           <Route path="/inquire" element={<Inquire />} />
           <Route path="/pwcheck" element={<PwCheck />} />
-          <Route path="/edit" element={<Edit />} />
           <Route path="/changepw" element={<ChangePW />} />
           <Route path="/changenick" element={<ChangeNick />} />
           <Route path="/changephone" element={<ChangePhone />} />
