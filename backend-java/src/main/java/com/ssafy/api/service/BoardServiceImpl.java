@@ -42,6 +42,7 @@ public class BoardServiceImpl implements BoardService {
         board.setBoardTitle(boardRegisterPostReq.getBoardTitle());
         board.setBoardContent(boardRegisterPostReq.getBoardContent());
         board.setDeadline(boardRegisterPostReq.getDeadline());
+        board.setBoardStatus(true);
 
         boardRepository.save(board);
     }
