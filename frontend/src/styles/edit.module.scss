@@ -1,12 +1,30 @@
+@import "./Variables.scss";
 .container {
   display: grid;
   justify-content: center;
   align-items: center;
   padding-top: 20ch;
   .Link {
+    position: relative;
+    margin: 2px 2px;
     box-sizing: border-box;
     display: block;
     // padding: 4px;
     font-size: xx-small;
+    .a {
+      display: flex;
+      justify-content: space-around;
+      .b {
+        background-color: $yellow;
+        border-radius: 5px;
+        padding: 8px;
+      }
+    }
   }
+}
+.textarea {
+  border-radius: 5px;
+  height: 100px;
+  margin-bottom: 10px;
+  font-size: small;
 }

@@ -30,10 +30,13 @@ function UserDistForm() {
   };
   return (
     <div className={style.container}>
-      <FormHeader text="회원탈퇴" />
+      <div>
+        <FormHeader text="Withdrawal" />
+      </div>
       <textarea
+        className={style.textarea}
         name="contents"
-        placeholder="회원탈퇴하시는 이유를 적어주세요"
+        placeholder="SSAPID를 탈퇴하시는 이유가 무엇인가요?"
       />
       <Button buttonType="submit" text="탈퇴하기" handleClick={Submit} />
     </div>
