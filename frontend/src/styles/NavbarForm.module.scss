@@ -23,6 +23,21 @@
     padding: 0 3px;
   }
 }
+.navItemsWrapper {
+  display: flex;
+}
+
+.navHomeDisNone {
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
+}
+.navItemsDisNone {
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
+}
+
 .navSidebarIcon {
   display: inline-block;
   width: 20px;
