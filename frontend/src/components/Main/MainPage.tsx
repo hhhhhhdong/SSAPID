@@ -13,6 +13,7 @@ type Board = {
   deadline: string;
   author: string;
   isLike: "true" | "false";
+  boardStatus: boolean;
 };
 const SIZE_OF_BOARDS_PER_REQ = 15;
 
@@ -33,7 +34,6 @@ function MainPage() {
 
   const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setKeywordType(e.target.value);
-    console.log(e.target.value);
   };
 
   useEffect(() => {
@@ -141,6 +141,7 @@ function MainPage() {
                   deadline={board.deadline}
                   author={board.author}
                   isLike={board.isLike}
+                  boardStatus={board.boardStatus}
                 />
               </div>
             );
@@ -154,6 +155,7 @@ function MainPage() {
                 deadline={board.deadline}
                 author={board.author}
                 isLike={board.isLike}
+                boardStatus={board.boardStatus}
               />
             </div>
           );

@@ -44,6 +44,7 @@ function BoardDetailForm() {
 
   const onClickLike = (e) => {
     e.preventDefault();
+    if (!board.boardStatus && !isLikeState) return;
     axios
       .get(`/board/favorite/${boardSeq}`, {
         headers: {
@@ -101,7 +102,11 @@ function BoardDetailForm() {
               <h2>{board.title}</h2>
               <p>{board.content}</p>
               <div className={style.buttons}>
-                <Button text="참여하기" handleClick={onClickJoin} />
+                <Button
+                  text="참여하기"
+                  handleClick={onClickJoin}
+                  Disabled={!board.boardStatus}
+                />
               </div>
             </div>
             {loading && (
