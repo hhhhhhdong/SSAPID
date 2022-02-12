@@ -5,10 +5,12 @@
 }
 
 .container {
+  margin-top: 60px;
   transition: width ease-out 0.4s;
   width: 100%;
 }
 .containerMove {
+  margin-top: 60px;
   transition: width ease-out 0.4s;
   width: calc(100% - #{$sidebarWidth});
   // width: calc(100% - 200px);
