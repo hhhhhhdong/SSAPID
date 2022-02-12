@@ -150,10 +150,10 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> changeNick(@ApiIgnore Authentication authentication,
-                                                                 @RequestBody @ApiParam(value = "변경할 닉네임", required = true) String req) {
+                                                                 @RequestBody @ApiParam(value = "변경할 닉네임", required = true) UserChangeNick req) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
-        userService.changeUserNickname(user, req);
+        userService.changeUserNickname(user, req.getUserNickname());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 
@@ -164,10 +164,10 @@ public class UserController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> changePhone(@ApiIgnore Authentication authentication,
-                                                                  @RequestBody @ApiParam(value = "변경할 번호", required = true) String req) {
+                                                                  @RequestBody @ApiParam(value = "변경할 번호", required = true) UserChangePhone req) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         User user = userDetails.getUser();
-        userService.changeUserPhone(user, req);
+        userService.changeUserPhone(user, req.getUserPhone());
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
 

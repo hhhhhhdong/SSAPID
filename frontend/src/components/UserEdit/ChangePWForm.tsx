@@ -14,6 +14,12 @@ function ChangePWForm() {
     userPw: "",
     userPwCheck: "",
   });
+  const [errorMessage, setErrorMessage] = useState({
+    userId: "",
+    userPw: "",
+    userPwCheck: "",
+  });
+  const { userId, userPw, userPwCheck } = form;
   const [isEmpty, setEmpty] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
@@ -29,6 +35,7 @@ function ChangePWForm() {
       });
   }, []);
   const Submit = () => {
+    if (form.userPw !== form.userPwCheck) return;
     console.log(form);
     axios
       .put("/user/change-pw", form)
@@ -40,6 +47,19 @@ function ChangePWForm() {
         alert("실패하였습니다.");
       });
   };
+  useEffect(() => {
+    if (form.userPwCheck && form.userPw !== form.userPwCheck) {
+      setErrorMessage({
+        ...errorMessage,
+        userPwCheck: "비밀번호가 다릅니다.",
+      });
+    } else {
+      setErrorMessage({
+        ...errorMessage,
+        userPwCheck: "",
+      });
+    }
+  }, [form.userPwCheck, form.userPw]);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm({
@@ -49,14 +69,31 @@ function ChangePWForm() {
   };
   return (
     <div className={style.container}>
-      <FormHeader text="Change PW" />
+      <div>
+        <FormHeader text="New PW" />
+      </div>
       <Input
         name="userPw"
-        placeHolder="password"
+        placeHolder="새 비밀번호"
         value={form.userPw}
+        errorMessage={errorMessage.userPw}
         onChange={onChange}
+        type="password"
       />
-      <Button buttonType="submit" text="edit" handleClick={Submit} />
+      <Input
+        name="userPwCheck"
+        placeHolder="비밀번호 확인"
+        value={form.userPwCheck}
+        errorMessage={errorMessage.userPwCheck}
+        onChange={onChange}
+        type="password"
+      />
+      <Button
+        buttonType="submit"
+        text="수정하기"
+        handleClick={Submit}
+        Disabled={isEmpty}
+      />
     </div>
   );
 }

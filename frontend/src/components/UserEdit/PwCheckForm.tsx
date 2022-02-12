@@ -56,17 +56,20 @@ function PwCheckForm() {
   return (
     <div className={style.container}>
       <Spacer size={INPUT_MARGIN_BOTTOM} />
-      <FormHeader text="Check Pw" />
+      <div>
+        <FormHeader text="Check Pw" />
+      </div>
       <Spacer size={INPUT_MARGIN_BOTTOM} />
       <Input
         name="userPw"
-        placeHolder="Password check"
+        placeHolder="비밀번호 확인"
         value={form.userPw}
         onChange={onChange}
+        type="password"
       />
       <Button
         buttonType="button"
-        text="submit"
+        text="확인"
         handleClick={Submit}
         Disabled={isEmpty}
       />

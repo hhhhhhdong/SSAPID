@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         }
         user.setUserNickname(userNickname);
         user.setUserPw(passwordEncoder.encode("sociallogin"));
-        user.setUserPhone("000-0000-0000");
+        user.setUserPhone("-");
         user.setUserName("social_guest");
         userRepository.save(user);
     }

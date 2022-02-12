@@ -47,7 +47,8 @@ public class BoardController {
     public ResponseEntity<? extends BaseResponseBody> register(@ApiIgnore Authentication authentication,
                                                                @Valid @RequestBody @ApiParam(value = "작성한 내용의 정보", required = true) BoardRegisterPostReq registerInfo) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         boardService.createBoard(registerInfo, user);
         return ResponseEntity.status(200).body(BaseResponseBody.of(200, "Success"));
     }
@@ -61,7 +62,8 @@ public class BoardController {
     public ResponseEntity<BoardListRes> boardList(@ApiIgnore Authentication authentication,
                                                   @PageableDefault(size = 6, sort = "boardSeq", direction = Sort.Direction.ASC) Pageable pageable) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         Map<String, Object> map = boardService.getBoardPage(pageable);
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", (List<Board>) map.get("boardList"), user, (Boolean) map.get("isLast")));
     }
@@ -76,7 +78,8 @@ public class BoardController {
     public ResponseEntity<BoardRes> getBoard(@ApiIgnore Authentication authentication,
                                              @PathVariable("boardSeq") @ApiParam(value = "게시글 번호", required = true) long boardSeq) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         Board board = boardService.getBoardByBoardSeq(boardSeq);
         if (board == null) {
             return ResponseEntity.status(404).body(null);
@@ -152,20 +155,24 @@ public class BoardController {
     @ApiOperation(value = "즐겨찾기 등록,해제", notes = "번호에 해당하는 게시글을 즐겨찾기 등록 또는 해제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "즐겨찾기 등록 or 해제"),
+            @ApiResponse(code = 401, message = "즐겨찾기 갯수 초과"),
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> favoriteBoard(@ApiIgnore Authentication authentication,
                                                                     @PathVariable("boardSeq") Long boardSeq) {
-
+        //빌드 테스트
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
         Board board = boardService.getBoardByBoardSeq(boardSeq);
 
         int islike = boardService.favoriteBoard(user, board);
+
         if (islike == 1) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 등록"));
-        } else {
+        }else if(islike==2){
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"즐겨찾기 갯수 초과"));
+        }else {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 해제"));
         }
     }
@@ -179,7 +186,8 @@ public class BoardController {
     public ResponseEntity<BoardListRes> favoriteBoardList(@ApiIgnore Authentication authentication) {
 
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
-        User user = userDetails.getUser();
+        String userId = userDetails.getUsername();
+        User user = userService.getUserByUserId(userId);
         List<Board> boards = boardService.getfavoriteBoardList(user);
 
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", boards));
