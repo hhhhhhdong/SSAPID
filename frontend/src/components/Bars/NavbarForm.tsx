@@ -29,17 +29,19 @@ function NavbarForm() {
   };
   return (
     <nav className={open ? `${style.nav} ${style.navMove}` : style.nav}>
-      <h2>
+      <h2 className={open && style.navHomeDisNone}>
         <Link to="/">SSAPID</Link>
       </h2>
-      <div>
-        <span>
-          <Link to="/createboard">글쓰기</Link>
-        </span>
-        <span>
-          <Link to="/pwcheck">내정보</Link>
-        </span>
-        <span onClick={onClickLogout}>로그아웃</span>
+      <div className={style.navItemsWrapper}>
+        <div className={open && style.navItemsDisNone}>
+          <span>
+            <Link to="/createboard">글쓰기</Link>
+          </span>
+          <span>
+            <Link to="/pwcheck">내정보</Link>
+          </span>
+          <span onClick={onClickLogout}>로그아웃</span>
+        </div>
         <span
           onMouseEnter={() => !open && setOpenIcon(true)}
           onMouseLeave={() => setOpenIcon(false)}

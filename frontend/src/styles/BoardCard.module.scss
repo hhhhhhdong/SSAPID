@@ -6,7 +6,6 @@
   border-radius: 10px;
   background-color: $yellow;
   color: $blue;
-  cursor: pointer;
   // 애니메이션
   transition: transform ease-out 0.2s;
   &:hover {
@@ -17,9 +16,18 @@
   box-shadow: 6px 8px 9px -3px rgba(0, 0, 0, 0.8);
 }
 
+.deadline {
+  background-color: gray;
+  color: black;
+  &:hover {
+    transform: scale(1);
+  }
+}
+
 .header {
   display: flex;
   justify-content: space-between;
+  height: 34px;
 
   padding-right: 5px;
   padding-left: 2px;
@@ -31,6 +39,7 @@
   span {
     padding: 5px;
     transition: transform ease-out 0.08s;
+    cursor: pointer;
     &:hover {
       transform: scale(1.1);
     }
