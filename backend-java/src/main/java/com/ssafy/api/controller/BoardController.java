@@ -1,6 +1,7 @@
 package com.ssafy.api.controller;
 
 
+import com.ssafy.api.request.BoardFavoriteReq;
 import com.ssafy.api.request.BoardRegisterPostReq;
 import com.ssafy.api.request.BoardUpdateReq;
 import com.ssafy.api.response.BoardListRes;
@@ -151,7 +152,7 @@ public class BoardController {
         return ResponseEntity.status(200).body(BoardListRes.of(200, "Success", (List<Board>) map.get("boardList"), user, (Boolean) map.get("isLast")));
     }
 
-    @GetMapping("/favorite/{boardSeq}")
+    @PostMapping("/favorite")
     @ApiOperation(value = "즐겨찾기 등록,해제", notes = "번호에 해당하는 게시글을 즐겨찾기 등록 또는 해제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "즐겨찾기 등록 or 해제"),
@@ -159,12 +160,11 @@ public class BoardController {
             @ApiResponse(code = 500, message = "서버 오류")
     })
     public ResponseEntity<? extends BaseResponseBody> favoriteBoard(@ApiIgnore Authentication authentication,
-                                                                    @PathVariable("boardSeq") Long boardSeq) {
-        //빌드 테스트
+                                                                    @Valid @RequestBody @ApiParam(value = "글 번호", required = true) BoardFavoriteReq req) {
         SsafyUserDetails userDetails = (SsafyUserDetails) authentication.getDetails();
         String userId = userDetails.getUsername();
         User user = userService.getUserByUserId(userId);
-        Board board = boardService.getBoardByBoardSeq(boardSeq);
+        Board board = boardService.getBoardByBoardSeq(req.getBoardSeq());
 
         int islike = boardService.favoriteBoard(user, board);
 
