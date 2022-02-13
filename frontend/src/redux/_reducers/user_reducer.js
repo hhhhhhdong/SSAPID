@@ -14,6 +14,7 @@ export default function (
     emailString: "",
     chatRoomString: null,
     chatRoomId: null,
+    oppChatString: "",
   },
   action
 ) {
@@ -26,6 +27,8 @@ export default function (
       return { ...state, emailString: action.payload };
     case CHATROOM_STRING:
       return { ...state, chatRoomString: action.payload };
+    case OPPCHAT_STRING:
+      return { ...state, oppChatString: action.payload };
     default:
       return state;
   }
