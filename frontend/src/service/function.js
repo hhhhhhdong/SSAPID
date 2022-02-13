@@ -30,7 +30,6 @@ export async function makeMessage(message, room) {
 
 // }
 
-
 // 상대방이 읽으면 상대방의 count에서 + 1;
 export async function makeRead(room) {
   const db = getDatabase();
