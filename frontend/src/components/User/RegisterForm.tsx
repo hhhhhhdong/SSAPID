@@ -209,12 +209,8 @@ function RegisterForm() {
         userPw,
         userType: 1,
       })
-<<<<<<< Updated upstream:frontend/src/components/User/RegisterForm.tsx
       .then((res) => {
         alert("회원가입에 성공했습니다.");
-=======
-      .then(() => {
->>>>>>> Stashed changes:frontend/src/components/RegisterForm.tsx
         navigate("/");
       })
       .catch((err) => {
