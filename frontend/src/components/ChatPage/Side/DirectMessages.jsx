@@ -1,7 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
+import useInterval from "utils/hooks/timerHook";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import { getDatabase, ref, onValue, onChildAdded } from "firebase/database";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  onChildAdded,
+  DataSnapshot,
+} from "firebase/database";
 import { chatRoomString } from "redux/_actions/actions";
 import Badge from "react-bootstrap/Badge";
 import Main from "../Main/Main";
@@ -9,14 +16,11 @@ import Main from "../Main/Main";
 function DirectMessages() {
   // DB에서 users 스키마를 res 해서 state
   const [state, setState] = useState({
-    usersRef: ref(getDatabase(), "users"),
-    roomsRef: ref(getDatabase(), "messages"),
-    chatRooms: [],
     notifications: [],
     selectRoom: "",
   });
   const lastSelect = useRef("");
-
+  const lastNoti = useRef();
   const [data, setData] = useState([]);
   // 가져온 users 스키마를 바탕으로 users state 형성
   const [users, setUsers] = useState([]);
@@ -26,43 +30,45 @@ function DirectMessages() {
   const pattern = /[.#/$]/;
   const regexAllCase = new RegExp(pattern, "gi");
 
-  // 렌더링 될때마다 db에서 스키마 로딩
-  useEffect(() => {
+  useInterval(() => {
     let isComponentMounted = true;
-    if (users && isComponentMounted) {
-      addUsersListeners();
-    }
-    return () => {
-      isComponentMounted = false;
-      setUsers([]);
-    };
-  }, []);
-
-  useEffect(() => {
-    let isComponentMounted = true;
+    const users = addUsersListeners();
+    chatRoomListeners();
     if (isComponentMounted) {
-      chatRoomListeners();
-      // readDataListeners();
+      setUsers(users);
     }
+
     return () => {
       isComponentMounted = false;
-      setState({ notifications: [] });
     };
-  }, [lastSelect]);
+  }, 1000);
 
-  const getNotification = (chatRoom) => {
-    let count = 0;
-    const { notifications } = state;
-    if (notifications) {
-      notifications.forEach((notification) => {
-        if (notification.id === chatRoom) {
-          count = notification.count;
-        }
-      });
-      if (count > 0) return count;
-    }
-    return null;
-  };
+  // 렌더링 될때마다 db에서 스키마 로딩
+  // useEffect(() => {
+  //   let isComponentMounted = true;
+  //   const users = addUsersListeners();
+  //   if (isComponentMounted) {
+  //     setUsers(users);
+  //   }
+
+  //   return () => {
+  //     isComponentMounted = false;
+  //   };
+  // }, []);
+
+  // useEffect(() => {
+  //   let isComponentMounted = true;
+  //   chatRoomListeners();
+  //   if (isComponentMounted) {
+  //     setState({ notifications: lastNoti });
+  //     // readDataListeners();
+  //   }
+  //   return () => {
+  //     isComponentMounted = false;
+  //   };
+  // }, [lastSelect]);
+
+  // const getNotification = (chatRoom) => {};
   // 전에 내가 보낸
   // db에 noticount 정보(내가 안읽은 정보)가 있다 ? noti identitiy 내거의 count를 return 전에 현재 noti의 count를 db의 정보로 동기화 : getNoti함수 실행
   // const readDataListeners = () => {
@@ -72,10 +78,9 @@ function DirectMessages() {
 
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addUsersListeners() {
-    const { usersRef } = state;
     const usersArray = [];
     const myEmail = sessionStorage.getItem("email");
-    onChildAdded(usersRef, (DataSnapshot) => {
+    onChildAdded(ref(getDatabase(), "users"), (DataSnapshot) => {
       if (myEmail !== DataSnapshot.val().email) {
         // eslint-disable-next-line prefer-const
         let user = DataSnapshot.val();
@@ -83,9 +88,9 @@ function DirectMessages() {
         user.nickName = DataSnapshot.key;
         user.roomId = room;
         usersArray.push(user);
-        setUsers([...usersArray]);
       }
     });
+    return usersArray;
   }
 
   // 방 ID 생성
@@ -113,61 +118,22 @@ function DirectMessages() {
   };
 
   const chatRoomListeners = () => {
-    const chatRooms = [];
     onChildAdded(ref(getDatabase(), "messages"), (DataSnapshot) => {
-      chatRooms.push(DataSnapshot.val());
       addNotificationListener(DataSnapshot.key);
     });
-    setState({ chatRooms });
   };
 
   const addNotificationListener = (roomId) => {
-    const { notifications } = state;
-    if (notifications) {
-      onValue(
-        ref(getDatabase(), `messages/${roomId}/message`),
-        (DataSnapshot) => {
-          handleNotification(
-            roomId,
-            lastSelect.current,
-            notifications,
-            DataSnapshot
-          );
-        }
-      );
-    }
+    onValue(
+      ref(getDatabase(), `messages/${roomId}/identity`),
+      (DataSnapshot) => {
+        handleNotification(DataSnapshot, roomId);
+      }
+    );
   };
 
-  const handleNotification = (
-    roomId,
-    currentRoom,
-    notifications,
-    DataSnapshot
-  ) => {
-    const index = notifications.findIndex(
-      (notification) => notification.id === roomId
-    );
-    if (index === -1) {
-      notifications.push({
-        id: roomId,
-        total: DataSnapshot.size,
-        lastKnownTotal: DataSnapshot.size,
-        count: 0,
-      });
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (roomId !== currentRoom) {
-        const lastTotal = notifications[index].lastKnownTotal;
-        if (DataSnapshot.size - lastTotal > 0) {
-          const notiCount = DataSnapshot.size - lastTotal;
-          // eslint-disable-next-line no-param-reassign
-          notifications[index].count = notiCount;
-        }
-      }
-      // eslint-disable-next-line no-param-reassign
-      notifications[index].total = DataSnapshot.size;
-    }
-    setState({ notifications });
+  const handleNotification = (DataSnapshot, roomId) => {
+    console.log(DataSnapshot.val());
   };
 
   // 닉네임 렌더링
@@ -184,7 +150,7 @@ function DirectMessages() {
         }}
       >
         <Badge variant="danger" style={{ marginRight: "1em" }}>
-          {getNotification(user.roomId)}
+          {/* {getNotification(user.roomId)} */}
         </Badge>
         # {user.nickName}
       </li>
