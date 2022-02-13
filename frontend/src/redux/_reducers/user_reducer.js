@@ -13,7 +13,6 @@ export default function (
     authString: "",
     emailString: "",
     chatRoomString: null,
-    chatRoomId: null,
   },
   action
 ) {
