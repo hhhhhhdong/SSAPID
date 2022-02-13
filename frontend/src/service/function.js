@@ -26,7 +26,26 @@ export async function makeMessage(message, room) {
   await set(push(ref(db, `messages/${room[0]}/message`)), msg);
 }
 
+// const makeCounterUser = (mine) => {
+
+// }
+
+
+// 상대방이 읽으면 상대방의 count에서 + 1;
 export async function makeRead(room) {
+  const db = getDatabase();
+  const user = sessionStorage.getItem("email");
+  // const counterUser = makeCounterUser(user);
+  const identity = {
+    // id: counterUser,
+    count: 0,
+  };
+
+  await set(ref(db, `messages/${room[0]}/identity`), identity);
+}
+
+// 내가 읽으면 내 count 0으로 초기화
+export async function zeroRead(room) {
   const db = getDatabase();
   const user = sessionStorage.getItem("email");
 
@@ -34,6 +53,5 @@ export async function makeRead(room) {
     id: user,
     count: 0,
   };
-
   await set(ref(db, `messages/${room[0]}/identity`), identity);
 }
