@@ -3,7 +3,6 @@ import {
   AUTH_STRING,
   EMAIL_STRING,
   CHATROOM_STRING,
-  OPPCHAT_STRING,
 } from "./types";
 
 export function openSidebar(data) {
@@ -28,13 +27,6 @@ export function emailString(data) {
 export function chatRoomString(data) {
   return {
     type: CHATROOM_STRING,
-    payload: data,
-  };
-}
-
-export function oppChatString(data) {
-  return {
-    type: OPPCHAT_STRING,
     payload: data,
   };
 }
