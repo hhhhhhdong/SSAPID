@@ -1,7 +1,8 @@
 /* eslint-disable prefer-const */
 import React, { useEffect, useState } from "react";
 import { MdOutlineFavorite } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { isLikeString } from "redux/_actions/actions";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axios";
@@ -12,6 +13,7 @@ function Favorited() {
   });
   const isLike = useSelector((state) => state.userReducer.isLikeString);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   useEffect(() => {
     let completed = false;
     async function get() {
@@ -48,7 +50,7 @@ function Favorited() {
           },
         }
       );
-      setState({ likeList: result });
+      dispatch(isLikeString(result));
     }
     post();
   };

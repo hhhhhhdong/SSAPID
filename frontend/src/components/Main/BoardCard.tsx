@@ -28,10 +28,10 @@ function BoardCard({
 }: Props) {
   const [isLikeState, setIsLikeState] = useState<boolean>(isLike === "true");
   const dispatch = useDispatch();
-  const onClickLike = (e: React.MouseEvent) => {
+  const onClickLike = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (!boardStatus && !isLikeState) return;
-    axios
+    await axios
       .post(
         `/board/favorite`,
         { boardSeq },
@@ -41,9 +41,9 @@ function BoardCard({
           },
         }
       )
-      .then(() => {
+      .then((res) => {
         setIsLikeState((prev) => !prev);
-        dispatch(isLikeString(isLikeState));
+        dispatch(isLikeString(res));
       })
       .catch((err) => {
         if (err.response.status === 401) {
