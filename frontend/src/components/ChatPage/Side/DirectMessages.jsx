@@ -43,31 +43,6 @@ function DirectMessages() {
     };
   }, 1000);
 
-  // 렌더링 될때마다 db에서 스키마 로딩
-  // useEffect(() => {
-  //   let isComponentMounted = true;
-  //   const users = addUsersListeners();
-  //   if (isComponentMounted) {
-  //     setUsers(users);
-  //   }
-
-  //   return () => {
-  //     isComponentMounted = false;
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   let isComponentMounted = true;
-  //   chatRoomListeners();
-  //   if (isComponentMounted) {
-  //     setState({ notifications: lastNoti });
-  //     // readDataListeners();
-  //   }
-  //   return () => {
-  //     isComponentMounted = false;
-  //   };
-  // }, [lastSelect]);
-
   // const getNotification = (chatRoom) => {};
   // 전에 내가 보낸
   // db에 noticount 정보(내가 안읽은 정보)가 있다 ? noti identitiy 내거의 count를 return 전에 현재 noti의 count를 db의 정보로 동기화 : getNoti함수 실행
@@ -157,12 +132,13 @@ function DirectMessages() {
     ));
 
   return (
-    <div>
+    <div style={{ marginTop: "2em" }}>
       <span
         style={{
           display: "flex",
           justifyContent: "right",
           fontSize: "1.5em",
+          marginBottom: "1em",
         }}
       >
         <BiMessageAltDetail

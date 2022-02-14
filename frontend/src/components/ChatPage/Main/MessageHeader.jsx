@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaUserFriends } from "react-icons/fa";
 import { useSelector } from "react-redux";
-import { getDatabase, ref, child, onChildAdded } from "firebase/database";
 
 function MessageHeader({ handleSearchChange, searchTerm }) {
   const [state, setState] = useState({
