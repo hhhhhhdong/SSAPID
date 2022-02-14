@@ -5,6 +5,7 @@ import {
   AUTH_STRING,
   EMAIL_STRING,
   CHATROOM_STRING,
+  LIKE_STRING,
 } from "redux/_actions/types";
 
 export default function (
@@ -13,6 +14,7 @@ export default function (
     authString: "",
     emailString: "",
     chatRoomString: null,
+    isLikeString: null,
   },
   action
 ) {
@@ -25,6 +27,8 @@ export default function (
       return { ...state, emailString: action.payload };
     case CHATROOM_STRING:
       return { ...state, chatRoomString: action.payload };
+    case LIKE_STRING:
+      return { ...state, isLikeString: action.payload };
     default:
       return state;
   }

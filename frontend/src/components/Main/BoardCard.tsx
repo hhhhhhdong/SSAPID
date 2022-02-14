@@ -2,7 +2,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from "react";
 import axios from "api/axios";
+import { isLikeString } from "redux/_actions/actions";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import style from "../../styles/BoardCard.module.scss";
 
 type Props = {
@@ -25,6 +27,7 @@ function BoardCard({
   boardStatus,
 }: Props) {
   const [isLikeState, setIsLikeState] = useState<boolean>(isLike === "true");
+  const dispatch = useDispatch();
   const onClickLike = (e: React.MouseEvent) => {
     e.preventDefault();
     if (!boardStatus && !isLikeState) return;
@@ -36,6 +39,7 @@ function BoardCard({
       })
       .then(() => {
         setIsLikeState((prev) => !prev);
+        dispatch(isLikeString(isLikeState));
       })
       .catch((err) => {
         console.dir(err);
