@@ -33,8 +33,8 @@ function CreateBoardForm() {
   const onClickSubmit = () => {
     const date = `${deadline?.getFullYear()}-${
       Number(deadline?.getMonth()) + 1 < 10
-        ? `0${deadline?.getMonth()}`
-        : deadline?.getMonth()
+        ? `0${Number(deadline?.getMonth()) + 1}`
+        : Number(deadline?.getMonth()) + 1
     }-${
       Number(deadline?.getDate()) < 10
         ? `0${deadline?.getDate()}`

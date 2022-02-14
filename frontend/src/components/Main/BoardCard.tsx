@@ -32,17 +32,25 @@ function BoardCard({
     e.preventDefault();
     if (!boardStatus && !isLikeState) return;
     axios
-      .get(`/board/favorite/${boardSeq}`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-      })
+      .post(
+        `/board/favorite`,
+        { boardSeq },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        }
+      )
       .then(() => {
         setIsLikeState((prev) => !prev);
         dispatch(isLikeString(isLikeState));
       })
       .catch((err) => {
-        console.dir(err);
+        if (err.response.status === 401) {
+          alert("즐겨찾기 등록은 10개까지만 가능합니다.");
+        } else {
+          console.dir(err);
+        }
       });
   };
 

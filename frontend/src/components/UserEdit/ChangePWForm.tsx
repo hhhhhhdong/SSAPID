@@ -22,21 +22,21 @@ function ChangePWForm() {
   const { userId, userPw, userPwCheck } = form;
   const [isEmpty, setEmpty] = useState(true);
   const navigate = useNavigate();
-  useEffect(() => {
-    axios
-      .get("/user/info", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(form);
-        setForm(res.data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("/user/info", {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then(() => {
+  //       // console.log(form);
+  //       // setForm(res.data);
+  //     });
+  // }, []);
   const Submit = () => {
     if (form.userPw !== form.userPwCheck) return;
-    console.log(form);
+    // console.log(form);
     axios
       .put("/user/change-pw", form)
       .then(() => {
@@ -47,6 +47,14 @@ function ChangePWForm() {
         alert("실패하였습니다.");
       });
   };
+  useEffect(() => {
+    console.log(form);
+    if (form.userPw !== "" && form.userPwCheck !== "") {
+      setEmpty(false);
+    } else {
+      setEmpty(true);
+    }
+  }, [form.userPw, form.userPwCheck]);
   useEffect(() => {
     if (form.userPwCheck && form.userPw !== form.userPwCheck) {
       setErrorMessage({
