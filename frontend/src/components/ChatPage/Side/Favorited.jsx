@@ -39,14 +39,16 @@ function Favorited() {
   const clearBoard = (e, boardSeq) => {
     e.stopPropagation();
     async function post() {
-      const result = await axios.post("/board/favorite", {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-        },
-        boardSeq,
-      });
-
-      console.log(result);
+      const result = await axios.post(
+        "/board/favorite",
+        { boardSeq },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      setState({ likeList: result });
     }
     post();
   };
@@ -66,7 +68,6 @@ function Favorited() {
         onClick={() => goToBoard(data.boardSeq, data.boardStatus)}
       >
         <br />
-        {/* style={{ padding: 0, cursor: "pointer", textAlign: "right" }} */}
         <div
           style={!data.boardStatus ? { textDecoration: "line-through" } : {}}
         >
@@ -94,7 +95,7 @@ function Favorited() {
       }}
     >
       <MdOutlineFavorite style={{ marginRight: "0.2em" }} /> Favorite (
-      {state.likeList.length})
+      {state.likeList.length === undefined ? 0 : state.likeList.length})
       <br />
       {renderLikeList(state.likeList)}
     </div>
