@@ -15,6 +15,14 @@ function ChangeNickForm() {
     userNickname: "",
   });
 
+  const [isEmpty, setEmpty] = useState(true);
+  useEffect(() => {
+    if (userNickname === "") {
+      setEmpty(true);
+    } else {
+      setEmpty(false);
+    }
+  });
   const { userNickname } = form;
 
   const navigate = useNavigate();
@@ -112,7 +120,12 @@ function ChangeNickForm() {
         errorMessage={errorMessage.userNickname}
         onClickInputButton={onClickCheckNickname}
       />
-      <Button buttonType="submit" text="수정하기" handleClick={Submit} />
+      <Button
+        buttonType="submit"
+        text="수정하기"
+        handleClick={Submit}
+        Disabled={isEmpty}
+      />
     </div>
   );
 }
