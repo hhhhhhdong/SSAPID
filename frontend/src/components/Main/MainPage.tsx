@@ -48,6 +48,7 @@ function MainPage() {
     // 입력값 없이 검색버튼을 클릭하면 검색상태를 해제되고 모든 리스트를 불러온다.
     if (!searchValue) {
       setIsSearching(false);
+      setIsSwitchOn(false);
       page.current = 1;
       getItems();
     } else {
