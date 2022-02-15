@@ -15,7 +15,11 @@ function GithubSignin() {
     const { uid } = user;
     const userData = uid;
     await axios
-      .post("/social-login", { userId: userData, userType: 2 })
+      .post("/social-login", {
+        userId: userData,
+        userType: 2,
+        loginType: "github",
+      })
       .then((res) => {
         makeUser(userData, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);

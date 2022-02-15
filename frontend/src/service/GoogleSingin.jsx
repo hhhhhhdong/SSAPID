@@ -10,7 +10,11 @@ function GoogleSignin() {
     await authService.signInWithPopup(googleProvider);
     const user = authService.currentUser;
     await axios
-      .post("/social-login", { userId: user.email, userType: 2 })
+      .post("/social-login", {
+        userId: user.email,
+        userType: 2,
+        loginType: "google",
+      })
       .then((res) => {
         makeUser(user.email, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);
