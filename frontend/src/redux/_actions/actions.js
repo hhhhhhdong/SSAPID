@@ -4,6 +4,7 @@ import {
   EMAIL_STRING,
   CHATROOM_STRING,
   LIKE_STRING,
+  LIKE_BOOL,
 } from "./types";
 
 export function openSidebar(data) {
@@ -35,6 +36,13 @@ export function chatRoomString(data) {
 export function isLikeString(data) {
   return {
     type: LIKE_STRING,
+    payload: data,
+  };
+}
+
+export function isLikeBool(data) {
+  return {
+    type: LIKE_BOOL,
     payload: data,
   };
 }

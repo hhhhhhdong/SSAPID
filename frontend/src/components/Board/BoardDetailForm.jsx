@@ -6,7 +6,9 @@ import { useParams } from "react-router-dom";
 import axios from "api/axios";
 import OpenViduSession from "openvidu-react";
 import Spinner from "components/layout/Spinner";
+import { isLikeString } from "redux/_actions/actions";
 import FormHeader from "components/layout/FormHeader";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "../common/Button";
 
 function BoardDetailForm() {
@@ -16,7 +18,8 @@ function BoardDetailForm() {
   const [isSession, setIsSession] = useState(false);
   const [token, setToken] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const dispatch = useDispatch();
+  const likeBool = useSelector((state) => state.userReducer.isLikeBool);
   const userNickname = sessionStorage.getItem("userNickname");
   const onClickJoin = () => {
     setLoading(true);
@@ -55,8 +58,9 @@ function BoardDetailForm() {
           },
         }
       )
-      .then(() => {
+      .then((res) => {
         setIsLikeState((prev) => !prev);
+        dispatch(isLikeString(res));
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -85,7 +89,13 @@ function BoardDetailForm() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [boardSeq]);
+
+  useEffect(() => {
+    if (Number(boardSeq) === likeBool[1]) {
+      setIsLikeState(false);
+    }
+  }, [likeBool]);
 
   if (board) {
     return (
