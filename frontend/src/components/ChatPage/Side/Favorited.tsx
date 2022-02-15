@@ -82,15 +82,22 @@ function Favorited() {
         key={data.boardSeq}
         aria-hidden="true"
         onClick={() => goToBoard(data.boardSeq, data.boardStatus)}
-        style={{ height: "1em", padding: 0, marginBottom: "1em" }}
+        style={{
+          padding: 0,
+          marginBottom: "1em",
+        }}
       >
         <Link to={`/board/${data.boardSeq}`}>
           <span
             className={hoverColor}
             style={{
               textDecoration: !data.boardStatus ? "line-through" : "",
-              backgroundColor:
-                data.boardSeq === colorRef.current ? "#ffffff45" : "",
+              height: "1.5em",
+              width: "80%",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              display: "inline-block",
             }}
           >
             {data.boardTitle}
