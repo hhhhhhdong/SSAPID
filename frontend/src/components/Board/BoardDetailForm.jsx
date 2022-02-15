@@ -6,7 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "api/axios";
 import OpenViduSession from "openvidu-react";
 import Spinner from "components/layout/Spinner";
-import { isLikeString } from "redux/_actions/actions";
+import { isLikeString, openSidebar } from "redux/_actions/actions";
 import FormHeader from "components/layout/FormHeader";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../common/Button";
@@ -24,6 +24,7 @@ function BoardDetailForm() {
   const userNickname = sessionStorage.getItem("userNickname");
   const onClickJoin = () => {
     setLoading(true);
+    dispatch(openSidebar(false));
     axios
       .post("/session", { sessionName: boardSeq, userNickname })
       .then((res) => {
