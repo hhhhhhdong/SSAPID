@@ -26,12 +26,34 @@
   p {
     margin: 0;
   }
-  span {
-    padding: 10px;
+
+  .author {
+    display: flex;
+    align-items: flex-start;
+    & > span {
+      padding: 2px 5px;
+      margin: 2px 5px;
+      cursor: pointer;
+      i {
+        color: $blue;
+        font-size: 20px;
+      }
+    }
+  }
+  .delete,
+  .edit {
     cursor: pointer;
-    i {
+    font-size: 14px;
+    color: $inputSpanColor;
+  }
+  .delete {
+    &:hover {
+      color: #b71c1c;
+    }
+  }
+  .edit {
+    &:hover {
       color: $blue;
-      font-size: 20px;
     }
   }
 }
