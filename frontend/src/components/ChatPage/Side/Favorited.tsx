@@ -93,7 +93,7 @@ function Favorited() {
             style={{
               textDecoration: !data.boardStatus ? "line-through" : "",
               height: "1.5em",
-              width: "80%",
+              width: "50%",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
               overflow: "hidden",
