@@ -6,6 +6,7 @@ import {
   EMAIL_STRING,
   CHATROOM_STRING,
   LIKE_STRING,
+  LIKE_BOOL,
 } from "redux/_actions/types";
 
 export default function (
@@ -15,6 +16,7 @@ export default function (
     emailString: "",
     chatRoomString: null,
     isLikeString: null,
+    isLikeBool: [true, ""],
   },
   action
 ) {
@@ -29,6 +31,8 @@ export default function (
       return { ...state, chatRoomString: action.payload };
     case LIKE_STRING:
       return { ...state, isLikeString: action.payload };
+    case LIKE_BOOL:
+      return { ...state, isLikeBool: action.payload };
     default:
       return state;
   }
