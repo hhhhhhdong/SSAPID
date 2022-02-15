@@ -19,4 +19,7 @@ public class UserSocialReq {
     @ApiModelProperty(name = "유저 Type", example = "2")
     @NotNull
     Long userType;
+    @ApiModelProperty(name = "로그인 Type", example = "Facebook")
+    @NotEmpty
+    String loginType;
 }

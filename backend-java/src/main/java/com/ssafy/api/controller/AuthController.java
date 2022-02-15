@@ -53,7 +53,7 @@ public class AuthController {
     @PostMapping("/social-login")
     @ApiOperation(value = "소셜 로그인", notes = "<strong>소셜 로그인 정보</strong>를 통해 정보를 저장하고 로그인 한다.")
     public ResponseEntity<? extends UserLoginPostRes> socialLogin(@Valid @RequestBody @ApiParam(value = "소셜 로그인 정보", required = true) UserSocialReq socialInfo) {
-        String userId = "Social_" + socialInfo.getUserId();
+        String userId = socialInfo.getLoginType() + "_" + socialInfo.getUserId();
         try {
             User user = userService.getSocialUserByUserId(userId);
             return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(userId), user.getUserNickname(), user.getUserType()));

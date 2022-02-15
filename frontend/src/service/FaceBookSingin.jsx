@@ -10,7 +10,11 @@ function FacebookSignin() {
     await authService.signInWithPopup(facebookProvider);
     const user = authService.currentUser;
     await axios
-      .post("/social-login", { userId: user.email, userType: 2 })
+      .post("/social-login", {
+        userId: user.email,
+        userType: 2,
+        loginType: "facebook",
+      })
       .then((res) => {
         makeUser(user.email, res.data.userNickname);
         sessionStorage.setItem("userNickname", res.data.userNickname);
