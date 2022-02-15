@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "api/axios";
 import Spinner from "components/layout/Spinner";
+import FormCheck from "react-bootstrap/FormCheck";
 import style from "styles/MainPage.module.scss";
 import BoardCard from "./BoardCard";
 import Input from "../common/Input";
@@ -21,6 +22,7 @@ function MainPage() {
   const [searchValue, setSearchValue] = useState<string>("");
   const [keywordType, setKeywordType] = useState<string>("keyword");
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [isSwitchOn, setIsSwitchOn] = useState<boolean>(false);
   const [boards, setBoards] = useState<Board[]>([]);
   const page = useRef(1);
   const [isLast, setIsLast] = useState<boolean>(false);
@@ -36,9 +38,9 @@ function MainPage() {
     setKeywordType(e.target.value);
   };
 
-  useEffect(() => {
-    getItems();
-  }, []);
+  // useEffect(() => {
+  //   getItems();
+  // }, []);
 
   const onClickSearch = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -74,7 +76,11 @@ function MainPage() {
       .then((res) => {
         setIsLast(res.data.last);
         if (page.current === 1) {
-          setBoards(res.data.boardInfos);
+          if (isSwitchOn) {
+            setBoards(res.data.boardInfos.filter((v: Board) => v.boardStatus));
+          } else {
+            setBoards(res.data.boardInfos);
+          }
         } else {
           setBoards((prev) => prev.concat(res.data.boardInfos));
         }
@@ -85,6 +91,19 @@ function MainPage() {
         console.dir(err);
       });
   };
+
+  // 모집 마강 제외 기능
+  const onChangeSwitch = (checked: React.ChangeEvent<HTMLInputElement>) => {
+    setIsSwitchOn((prev) => !prev);
+  };
+  useEffect(() => {
+    if (isSwitchOn) {
+      setBoards(boards.filter((v) => v.boardStatus));
+    } else {
+      page.current = 1;
+      getItems(isSearching);
+    }
+  }, [isSwitchOn]);
 
   // 옵저버 설정 함수
   const intersectionObserver = (
@@ -126,9 +145,20 @@ function MainPage() {
             onChange={onChangeSearchValue}
             buttonText="검색"
             onClickInputButton={onClickSearch}
+            height="38px"
+          />
+        </div>
+        <div className={style.switch}>
+          <FormCheck
+            type="switch"
+            id="custom-switch"
+            label="모집 마감 제외"
+            onChange={onChangeSwitch}
+            checked={isSwitchOn}
           />
         </div>
       </div>
+
       <div className={style.cards}>
         {boards.map((board, idx) => {
           if (boards.length - 1 === idx) {

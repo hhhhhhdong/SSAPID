@@ -16,6 +16,7 @@ type Props = {
   errorMessage?: string;
   noBackground?: boolean;
   onKeyPressEventHandler?: React.KeyboardEventHandler<HTMLInputElement>;
+  height?: string;
 };
 
 function Input({
@@ -29,6 +30,7 @@ function Input({
   width = 240,
   onClickInputButton,
   errorMessage,
+  height,
   noBackground = false,
 }: Props) {
   return (
@@ -37,7 +39,11 @@ function Input({
         className={
           noBackground ? `${style.input} ${style.noBackground}` : style.input
         }
-        style={{ width: `${width}px` }}
+        style={
+          height
+            ? { width: `${width}px`, height: `${height}` }
+            : { width: `${width}px` }
+        }
       >
         <label htmlFor={name}>
           <span className={value ? style.inValueSpan : ""}>{placeHolder}</span>
