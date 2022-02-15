@@ -133,6 +133,7 @@ function DirectMessages() {
         key={user.nickName}
         onClick={() => changeChatRoom(user)}
         aria-hidden="true"
+        style={{ marginBottom: "1em" }}
       >
         <Badge variant="danger" style={{ marginRight: "1em" }}>
           {/* {getNotification(user.roomId)} */}
