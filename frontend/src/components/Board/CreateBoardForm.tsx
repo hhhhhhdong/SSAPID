@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import queryStirng from "query-string";
 import style from "styles/CreateBoardForm.module.scss";
 import axios from "api/axios";
 import FormHeader from "components/layout/FormHeader";
@@ -11,11 +12,35 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function CreateBoardForm() {
   const navigate = useNavigate();
-
+  const edit = useRef(
+    window.location.search
+      ? queryStirng.parse(window.location.search).edit
+      : null
+  );
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [deadline, setDeadline] = useState<Date | null>(null);
   const [disabled, setDisabled] = useState(true);
+
+  // 수정 페이지 확인
+  useEffect(() => {
+    if (edit.current) {
+      axios
+        .get(`/board/${edit.current}`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+          },
+        })
+        .then((res) => {
+          setTitle(res.data.boardTitle);
+          setContent(res.data.boardContent);
+        })
+        .catch((err) => {
+          console.log(err);
+          navigate("/");
+        });
+    }
+  }, [edit]);
 
   const onChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -40,28 +65,51 @@ function CreateBoardForm() {
         ? `0${deadline?.getDate()}`
         : deadline?.getDate()
     }`;
-
-    axios
-      .post(
-        "/board",
-        {
-          boardTitle: title,
-          boardContent: content,
-          deadline: date,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+    if (edit.current) {
+      axios
+        .put(
+          `/board/${edit.current}`,
+          {
+            boardTitle: title,
+            boardContent: content,
+            deadline: date,
           },
-        }
-      )
-      .then(() => {
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log("에러: ", err);
-        alert("게시글 생성에 실패했습니다.");
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then(() => {
+          navigate(`/board/${edit.current}`);
+        })
+        .catch((err) => {
+          console.log("에러: ", err);
+          alert("게시글 수정에 실패했습니다.");
+        });
+    } else {
+      axios
+        .post(
+          "/board",
+          {
+            boardTitle: title,
+            boardContent: content,
+            deadline: date,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+            },
+          }
+        )
+        .then(() => {
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log("에러: ", err);
+          alert("게시글 생성에 실패했습니다.");
+        });
+    }
   };
 
   return (

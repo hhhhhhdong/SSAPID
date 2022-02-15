@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect, useState } from "react";
 import style from "styles/BoardDetailForm.module.scss";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "api/axios";
 import OpenViduSession from "openvidu-react";
 import Spinner from "components/layout/Spinner";
@@ -13,6 +13,7 @@ import Button from "../common/Button";
 
 function BoardDetailForm() {
   const { boardSeq } = useParams();
+  const navigate = useNavigate();
   const [board, setBoard] = useState();
   const [isLikeState, setIsLikeState] = useState(board?.isLike === "true");
   const [isSession, setIsSession] = useState(false);
@@ -71,6 +72,26 @@ function BoardDetailForm() {
       });
   };
 
+  const onClickDelete = () => {
+    axios
+      .delete(`/board/${boardSeq}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => {
+        console.dir(err);
+        alert("게시글을 삭제할 수 없습니다.");
+      });
+  };
+
+  const onClickEdit = () => {
+    navigate(`/createboard?edit=${boardSeq}`);
+  };
+
   useEffect(() => {
     axios
       .get(`/board/${boardSeq}`, {
@@ -88,6 +109,7 @@ function BoardDetailForm() {
       })
       .catch((err) => {
         console.log(err);
+        navigate("/");
       });
   }, [boardSeq]);
 
@@ -106,7 +128,7 @@ function BoardDetailForm() {
             <div className={style.wrapper}>
               <div className={style.header}>
                 <p>작성자: {board.author}</p>
-                <p>
+                <div className={style.author}>
                   마감일: {board.deadline}
                   <span onClick={onClickLike}>
                     {isLikeState ? (
@@ -115,7 +137,18 @@ function BoardDetailForm() {
                       <i className="far fa-bookmark" />
                     )}
                   </span>
-                </p>
+                  {board.author === userNickname && (
+                    <div>
+                      <span className={style.edit} onClick={onClickEdit}>
+                        수정
+                      </span>
+                      {" | "}
+                      <span className={style.delete} onClick={onClickDelete}>
+                        삭제
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
               <h2>{board.title}</h2>
               <p>{board.content}</p>
