@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import useInterval from "utils/hooks/timerHook";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { useDispatch } from "react-redux";
+import { style } from "typestyle";
 import {
   getDatabase,
   ref,
@@ -13,6 +14,20 @@ import { chatRoomString } from "redux/_actions/actions";
 import Badge from "react-bootstrap/Badge";
 import Main from "../Main/Main";
 
+type userList = {
+  nickName: string;
+  roomId: string;
+  email: string;
+};
+
+const hoverColor = style({
+  $nest: {
+    "&:hover": {
+      backgroundColor: "#ffffff45",
+    },
+  },
+});
+
 function DirectMessages() {
   // DB에서 users 스키마를 res 해서 state
   const [state, setState] = useState({
@@ -20,10 +35,9 @@ function DirectMessages() {
     selectRoom: "",
   });
   const lastSelect = useRef("");
-  const lastNoti = useRef();
   const [data, setData] = useState([]);
   // 가져온 users 스키마를 바탕으로 users state 형성
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<Array<userList>>([]);
   const [isShow, setShow] = useState(false);
   // 선택 정보
   const dispatch = useDispatch();
@@ -33,7 +47,7 @@ function DirectMessages() {
   useInterval(() => {
     let isComponentMounted = true;
     const users = addUsersListeners();
-    chatRoomListeners();
+    // chatRoomListeners();
     if (isComponentMounted) {
       setUsers(users);
     }
@@ -53,7 +67,7 @@ function DirectMessages() {
 
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addUsersListeners() {
-    const usersArray = [];
+    const usersArray: Array<userList> = [];
     const myEmail = sessionStorage.getItem("email");
     onChildAdded(ref(getDatabase(), "users"), (DataSnapshot) => {
       if (myEmail !== DataSnapshot.val().email) {
@@ -69,7 +83,7 @@ function DirectMessages() {
   }
 
   // 방 ID 생성
-  const getChatRoomId = (userId) => {
+  const getChatRoomId = (userId: string) => {
     const mine = sessionStorage.getItem("email");
     if (mine) {
       const user = mine.replace(regexAllCase, "");
@@ -80,59 +94,64 @@ function DirectMessages() {
   };
 
   // 채팅 룸 변경
-  const changeChatRoom = (user) => {
+  const changeChatRoom = (user: userList) => {
     const chatRoomId = getChatRoomId(user.email);
     const chatRoomData = [chatRoomId, user.nickName];
     dispatch(chatRoomString(chatRoomData));
-    lastSelect.current = user.roomId;
-    if (user.email === state.selectRoom) {
+    if (user.nickName === lastSelect.current) {
       setShow(!isShow);
     } else {
       setShow(true);
     }
+    lastSelect.current = user.nickName;
   };
 
-  const chatRoomListeners = () => {
-    onChildAdded(ref(getDatabase(), "messages"), (DataSnapshot) => {
-      addNotificationListener(DataSnapshot.key);
-    });
-  };
+  // const chatRoomListeners = () => {
+  //   onChildAdded(ref(getDatabase(), "messages"), (DataSnapshot) => {
+  //     addNotificationListener(DataSnapshot.key);
+  //   });
+  // };
 
-  const addNotificationListener = (roomId) => {
-    onValue(
-      ref(getDatabase(), `messages/${roomId}/identity`),
-      (DataSnapshot) => {
-        handleNotification(DataSnapshot, roomId);
-      }
-    );
-  };
+  // const addNotificationListener = (roomId: string) => {
+  //   onValue(
+  //     ref(getDatabase(), `messages/${roomId}/identity`),
+  //     (DataSnapshot) => {
+  //       handleNotification(DataSnapshot, roomId);
+  //     }
+  //   );
+  // };
 
-  const handleNotification = (DataSnapshot, roomId) => {
-    console.log(DataSnapshot.val());
-  };
+  // const handleNotification = (DataSnapshot, roomId) => {
+  //   console.log(DataSnapshot.val());
+  // };
 
   // 닉네임 렌더링
-  const renderDirectMessages = (users) =>
+  const renderDirectMessages = (users: Array<userList>) =>
     users.length > 0 &&
-    users.map((user) => (
+    users.map((user: userList) => (
       <li
         key={user.nickName}
         onClick={() => changeChatRoom(user)}
         aria-hidden="true"
-        style={{
-          backgroundColor: user.email === isShow && "#ffffff45",
-          marginBottom: "0.5em",
-        }}
       >
         <Badge variant="danger" style={{ marginRight: "1em" }}>
           {/* {getNotification(user.roomId)} */}
         </Badge>
-        # {user.nickName}
+        <span
+          className={hoverColor}
+          style={{
+            backgroundColor:
+              lastSelect.current === user.nickName && isShow ? "#ffffff45" : "",
+            marginBottom: "0.5em",
+          }}
+        >
+          # {user.nickName}
+        </span>
       </li>
     ));
 
   return (
-    <div style={{ marginTop: "2em" }}>
+    <div style={{ marginTop: "3em" }}>
       <span
         style={{
           display: "flex",
@@ -141,11 +160,7 @@ function DirectMessages() {
           marginBottom: "1em",
         }}
       >
-        <BiMessageAltDetail
-          style={{
-            marginRight: "0.2em",
-          }}
-        />
+        <BiMessageAltDetail />
         Direct Message ({users.length})
       </span>
       <ul
@@ -159,7 +174,7 @@ function DirectMessages() {
         {renderDirectMessages(users)}
       </ul>
       <hr />
-      {isShow && <Main key={state.selectRoom} setData={setData} />}
+      {isShow && <Main setData={setData} />}
     </div>
   );
 }

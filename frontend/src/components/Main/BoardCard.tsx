@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import axios from "api/axios";
 import { isLikeString } from "redux/_actions/actions";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "redux/_reducers";
 import style from "../../styles/BoardCard.module.scss";
 
 type Props = {
@@ -28,6 +29,9 @@ function BoardCard({
 }: Props) {
   const [isLikeState, setIsLikeState] = useState<boolean>(isLike === "true");
   const dispatch = useDispatch();
+  const likeBool = useSelector(
+    (state: RootState) => state.userReducer.isLikeBool
+  );
   const onClickLike = async (e: React.MouseEvent) => {
     e.preventDefault();
     if (!boardStatus && !isLikeState) return;
@@ -53,6 +57,11 @@ function BoardCard({
         }
       });
   };
+  useEffect(() => {
+    if (boardSeq === likeBool[1]) {
+      setIsLikeState(false);
+    }
+  }, [likeBool]);
 
   if (boardStatus) {
     return (
