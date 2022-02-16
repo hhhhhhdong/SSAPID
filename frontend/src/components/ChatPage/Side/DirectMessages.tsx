@@ -6,7 +6,6 @@ import { style } from "typestyle";
 import {
   getDatabase,
   ref,
-  onValue,
   onChildAdded,
   DataSnapshot,
 } from "firebase/database";
@@ -68,15 +67,19 @@ function DirectMessages() {
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addUsersListeners() {
     const usersArray: Array<userList> = [];
-    const myEmail = sessionStorage.getItem("email");
+    const myEmail = sessionStorage.getItem("email")?.replace(".", "");
     onChildAdded(ref(getDatabase(), "users"), (DataSnapshot) => {
       if (myEmail !== DataSnapshot.val().email) {
-        // eslint-disable-next-line prefer-const
-        let user = DataSnapshot.val();
-        const room = getChatRoomId(user.email);
-        user.nickName = DataSnapshot.key;
-        user.roomId = room;
-        usersArray.push(user);
+        if (DataSnapshot.key && !DataSnapshot.val().dist) {
+          // eslint-disable-next-line prefer-const
+          let user = DataSnapshot.val();
+
+          const room = getChatRoomId(DataSnapshot.key);
+          user.email = DataSnapshot.key;
+          user.nickName = user.userNickName;
+          user.roomId = room;
+          usersArray.push(user);
+        }
       }
     });
     return usersArray;

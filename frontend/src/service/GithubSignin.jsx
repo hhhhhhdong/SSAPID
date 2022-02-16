@@ -6,6 +6,7 @@ import { authService, githubProvider } from "./fbase";
 
 function GithubSignin() {
   const navigate = useNavigate();
+
   const onGithubClick = async (event) => {
     await authService.signInWithPopup(githubProvider);
     const User = authService.currentUser;
@@ -21,10 +22,11 @@ function GithubSignin() {
         loginType: "github",
       })
       .then((res) => {
-        makeUser(userData, res.data.userNickname);
+        makeUser(userData, res.data.userNickname, uid);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userData);
+        sessionStorage.setItem("uid", uid);
         // sessionStorage.setItem("userType", res.data.userType);
         navigate("/");
       })

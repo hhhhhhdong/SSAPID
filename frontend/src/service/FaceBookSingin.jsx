@@ -16,10 +16,11 @@ function FacebookSignin() {
         loginType: "facebook",
       })
       .then((res) => {
-        makeUser(user.email, res.data.userNickname);
+        makeUser(user.email, res.data.userNickname, user.uid);
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", user.email);
+        sessionStorage.setItem("uid", user.uid);
         // sessionStorage.setItem("userType", res.data.userType);
         navigate("/");
       })

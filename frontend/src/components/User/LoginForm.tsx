@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { makeUser } from "service/function";
 import { useNavigate } from "react-router-dom";
+import { makeUser } from "service/function";
 import axios from "../../api/axios";
 import GithubSignin from "../../service/GithubSignin";
 import FormHeader from "../layout/FormHeader";
@@ -19,16 +19,20 @@ function LoginForm() {
     userId: "",
     userPw: "",
   });
+  const pattern = /[.#/$]/;
+  const regexAllCase = new RegExp(pattern, "gi");
   const { userId, userPw } = form;
-  const Submit = () => {
-    axios
+  const Submit = async () => {
+    await axios
       .post("/login", form)
       .then((res: any) => {
-        makeUser(userId, res.data.userNickname);
+        const regId = userId.replace(regexAllCase, "");
         sessionStorage.setItem("userNickname", res.data.userNickname);
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", userId);
         sessionStorage.setItem("userType", res.data.userType);
+        sessionStorage.setItem("uid", regId);
+        makeUser(userId, res.data.userNickname, regId);
         navigate("/");
       })
       .catch((err) => {
