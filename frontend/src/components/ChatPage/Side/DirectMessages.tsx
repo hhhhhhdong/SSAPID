@@ -135,9 +135,9 @@ function DirectMessages() {
         aria-hidden="true"
         style={{ marginBottom: "1em" }}
       >
-        <Badge variant="danger" style={{ marginRight: "1em" }}>
-          {/* {getNotification(user.roomId)} */}
-        </Badge>
+        {/* <Badge variant="danger" style={{ marginRight: "1em" }}>
+          {getNotification(user.roomId)}
+        </Badge> */}
         <span
           className={hoverColor}
           style={{
