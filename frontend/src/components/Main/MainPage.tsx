@@ -27,7 +27,8 @@ function MainPage() {
   const page = useRef(1);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const pattern = /[.#/$]/;
+  const regexAllCase = new RegExp(pattern, "gi");
   const targetRef = useRef<HTMLDivElement>(null);
 
   const onChangeSearchValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,10 +38,6 @@ function MainPage() {
   const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setKeywordType(e.target.value);
   };
-
-  // useEffect(() => {
-  //   getItems();
-  // }, []);
 
   const onClickSearch = async (e: React.MouseEvent) => {
     e.preventDefault();

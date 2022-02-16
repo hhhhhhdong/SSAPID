@@ -1,12 +1,15 @@
 import { getDatabase, push, ref, set } from "firebase/database";
 import { Timestamp } from "firebase/firestore";
 
-export async function makeUser(email, userNickName) {
+export async function makeUser(email, userNickName, uid) {
   const newEmail = email.replace(".", "");
   const db = getDatabase();
-  await set(ref(db, `users/${newEmail}`), {
+  await set(ref(db, `/users/${uid}`), {
+    email: newEmail,
     userNickName,
+    dist: false,
   });
+
   // console.log("만들어짐");
 }
 

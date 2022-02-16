@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormHeader from "components/layout/FormHeader";
+import { getDatabase, ref, onValue, set } from "firebase/database";
+import { useSelector } from "react-redux";
 import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
@@ -10,6 +12,15 @@ import style from "../../styles/edit.module.scss";
 function UserDistForm() {
   const [isEmpty, setEmpty] = useState(true);
   const navigate = useNavigate();
+
+  const firebaseUserisDist = async () => {
+    const db = getDatabase();
+    const getUid = sessionStorage.getItem("uid");
+    await set(ref(db, `users/${getUid}`), {
+      dist: true,
+    });
+  };
+
   const Submit = () => {
     axios
       .delete("/user/delete", {
@@ -19,6 +30,7 @@ function UserDistForm() {
       })
       .then((res) => {
         alert("회원탈퇴가 완료되었습니다.");
+        firebaseUserisDist();
         sessionStorage.removeItem("userNickname");
         sessionStorage.removeItem("accessToken");
         sessionStorage.removeItem("email");
