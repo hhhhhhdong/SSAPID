@@ -15,8 +15,7 @@ import Main from "../Main/Main";
 
 type userList = {
   nickName: string;
-  roomId: string;
-  email: string;
+  uid: string;
 };
 
 const hoverColor = style({
@@ -74,10 +73,8 @@ function DirectMessages() {
           // eslint-disable-next-line prefer-const
           let user = DataSnapshot.val();
 
-          const room = getChatRoomId(DataSnapshot.key);
-          user.email = DataSnapshot.key;
+          user.uid = DataSnapshot.key;
           user.nickName = user.userNickName;
-          user.roomId = room;
           usersArray.push(user);
         }
       }
@@ -87,7 +84,7 @@ function DirectMessages() {
 
   // 방 ID 생성
   const getChatRoomId = (userId: string) => {
-    const mine = sessionStorage.getItem("email");
+    const mine = sessionStorage.getItem("uid");
     if (mine) {
       const user = mine.replace(regexAllCase, "");
       const your = userId.replace(regexAllCase, "");
@@ -98,7 +95,7 @@ function DirectMessages() {
 
   // 채팅 룸 변경
   const changeChatRoom = (user: userList) => {
-    const chatRoomId = getChatRoomId(user.email);
+    const chatRoomId = getChatRoomId(user.uid);
     const chatRoomData = [chatRoomId, user.nickName];
     dispatch(chatRoomString(chatRoomData));
     if (user.nickName === lastSelect.current) {
