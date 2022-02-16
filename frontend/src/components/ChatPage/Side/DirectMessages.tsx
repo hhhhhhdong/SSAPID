@@ -70,13 +70,17 @@ function DirectMessages() {
     const usersArray: Array<userList> = [];
     const myEmail = sessionStorage.getItem("email");
     onChildAdded(ref(getDatabase(), "users"), (DataSnapshot) => {
-      if (myEmail !== DataSnapshot.val().email) {
-        // eslint-disable-next-line prefer-const
-        let user = DataSnapshot.val();
-        const room = getChatRoomId(user.email);
-        user.nickName = DataSnapshot.key;
-        user.roomId = room;
-        usersArray.push(user);
+      if (myEmail !== DataSnapshot.key) {
+        if (DataSnapshot.key) {
+          // eslint-disable-next-line prefer-const
+          let user = DataSnapshot.val();
+
+          const room = getChatRoomId(DataSnapshot.key);
+          user.email = DataSnapshot.key;
+          user.nickName = user.userNickName;
+          user.roomId = room;
+          usersArray.push(user);
+        }
       }
     });
     return usersArray;
