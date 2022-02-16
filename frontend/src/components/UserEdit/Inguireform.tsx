@@ -71,7 +71,7 @@ function InquireForm() {
         onChange={undefined}
         type="tel"
       />
-      <p className={style.Link}>
+      <div className={style.Link}>
         <Link to="/changephone">휴대폰 번호 변경</Link>
         <hr />
         <div className={style.a}>
@@ -82,7 +82,7 @@ function InquireForm() {
             회원탈퇴
           </Link>
         </div>
-      </p>
+      </div>
     </div>
   );
 }

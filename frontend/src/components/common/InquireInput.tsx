@@ -40,6 +40,7 @@ function Input({
           name={name}
           className={value ? style.inValueInput : ""}
           type={type}
+          readOnly
           value={value}
           onChange={onChange}
         />
