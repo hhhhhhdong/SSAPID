@@ -81,13 +81,13 @@
 
 - 회원가입
 
-  <img src="./img/회원가입.png" width="500">
+  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/raw/develop/exec/img/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.png" width="500">
 
   회원가입은 email, nickname 중복체크 및 유효성체크를 통해 진행됩니다.
 
 - 아이디 찾기
 
-  <img src="./img/아이디찾기.png" width="800">
+  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/raw/develop/exec/img/%EC%95%84%EC%9D%B4%EB%94%94%EC%B0%BE%EA%B8%B0.png" width="800">
 
   아이디 찾기는 이름과 휴대폰 번호를 활용해 찾을 수 있습니다.
 
@@ -99,7 +99,7 @@
 
 - 메인페이지
 
-  <img src="img/메인페이지.png" width="800">
+  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/raw/develop/exec/img/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.png" width="800">
 
   검색기능을 활용하면 원하는 게시글로 필터링 할 수 있습니다.
 
@@ -109,13 +109,13 @@
 
 - 사이드 바
 
-  <img src="img/사이드바.png" width="800">
+  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/raw/develop/exec/img/%EC%82%AC%EC%9D%B4%EB%93%9C%EB%B0%94.png" width="800">
 
   사이드 바에서는 즐겨찾기, 채팅 기능을 사용할 수 있습니다.
 
 - 게시글 작성
 
-  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/blob/develop/exec/img/%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1.png" width="800">
+  <img src="img/게시글작성.png" width="800">
 
   게시글을 작성하면 유저에게 팀원모집 글을 알릴 수 있습니다.
 
@@ -125,4 +125,4 @@
 
 - 화상회의
 
-  <img src="img/화상회의.png" width="800">
+  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/raw/develop/exec/img/%ED%99%94%EC%83%81%ED%9A%8C%EC%9D%98.png" width="800">
