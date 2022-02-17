@@ -57,10 +57,13 @@
 - Docker
   - EC2에서 Docker를 이용하여 MariaDB를 실행
 - jenkins
+
   - 빌드/배포 자동화를 위해 jenkins 이용
 
 - Openvidu
   - 화상미팅 미디어 서버 제공
+- Firebase RealTimeDatabase
+  - 실시간 채팅 서버 및 DB 제공
 
 ## 3. 데이터베이스
 
