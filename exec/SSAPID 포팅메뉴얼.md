@@ -81,7 +81,7 @@
 
 - 회원가입
 
-  <img src="img/회원가입.png" width="500">
+  <img src="./img/회원가입.png" width="500">
 
   회원가입은 email, nickname 중복체크 및 유효성체크를 통해 진행됩니다.
 
