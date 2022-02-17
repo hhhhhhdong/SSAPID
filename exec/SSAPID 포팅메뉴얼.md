@@ -75,7 +75,7 @@
 
 - 로그인
 
-  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/blob/develop/exec/img/%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1.png" width="400">
+  <img src="./img/로그인.png" width="400">
 
   로그인시 Githup, Google, Facebook을 이용한 소셜로그인이 가능합니다.
 
@@ -93,7 +93,7 @@
 
 - 비밀번호 찾기
 
-<img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/raw/develop/exec/img/%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%20%EC%B0%BE%EA%B8%B0.png" width="800">
+  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/raw/develop/exec/img/%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%20%EC%B0%BE%EA%B8%B0.png" width="800">
 
   비밀번호 찾기는 메일의 인증번호를 입력하면 비밀번호 재설정을 할 수 있습니다.
 
