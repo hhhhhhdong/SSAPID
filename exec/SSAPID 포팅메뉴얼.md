@@ -75,7 +75,7 @@
 
 - 로그인
 
-  <img src="img/로그인.png" width="400">
+  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/blob/develop/exec/img/%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1.png" width="400">
 
   로그인시 Githup, Google, Facebook을 이용한 소셜로그인이 가능합니다.
 
