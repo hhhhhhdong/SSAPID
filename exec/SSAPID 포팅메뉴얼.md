@@ -67,8 +67,10 @@
 
 ## 3. 데이터베이스
 
-1. 덤프 파일
+1. [덤프 파일](exec/dump)
+
 2. 파일 테이블 구조도(ERD)
+<img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/raw/develop/exec/img/ERD.PNG" width="500">
 
 ## 4. 시연 시나리오
 
