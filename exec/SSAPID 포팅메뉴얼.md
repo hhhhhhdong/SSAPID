@@ -115,7 +115,7 @@
 
 - 게시글 작성
 
-  <img src="img/게시글 작성.png" width="800">
+  <img src="https://lab.ssafy.com/s06-webmobile1-sub2/S06P12D205/-/blob/develop/exec/img/%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1.png" width="800">
 
   게시글을 작성하면 유저에게 팀원모집 글을 알릴 수 있습니다.
 
