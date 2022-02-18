@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@ApiModel("")
+@ApiModel("SessionCreateRes")
 public class SessionCreateRes extends BaseResponseBody {
     @ApiModelProperty(name = "", example = "")
     String token;
