@@ -1,16 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import useInterval from "utils/hooks/timerHook";
 import { BiMessageAltDetail } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { style } from "typestyle";
-import {
-  getDatabase,
-  ref,
-  onChildAdded,
-  DataSnapshot,
-} from "firebase/database";
+import { getDatabase, ref, onChildAdded } from "firebase/database";
 import { chatRoomString } from "redux/_actions/actions";
-import Badge from "react-bootstrap/Badge";
 import Main from "../Main/Main";
 
 type userList = {
@@ -55,14 +49,6 @@ function DirectMessages() {
     };
   }, 1000);
 
-  // const getNotification = (chatRoom) => {};
-  // 전에 내가 보낸
-  // db에 noticount 정보(내가 안읽은 정보)가 있다 ? noti identitiy 내거의 count를 return 전에 현재 noti의 count를 db의 정보로 동기화 : getNoti함수 실행
-  // const readDataListeners = () => {
-  //   let count;
-  //   return count;
-  // };
-
   // 데이터 스냅샷을 이용해서 DB에서 스키마를 가지고 조작
   function addUsersListeners() {
     const usersArray: Array<userList> = [];
@@ -106,25 +92,6 @@ function DirectMessages() {
     lastSelect.current = user.nickName;
   };
 
-  // const chatRoomListeners = () => {
-  //   onChildAdded(ref(getDatabase(), "messages"), (DataSnapshot) => {
-  //     addNotificationListener(DataSnapshot.key);
-  //   });
-  // };
-
-  // const addNotificationListener = (roomId: string) => {
-  //   onValue(
-  //     ref(getDatabase(), `messages/${roomId}/identity`),
-  //     (DataSnapshot) => {
-  //       handleNotification(DataSnapshot, roomId);
-  //     }
-  //   );
-  // };
-
-  // const handleNotification = (DataSnapshot, roomId) => {
-  //   console.log(DataSnapshot.val());
-  // };
-
   // 닉네임 렌더링
   const renderDirectMessages = (users: Array<userList>) =>
     users.length > 0 &&
@@ -135,9 +102,6 @@ function DirectMessages() {
         aria-hidden="true"
         style={{ marginBottom: "1em" }}
       >
-        {/* <Badge variant="danger" style={{ marginRight: "1em" }}>
-          {getNotification(user.roomId)}
-        </Badge> */}
         <span
           className={hoverColor}
           style={{

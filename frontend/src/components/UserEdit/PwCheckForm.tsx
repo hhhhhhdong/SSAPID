@@ -24,7 +24,6 @@ function PwCheckForm() {
     }
   }, []);
   const Submit = () => {
-    console.log(form.userPw);
     axios
       .post("/user/check-pw", form, {
         headers: {

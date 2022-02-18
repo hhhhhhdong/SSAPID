@@ -22,7 +22,6 @@ function GoogleSignin() {
         sessionStorage.setItem("accessToken", res.data.accessToken);
         sessionStorage.setItem("email", user.email);
         sessionStorage.setItem("uid", user.uid);
-        // sessionStorage.setItem("userType", res.data.userType);
         navigate("/");
       })
       .catch((error) => {

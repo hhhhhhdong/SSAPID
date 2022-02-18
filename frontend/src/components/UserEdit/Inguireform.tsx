@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "../../api/axios";
 import Input from "../common/InquireInput";
-import Button from "../common/Button";
 import Spacer from "../common/Spacer";
 import FormHeader from "../layout/FormHeader";
 import style from "../../styles/edit.module.scss";

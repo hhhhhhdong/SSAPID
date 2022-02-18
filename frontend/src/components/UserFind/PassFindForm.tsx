@@ -68,8 +68,6 @@ function PassFindForm() {
     axios
       .post("/user/find-pw", { userId: email })
       .then((res: any) => {
-        // 로딩 스피너 구현예정.
-
         dispatch(emailString(email));
 
         alert("인증번호를 이메일로 보냈습니다.");

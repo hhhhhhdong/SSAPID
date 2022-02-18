@@ -3,11 +3,6 @@ import { FaUserFriends } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
 function MessageHeader({ handleSearchChange, searchTerm }) {
-  const [state, setState] = useState({
-    search: "",
-    messages: [],
-  });
-
   const room = useSelector((state) => state.userReducer.chatRoomString);
 
   return (

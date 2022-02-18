@@ -51,15 +51,6 @@ function WebRtcTest() {
             sessionName={mySessionId}
             user={myUserName}
             token="wss://localhost:4443?sessionId=ses_KZvWGWltdO&token=tok_O2HWn1vG1ZkNhedm"
-            // joinSession={() => {
-            //   console.log("join session");
-            // }}
-            // leaveSession={() => {
-            //   // setSession(false);
-            // }}
-            // error={() => {
-            //   console.log("error");
-            // }}
           />
         </div>
       )}

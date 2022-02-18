@@ -2,7 +2,7 @@ import React from "react";
 import style from "../../styles/Button.module.scss";
 
 export interface buttonProps {
-  buttonType?: "submit" | "button"; // or directly JSX.IntrinsicElements['button']['type']
+  buttonType?: "submit" | "button";
   handleClick?: () => void;
   Disabled?: boolean;
   Loading?: boolean;

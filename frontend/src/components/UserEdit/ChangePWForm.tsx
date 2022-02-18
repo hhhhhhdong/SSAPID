@@ -4,11 +4,9 @@ import FormHeader from "components/layout/FormHeader";
 import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
-import Spacer from "../common/Spacer";
 import style from "../../styles/edit.module.scss";
 
 function ChangePWForm() {
-  const token = sessionStorage.getItem("accessToken");
   const [form, setForm] = useState({
     userId: "",
     userPw: "",
@@ -19,24 +17,11 @@ function ChangePWForm() {
     userPw: "",
     userPwCheck: "",
   });
-  const { userId, userPw, userPwCheck } = form;
   const [isEmpty, setEmpty] = useState(true);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   axios
-  //     .get("/user/info", {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then(() => {
-  //       // console.log(form);
-  //       // setForm(res.data);
-  //     });
-  // }, []);
+
   const Submit = () => {
     if (form.userPw !== form.userPwCheck) return;
-    // console.log(form);
     axios
       .put("/user/change-pw", form)
       .then(() => {
@@ -48,7 +33,6 @@ function ChangePWForm() {
       });
   };
   useEffect(() => {
-    console.log(form);
     if (form.userPw !== "" && form.userPwCheck !== "") {
       setEmpty(false);
     } else {

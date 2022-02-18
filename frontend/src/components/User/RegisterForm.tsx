@@ -199,7 +199,6 @@ function RegisterForm() {
 
     // 비밀번호 확인 다르면 리턴
     if (form.userPw !== form.userPwCheck) return;
-    // 파이어베이스 데이터베이스 저장
     axios
       .post("/user/register", {
         userId,

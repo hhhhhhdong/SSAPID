@@ -5,7 +5,6 @@
 /* eslint-disable react/sort-comp */
 /* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
-// import "./App.css";
 import axios from "api/axios";
 import OpenViduSession from "openvidu-react";
 
@@ -53,18 +52,6 @@ class Openvidu extends Component {
     });
   }
 
-  // joinSession(event) {
-  //   if (this.state.sessionName && this.state.userNickname) {
-  //     this.getToken().then((token) => {
-  //       this.setState({
-  //         token,
-  //         session: true,
-  //       });
-  //     });
-  //     event.preventDefault();
-  //   }
-  // }
-
   joinSession(event) {
     axios
       .post("/session", this.state)
@@ -79,12 +66,6 @@ class Openvidu extends Component {
       });
     event.preventDefault();
   }
-
-  // getToken() {
-  //   return this.createSession(this.state.sessionName)
-  //     .then((sessionId) => this.createToken(sessionId))
-  //     .catch((Err) => console.error(Err));
-  // }
 
   render() {
     const { sessionName } = this.state;

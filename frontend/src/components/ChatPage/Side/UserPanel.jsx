@@ -5,7 +5,6 @@ function UserPanel() {
   const name = sessionStorage.getItem("userNickname");
   return (
     <div>
-      {/* logo */}
       <h3 style={{ color: "white" }}>
         <IoIosChatboxes />
         {`${name} 님 반갑습니다.`}

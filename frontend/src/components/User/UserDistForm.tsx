@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FormHeader from "components/layout/FormHeader";
 import { getDatabase, ref, onValue, set } from "firebase/database";
-import { useSelector } from "react-redux";
 import axios from "../../api/axios";
 import Input from "../common/Input";
 import Button from "../common/Button";
