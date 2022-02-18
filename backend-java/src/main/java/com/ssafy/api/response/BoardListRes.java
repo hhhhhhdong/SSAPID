@@ -34,13 +34,13 @@ public class BoardListRes extends BaseResponseBody {
             boardInfo.put("createdAt", board.getCreatedAt());
             boardInfo.put("deadline", board.getDeadline());
             boardInfo.put("author", board.getUser().getUserNickname());
-            for (Favorite favorite : board.getFavoriteList()) { //게시글의 즐겨찾기들 탐색
-                if (favorite.getUser().getUserSeq() == user.getUserSeq()) { //즐겨찾기의 userSeq == 해당유저의 userSeq
+            for (Favorite favorite : board.getFavoriteList()) {
+                if (favorite.getUser().getUserSeq() == user.getUserSeq()) {
                     isLike = "true";
                     break;
                 }
             }
-            boardInfo.put("boardStatus",board.getBoardStatus());
+            boardInfo.put("boardStatus", board.getBoardStatus());
             boardInfo.put("isLike", isLike);
             boardInfos.add(boardInfo);
         }
@@ -64,13 +64,13 @@ public class BoardListRes extends BaseResponseBody {
             boardInfo.put("createdAt", board.getCreatedAt());
             boardInfo.put("deadline", board.getDeadline());
             boardInfo.put("author", board.getUser().getUserNickname());
-            for (Favorite favorite : board.getFavoriteList()) { //게시글의 즐겨찾기들 탐색
-                if (favorite.getUser().getUserSeq() == user.getUserSeq()) { //즐겨찾기의 userSeq == 해당유저의 userSeq
+            for (Favorite favorite : board.getFavoriteList()) {
+                if (favorite.getUser().getUserSeq() == user.getUserSeq()) {
                     isLike = "true";
                     break;
                 }
             }
-            boardInfo.put("boardStatus",board.getBoardStatus());
+            boardInfo.put("boardStatus", board.getBoardStatus());
             boardInfo.put("isLike", isLike);
             boardInfos.add(boardInfo);
         }
@@ -93,7 +93,7 @@ public class BoardListRes extends BaseResponseBody {
             boardInfo.put("createdAt", board.getCreatedAt());
             boardInfo.put("deadline", board.getDeadline());
             boardInfo.put("author", board.getUser().getUserNickname());
-            boardInfo.put("boardStatus",board.getBoardStatus());
+            boardInfo.put("boardStatus", board.getBoardStatus());
             boardInfos.add(boardInfo);
         }
 

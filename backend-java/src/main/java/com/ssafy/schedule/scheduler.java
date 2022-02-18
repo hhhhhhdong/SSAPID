@@ -14,7 +14,7 @@ public class scheduler {
     @Autowired
     BoardRepositorySupport boardRepositorySupport;
 
-    @Scheduled(cron = " 0 0 0 * * *",zone = "Asia/Seoul") // cron식 표기 0초 0분 0시 매일 실행
+    @Scheduled(cron = " 0 0 0 * * *",zone = "Asia/Seoul")
     @Transactional
     public void scheduleUpdateBoardStatus() {
         StopWatch stopWatch = new StopWatch();

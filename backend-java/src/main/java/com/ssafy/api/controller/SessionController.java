@@ -23,16 +23,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping("/session")
 public class SessionController {
 
-    // OpenVidu object as entrypoint of the SDK
     private OpenVidu openVidu;
-
-    // Collection to pair session names and OpenVidu Session objects
     private Map<String, Session> mapSessions = new ConcurrentHashMap<>();
-    // Collection to pair session names and tokens (the inner Map pairs tokens and role associated)
     private Map<String, Map<String, OpenViduRole>> mapSessionNamesTokens = new ConcurrentHashMap<>();
-
     private String OPENVIDU_URL;
-    // Secret shared with our OpenVidu server
     private String SECRET;
 
     public SessionController(@Value("${openvidu.secret}") String secret, @Value("${openvidu.url}") String openviduUrl) {
@@ -45,9 +39,6 @@ public class SessionController {
     @ApiOperation(value = "토큰 발급", notes = "wss 주소를 반환")
     public ResponseEntity<SessionCreateRes> createSession(@RequestBody @ApiParam(value = "세션 정보") SessionCreateReq sessionInfo) throws ParseException {
 
-        // 유저 토큰을 요구하도록 수정 필요
-
-        // 세션 정보
         String sessionName = sessionInfo.getSessionName();
         String userNickname = sessionInfo.getUserNickname();
         SessionProperties properties = new SessionProperties.Builder().build();
@@ -60,7 +51,6 @@ public class SessionController {
                 .data(userNickname)
                 .build();
 
-        // 같은 이름의 세션이 이미 존재하는 경우 => 해당 세션으로 연결
         if (this.mapSessions.get(sessionName) != null) {
             System.out.println("Existing session " + sessionName);
             try {
@@ -68,32 +58,24 @@ public class SessionController {
                 this.mapSessionNamesTokens.get(sessionName).put(token, role);
                 return ResponseEntity.status(200).body(SessionCreateRes.of(200, "Success", token));
             } catch (OpenViduJavaClientException e1) {
-                // If internal error generate an error message and return it to client
                 return getErrorResponse(e1);
             } catch (OpenViduHttpException e2) {
                 if (404 == e2.getStatus()) {
-                    // Invalid sessionId (user left unexpectedly). Session object is not valid
-                    // anymore. Clean collections and continue as new session
                     this.mapSessions.remove(sessionName);
                     this.mapSessionNamesTokens.remove(sessionName);
                 }
             }
         }
 
-        // 세션이 존재하지 않는 경우 => 새 세션 생성
-        System.out.println("New session " + sessionName);
+
         try {
             Session session = this.openVidu.createSession();
             String token = session.createConnection(connectionProperties).getToken();
-
             this.mapSessions.put(sessionName, session);
             this.mapSessionNamesTokens.put(sessionName, new ConcurrentHashMap<>());
             this.mapSessionNamesTokens.get(sessionName).put(token, role);
-
             return ResponseEntity.status(200).body(SessionCreateRes.of(200, "Success", token));
-
         } catch (Exception e) {
-            // If error generate an error message and return it to client
             return getErrorResponse(e);
         }
     }

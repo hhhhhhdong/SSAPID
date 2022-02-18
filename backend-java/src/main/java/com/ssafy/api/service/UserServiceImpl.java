@@ -48,17 +48,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createSocialUser(UserSocialReq socialRegisterInfo) {
         User user = new User();
-        user.setUserId(socialRegisterInfo.getLoginType()+"_" + socialRegisterInfo.getUserId());
+        user.setUserId(socialRegisterInfo.getLoginType() + "_" + socialRegisterInfo.getUserId());
         user.setUserType(socialRegisterInfo.getUserType());
 
-        String userNickname = socialRegisterInfo.getLoginType()+"_"+RandomStringUtils.random(6, true, true);
+        String userNickname = socialRegisterInfo.getLoginType() + "_" + RandomStringUtils.random(6, true, true);
         while (checkId(userNickname)) {
-            userNickname = socialRegisterInfo.getLoginType()+"_"+RandomStringUtils.random(6, true, true);
+            userNickname = socialRegisterInfo.getLoginType() + "_" + RandomStringUtils.random(6, true, true);
         }
         user.setUserNickname(userNickname);
         user.setUserPw(passwordEncoder.encode("sociallogin"));
         user.setUserPhone("-");
-        user.setUserName(socialRegisterInfo.getLoginType()+"_guest");
+        user.setUserName(socialRegisterInfo.getLoginType() + "_guest");
         userRepository.save(user);
     }
 

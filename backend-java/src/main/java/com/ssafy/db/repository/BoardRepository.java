@@ -27,7 +27,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Page<Board> findByUser(User user, Pageable pageable);
 
-    // IllegalArgumentException - did not match expected type 해결 못해서 QueryDSL 사용해서 만듬
-    //List<Board> findByUserContaining(User user);
 
 }

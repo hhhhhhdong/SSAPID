@@ -170,9 +170,9 @@ public class BoardController {
 
         if (islike == 1) {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 등록"));
-        }else if(islike==2){
-            return ResponseEntity.status(401).body(BaseResponseBody.of(401,"즐겨찾기 갯수 초과"));
-        }else {
+        } else if (islike == 2) {
+            return ResponseEntity.status(401).body(BaseResponseBody.of(401, "즐겨찾기 갯수 초과"));
+        } else {
             return ResponseEntity.status(200).body(BaseResponseBody.of(200, "즐겨찾기 해제"));
         }
     }

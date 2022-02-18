@@ -13,16 +13,12 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 
 @Service("boardService")
@@ -108,9 +104,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public long checkFavorite(User user, Board board) {
-        for (Favorite favorite : board.getFavoriteList()) { //게시글의 즐겨찾기들 탐색
-            if (favorite.getUser().getUserSeq() == user.getUserSeq()) { //즐겨찾기의 userSeq == 해당유저의 userSeq
-                return favorite.getFavoriteSeq();   //해당하는 즐겨찾기의 번호 반환
+        for (Favorite favorite : board.getFavoriteList()) {
+            if (favorite.getUser().getUserSeq() == user.getUserSeq()) {
+                return favorite.getFavoriteSeq();
             }
         }
         return -1;
@@ -118,16 +114,16 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public int favoriteBoard(User user, Board board) {
-        long favoriteSeq = checkFavorite(user, board); //중복체크
+        long favoriteSeq = checkFavorite(user, board);
 
-        if (favoriteSeq != -1) { // 이미 등록 되어있다면
+        if (favoriteSeq != -1) {
             Favorite favorite = favoriteRepository.findByFavoriteSeq(favoriteSeq);
             board.getFavoriteList().remove(favorite);
             user.getFavoriteList().remove(favorite);
             favoriteRepository.delete(favorite);
             return -1;
-        } else { // 미등록 상태라면
-            if( user.getFavoriteList().size() > 9 ){
+        } else {
+            if (user.getFavoriteList().size() > 9) {
                 return 2;
             }
             Favorite favorite = new Favorite();
